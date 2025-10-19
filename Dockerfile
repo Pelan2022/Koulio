@@ -5,7 +5,7 @@ FROM nginx:alpine
 COPY koulio_complete_app.html /usr/share/nginx/html/index.html
 
 # Zkopíruj obrázek pokud existuje
-COPY vanocni_koule.jpg /usr/share/nginx/html/ 2>/dev/null || true
+COPY vanocni_koule.jpg /usr/share/nginx/html/vanocni_koule.jpg
 
 # Vytvoř nginx konfiguraci pro SPA
 RUN echo 'server { \
