@@ -189,6 +189,77 @@
         .kuličky-list input[type="checkbox"] {
             transform: scale(1.2);
             accent-color: #667eea;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #667eea;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .kuličky-list input[type="checkbox"]:checked {
+            background: #667eea;
+        }
+
+        .kuličky-list input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .guide-steps {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .guide-step {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .guide-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            width: 2px;
+            height: 32px;
+            border-left: 2px dashed #dc3545;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 15px;
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .step-circle.red {
+            background-color: #dc3545;
+        }
+
+        .step-circle.blue {
+            background-color: #667eea;
+        }
+
+        .step-content {
+            color: #495057;
+            font-size: 1.1em;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
         .kuličky-list li:last-child {
@@ -272,6 +343,40 @@
                     <h4><span style="font-size: 2em;">🎄</span> Úvodní lekce</h4>
                 </div>
 
+                <div class="section">
+                    <h3>Jak se odkoulovávat?</h3>
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Potřebuji prožívat...?</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Jsem ochotna to propustit?</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Teď a tady?</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Na všech úrovních bytí?</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Vše proměnit na lásku?</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle red"></div>
+                            <div class="step-content">Nechť se tak stane, děkuji.</div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="step-circle blue"></div>
+                            <div class="step-content">Všechny tyto programy měním na lásku a s láskou je vracím všem autorům zpět.</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="section kuličky">
                     <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (50)</h3>
                     <ul class="kuličky-list">
@@ -295,7 +400,6 @@
                         <li>roli oběti</li>
                         <li>život v sebelítosti</li>
                         <li>nepochopení sama sebe</li>
-                        <li>POTŘEBUJI PROŽÍVAT... ?</li>
                         <li>nepochopení druhých</li>
                         <li>bezohlednost ve vztazích</li>
                         <li>sebeponižování</li>
@@ -341,7 +445,7 @@
                 </div>
 
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (75)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (75)</h3>
                     <ul class="kuličky-list">
                         <li>zajetí v traumatu děsivé události</li>
                         <li>zhroucení mého systému života</li>
@@ -474,7 +578,7 @@
                 </div>
 
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (44)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (44)</h3>
                     <ul class="kuličky-list">
                         <li>zbytečné prodlužování čehokoli</li>
                         <li>odvrácení se od sebe a svých potřeb</li>
@@ -534,7 +638,7 @@
                     <h3>Témata k zamyšlení</h3>
                     <ul class="topics-list">
                         <li>NEMŮŽU BEZ TOHO ŽÍT</li>
-                        <li>DRUHY ZÁVISLOSTÍ
+                        <li>DRUHY ZÁVISLOSTÍ 
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> zjevá</li>
                                 <li><input type="checkbox" style="margin-right: 8px;"> skrytá</li>
@@ -570,7 +674,7 @@
                 </div>
 
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (53)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (53)</h3>
                     <ul class="kuličky-list">
                         <li>iluzi, že v životě nemáš žádnou závislost</li>
                         <li>nepřipouštění si, že bys mohl/a být závislý/á</li>
@@ -637,17 +741,26 @@
                 <div class="section">
                     <h3>Témata k zamyšlení</h3>
                     <ul class="topics-list">
-                        <li>SKUTEČNÉ BOHATSTVÍ</li>
-                        <li>PROSTOR PŘÍZNIVÝ PRO ŽIVOT</li>
-                        <li>ZDRAVÍ A ČINNOST</li>
-                        <li>HARMONICKÉ VZTAHY</li>
-                        <li>MATERIÁLNÍ BLAHOBYT</li>
-                        <li>MODEL BOHATSTVÍ RODIČŮ</li>
-                        <li>VNÍMÁNÍ BOHATÉHO/CHUDÉHO ČLOVĚKA</li>
+                        <li>SKUTEČNÉ BOHATSTVÍ
+                            <ul class="kuličky-list" style="margin-top: 10px;">
+                                <li><input type="checkbox" style="margin-right: 8px;"> Prostor příznivý pro život (domov)</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> Zdraví (fyzická a duševní spokojenost)</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> Šťastná rodina (harmonické vztahy mezi rodiči a dětmi)</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> Materiální blahobyt (dostatečné množství peněz)</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> Příznivá vzájemná komunikace s lidmi (spolehliví a věrní přátelé, podobně smýšlející)</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> Oblíbená činnost (přináší duševní a materiální uspokojení)</li>
+                            </ul>
+                        </li>
+                        <li>MAJETNÝ X BOHATÝ</li>
+                        <li>BOHATSTVÍ RODIČŮ</li>
+                        <li>JÁ A SYSTÉM (vláda, politika, systém, daně)</li>
+                        <li>VNÍMÁNÍ BOHATÉHO ČLOVĚKA</li>
+                        <li>VNÍMÁNÍ CHUDÉHO ČLOVĚKA</li>
+                        <li>PENÍZE A STRACH</li>
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (78)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (78)</h3>
                     <ul class="kuličky-list">
                         <li>finanční nouzi</li>
                         <li>uvěření v život v nouzi a nedostatku</li>
@@ -670,14 +783,14 @@
                         <li>odpor k přijímání peněz</li>
                         <li>zákaz používat peníze pro realizaci svých úmyslů a záměrů</li>
                         <li>tavení toku peněz do svého života</li>
-                        <li>nevědomost jak peníze získávat a disponovat s nimi</li>
+                        <li>nevědomost, jak peníze získávat a disponovat s nimi</li>
                         <li>stagnace ve finančním vývoji</li>
                         <li>vše, co mne brání využívat své bohatství ve svém životě</li>
                         <li>přesvědčení, že s dospíváním dětí rostou výdaje</li>
                         <li>podporování vlastní hlouposti a slabosti</li>
                         <li>komplexy méněcennosti, když nemám velké bohatství</li>
                         <li>přesvědčení, že jen peníze mne pomůžou k uskutečnění vlastních záměrů</li>
-                        <li>být otrokyní peněz</li>
+                        <li>být otrokyní/otrokem peněz</li>
                         <li>že mám peníze jako drogu</li>
                         <li>strach z nízkého platu</li>
                         <li>strach z výpovědi</li>
@@ -686,7 +799,7 @@
                         <li>přesvědčení, že náš svět je hrozný</li>
                         <li>že peníze jsou smyslem a jediným záměrem života</li>
                         <li>podřizování všeho k dosažení hmotného blahobytu</li>
-                        <li>nezastavitelná závod v honbě o peníze</li>
+                        <li>nezastavitelný závod v honbě o peníze</li>
                         <li>strach z chamtivosti</li>
                         <li>že po vydělání peněz brzy cítím zase nedostatek</li>
                         <li>stálý neklid ohledně peněz</li>
@@ -746,7 +859,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (78)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (78)</h3>
                     <ul class="kuličky-list">
                         <li>nerozezní mi</li>
                         <li>neposlouchá co říkám</li>
@@ -845,7 +958,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (88)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (88)</h3>
                     <ul class="kuličky-list">
                         <li>ovlivnění fyzickými vlivy</li>
                         <li>ovlivnění psychickými vlivy</li>
@@ -954,7 +1067,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (118)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (118)</h3>
                     <ul class="kuličky-list">
                         <li>strach ze zklamání</li>
                         <li>přesvědčení, že něco musím</li>
@@ -1093,7 +1206,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (80)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (80)</h3>
                     <ul class="kuličky-list">
                         <li>přesvědčení, že muž je kurevník</li>
                         <li>nálepku, že žena je kurva</li>
@@ -1193,7 +1306,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (46)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (46)</h3>
                     <ul class="kuličky-list">
                         <li>trapnost za vzhled svého těla</li>
                         <li>pocit, že se mé tělo vymyká standardům a normám</li>
@@ -1262,7 +1375,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (53)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (53)</h3>
                     <ul class="kuličky-list">
                         <li>vypnutí vzrušujících pocitů</li>
                         <li>absenci sexuální touhy</li>
@@ -1339,7 +1452,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (62)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (62)</h3>
                     <ul class="kuličky-list">
                         <li>přesvědčení, že je má práce utrpením</li>
                         <li>přesvědčení, že práce je za trest</li>
@@ -1426,7 +1539,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (42)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (42)</h3>
                     <ul class="kuličky-list">
                         <li>přesvědčení, že jsem na cokoli moc mladá a nevyzrálá?</li>
                         <li>přesvědčení, že jsem na cokoli moc stará?</li>
@@ -1494,7 +1607,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (70)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (70)</h3>
                     <ul class="kuličky-list">
                         <li>strach z otěhotnění</li>
                         <li>strach z potratu</li>
@@ -1598,7 +1711,7 @@
                     </ul>
                 </div>
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky - Traumatické elementy (46)</h3>
+                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (46)</h3>
                     <ul class="kuličky-list">
                         <li>přes., že kdo šetří má za tři</li>
                         <li>přes., že s poctivostí nejdál dojdeš</li>
