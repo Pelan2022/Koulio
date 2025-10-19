@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            overflow-x: auto;
         }
 
         .container {
@@ -92,7 +93,7 @@
 
         .content {
             padding: 40px;
-            min-height: 600px;
+            min-height: auto;
         }
 
         .tab-content {
@@ -164,8 +165,8 @@
         .kuličky-list {
             list-style: none;
             padding: 0;
-            max-height: 400px;
-            overflow-y: auto;
+            max-height: none;
+            overflow: visible;
             border: 1px solid #dee2e6;
             border-radius: 8px;
             background: #fff;
@@ -177,11 +178,17 @@
             font-size: 1em;
             color: #6c757d;
             transition: all 0.3s ease;
+            border-left: none;
         }
 
         .kuličky-list li:hover {
             background: #f8f9fa;
             color: #495057;
+        }
+
+        .kuličky-list input[type="checkbox"] {
+            transform: scale(1.2);
+            accent-color: #667eea;
         }
 
         .kuličky-list li:last-child {
@@ -427,13 +434,13 @@
                         <li>PYRAMIDA – ZRCADLO</li>
                         <li>SEBEHODNOTA
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li>nikdo si mě neváží</li>
-                                <li>nestojím za nic</li>
-                                <li>vše co udělám je k ničemu</li>
-                                <li>nemůžu být sama sebou</li>
-                                <li>nechápu co tu vlastně dělám</li>
-                                <li>je ze mě troska</li>
-                                <li>vše je to stejně moje vina</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> nikdo si mě neváží</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> nestojím za nic</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> vše co udělám je k ničemu</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> nemůžu být sama sebou</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> nechápu co tu vlastně dělám</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> je ze mě troska</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> vše je to stejně moje vina</li>
                             </ul>
                         </li>
                         <li>KONTROLY PRAVIDLA</li>
@@ -442,21 +449,21 @@
                             <div style="margin-left: 20px; margin-top: 10px;">
                                 <h4 style="color: #667eea; margin: 10px 0 5px 0; font-size: 1em;">(JAK MĚ VIDÍ DRUZÍ):</h4>
                                 <ul class="kuličky-list">
-                                    <li>dosáhnu vůbec něčeho</li>
-                                    <li>jsem neschopný</li>
-                                    <li>strach o finanční zajištění rodiny</li>
-                                    <li>když to říkají druzí, tak takový musím být</li>
-                                    <li>musím naplnit očekávání druhých</li>
-                                    <li>zaslepení vůči svým vlastnostem</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> dosáhnu vůbec něčeho</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> jsem neschopný</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> strach o finanční zajištění rodiny</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> když to říkají druzí, tak takový musím být</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> musím naplnit očekávání druhých</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> zaslepení vůči svým vlastnostem</li>
                                 </ul>
                                 
                                 <h4 style="color: #667eea; margin: 10px 0 5px 0; font-size: 1em;">(KDO JSEM):</h4>
                                 <ul class="kuličky-list">
-                                    <li>jsem divná</li>
-                                    <li>nikam nezapadám</li>
-                                    <li>stejně to nemá smysl</li>
-                                    <li>ospravedlňování svých činů a chování</li>
-                                    <li>nikdy nedokážu, aby mě měli všichni rádi</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> jsem divná</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> nikam nezapadám</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> stejně to nemá smysl</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> ospravedlňování svých činů a chování</li>
+                                    <li><input type="checkbox" style="margin-right: 8px;"> nikdy nedokážu, aby mě měli všichni rádi</li>
                                 </ul>
                             </div>
                         </li>
@@ -529,34 +536,34 @@
                         <li>NEMŮŽU BEZ TOHO ŽÍT</li>
                         <li>DRUHY ZÁVISLOSTÍ
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li>zjevná</li>
-                                <li>skrytá</li>
-                                <li>příčina</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> zjevá</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> skrytá</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> příčina</li>
                             </ul>
                         </li>
                         <li>PŘEJÍMÁNÍ ZÁVISLOSTI - ZÁVISLOST NA JÍDLE</li>
                         <li>PŘEJÍMÁNÍ ZÁVISLOSTI
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li>přesvědčení, že cokoli dělá taťka, tak to můžu dělat i já, protože to je v pořádku</li>
-                                <li>přesvědčení, že musím být jako on, abych se mu zalíbil</li>
-                                <li>přesvědčení, že abych byl přijat, musím napodobovat druhé</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že cokoli dělá taťka, tak to můžu dělat i já, protože to je v pořádku</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že musím být jako on, abych se mu zalíbil</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že abych byl přijat, musím napodobovat druhé</li>
                             </ul>
                         </li>
                         <li>ZÁVISLOST NA ÚKLIDU
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li>posedlost</li>
-                                <li>že nebudu spát dokud tu nebude pořádně uklizeno</li>
-                                <li>že nikdy není dostatečně uklizeno</li>
-                                <li>posedlost úklidem je silnější než já</li>
-                                <li>že stavím svou hodnotu na pořádku okolo sebe a mínění druhých</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> posedlost</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> že nebudu spát dokud tu nebude pořádně uklizeno</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> že nikdy není dostatečně uklizeno</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> posedlost úklidem je silnější než já</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> že stavím svou hodnotu na pořádku okolo sebe a mínění druhých</li>
                             </ul>
                         </li>
                         <li>NESCHOPNOST SE ODPOUTAT
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li>neochotu změnit své chování</li>
-                                <li>potlačování negativních vzpomínek</li>
-                                <li>podléhání manipulaci jiných osob</li>
-                                <li>rezignaci nad svým osudem ve vztahu</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> neochotu změnit své chování</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> potlačování negativních vzpomínek</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> podléhání manipulaci jiných osob</li>
+                                <li><input type="checkbox" style="margin-right: 8px;"> rezignaci nad svým osudem ve vztahu</li>
                             </ul>
                         </li>
                     </ul>
