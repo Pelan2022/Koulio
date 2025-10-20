@@ -273,22 +273,13 @@
         </div>
     </div>
 
+    <!-- API Client -->
+    <script src="api-client.js"></script>
+    
     <script>
-        // Demo uživatelské údaje
+        // Demo uživatelské údaje (stále podporováno pro testování)
         const DEMO_EMAIL = 'demo@koulio.cz';
         const DEMO_PASSWORD = 'demo123';
-
-        // Funkce pro získání uživatelů z localStorage
-        function getUsers() {
-            const users = localStorage.getItem('koulio_users');
-            return users ? JSON.parse(users) : [];
-        }
-
-        // Funkce pro nalezení uživatele podle emailu
-        function findUserByEmail(email) {
-            const users = getUsers();
-            return users.find(user => user.email.toLowerCase() === email.toLowerCase());
-        }
 
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
@@ -329,53 +320,42 @@
             }
         }
 
-        function login(email, password) {
-            // Simulace přihlašovacího procesu
+        async function login(email, password) {
             setLoading(true);
             
-            setTimeout(() => {
-                let loginSuccess = false;
-                let userData = null;
+            try {
+                // Zkusíme přihlášení přes API
+                const response = await window.koulioAPI.login(email, password);
                 
-                // Kontrola demo účtu
+                showSuccess('Přihlášení úspěšné! Přesměrovávám...');
+                
+                // Přesměrování na hlavní aplikaci
+                setTimeout(() => {
+                    window.location.href = 'koulio_complete_app.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Fallback na demo účet pro testování
                 if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-                    loginSuccess = true;
-                    userData = {
-                        email: DEMO_EMAIL,
-                        fullName: 'Demo Uživatel',
-                        isDemo: true
-                    };
-                } else {
-                    // Kontrola registrovaných uživatelů
-                    const user = findUserByEmail(email);
-                    if (user && user.password === password && user.isActive) {
-                        loginSuccess = true;
-                        userData = {
-                            email: user.email,
-                            fullName: user.fullName,
-                            isDemo: false
-                        };
-                    }
-                }
-                
-                if (loginSuccess) {
-                    showSuccess('Přihlášení úspěšné! Přesměrovávám...');
+                    showSuccess('Demo přihlášení úspěšné! Přesměrovávám...');
                     
-                    // Uložení informace o přihlášení do localStorage
+                    // Uložení demo session dat
                     localStorage.setItem('koulio_logged_in', 'true');
-                    localStorage.setItem('koulio_user_email', userData.email);
-                    localStorage.setItem('koulio_user_name', userData.fullName);
-                    localStorage.setItem('koulio_user_demo', userData.isDemo.toString());
+                    localStorage.setItem('koulio_user_email', DEMO_EMAIL);
+                    localStorage.setItem('koulio_user_name', 'Demo Uživatel');
+                    localStorage.setItem('koulio_user_demo', 'true');
                     
-                    // Přesměrování na hlavní aplikaci
                     setTimeout(() => {
                         window.location.href = 'koulio_complete_app.html';
                     }, 1500);
                 } else {
-                    showError('Neplatné přihlašovací údaje. Zkuste to prosím znovu.');
+                    showError(error.message || 'Neplatné přihlašovací údaje. Zkuste to prosím znovu.');
                 }
+            } finally {
                 setLoading(false);
-            }, 1000);
+            }
         }
 
         function forgotPassword() {
