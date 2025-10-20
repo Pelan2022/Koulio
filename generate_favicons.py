@@ -3,7 +3,8 @@ from pathlib import Path
 from PIL import Image
 
 # Configuration
-SOURCE_NAME = "Abstraktní strom.png"  # Unicode filename supported on Windows
+DEFAULT_SOURCE = "Abstraktní strom.png"  # Fallback if new file not present
+PREFERRED_SOURCE = "novy_favicon.png"    # New requested source
 OUTPUTS = {
     "favicon-16x16.png": (16, 16),
     "favicon-32x32.png": (32, 32),
@@ -11,6 +12,8 @@ OUTPUTS = {
     "android-chrome-192x192.png": (192, 192),
     "android-chrome-512x512.png": (512, 512),
     "mstile-150x150.png": (150, 150),
+    # maskable icon (transparent padding around) commonly 512x512
+    "maskable-icon-512x512.png": (512, 512),
 }
 ICO_SIZES = [(16, 16), (32, 32), (48, 48), (64, 64)]
 
@@ -46,20 +49,34 @@ def save_pngs(src: Image.Image, project_root: Path) -> None:
 
 def save_ico(src: Image.Image, project_root: Path) -> None:
     sizes_imgs = [make_square(src, s[0]) for s in ICO_SIZES]
-    # PIL expects a single image with sizes specified
     ico_path = project_root / "favicon.ico"
     sizes = [img.size for img in sizes_imgs]
     sizes_imgs[0].save(ico_path, format="ICO", sizes=sizes)
     print(f"Wrote {ico_path} (sizes: {sizes})")
 
 
+def resolve_source(root: Path, cli_arg: str | None) -> Path:
+    if cli_arg:
+        p = (root / cli_arg)
+        if p.exists():
+            return p
+        print(f"Provided source not found: {p}")
+    pref = root / PREFERRED_SOURCE
+    if pref.exists():
+        return pref
+    fallback = root / DEFAULT_SOURCE
+    return fallback
+
+
 def main() -> int:
     root = Path(__file__).resolve().parent
-    source_path = root / SOURCE_NAME
+    cli_source = sys.argv[1] if len(sys.argv) > 1 else None
+    source_path = resolve_source(root, cli_source)
     if not source_path.exists():
         print(f"Source image not found: {source_path}")
         return 1
 
+    print(f"Using source: {source_path.name}")
     src = load_source_image(source_path)
     save_pngs(src, root)
     save_ico(src, root)
