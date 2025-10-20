@@ -70,12 +70,10 @@ COPY --from=frontend /usr/share/nginx/html /usr/share/nginx/html
 # Instalace Python a závislostí pro backend
 RUN apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev libpq-dev
 
-# Kopírování backend souborů
+# Kopírování backend souborů a závislostí z backend stage
 COPY --from=backend /app /app
+COPY --from=backend /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 WORKDIR /app
-
-# Instalace Python závislostí
-RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Vytvoření uživatele pro bezpečnost
 RUN adduser -D -u 1000 koulio && chown -R koulio:koulio /app
@@ -137,7 +135,7 @@ RUN echo 'server { \
 # Vytvoření startovacího skriptu
 RUN echo '#!/bin/sh \
 # Spuštění backend API na pozadí \
-cd /app && python3 app.py & \
+cd /app && PYTHONPATH=/usr/local/lib/python3.11/site-packages python3 app.py & \
 # Spuštění nginx na popředí \
 nginx -g "daemon off;"' > /start.sh && chmod +x /start.sh
 
