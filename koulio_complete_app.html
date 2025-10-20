@@ -307,6 +307,17 @@
             color: #e74c3c;
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+        }
+
         .guide-steps {
             position: relative;
             padding-left: 30px;
@@ -471,48 +482,411 @@
                 </div>
 
                 <div class="section kuličky">
-                    <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (40)</h3>
+                    <div class="section-header">
+                        <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (40)</h3>
+                        <button class="add-kulicka-btn" onclick="addKulickaToSection(this)">+</button>
+                    </div>
                     <ul class="kuličky-list">
-                        <li><input type="checkbox" style="margin-right: 8px;"> strach ze změny</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že si nedokážu pomoci sama</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nedůvěru v sebe, že můžu cokoliv změnit</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že každá změna je jen na chvilku</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> prahnutí po dokonalosti</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> zákaz přijímat pomoc</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> trapnost v požádání o pomoc</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> boj s časem</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> marnivost svého života</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> bezohlednost sama k sobě</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> zmítání se v pochybnostech</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> to, že dáváš sebe na poslední místo</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> těžké průběhy situací</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> marnivost svého času</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> odkládání svého života na potom</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> promarněnost vlastních příležitostí</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> ztrátu naděje na pěkný život</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> roli oběti</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> život v sebelítosti</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nepochopení sama sebe</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nepochopení druhých</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> bezohlednost ve vztazích</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> sebezpůsobování</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> strach vzdát se iluzí</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> život v iluzích</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> chaos ve vztahu sama k sobě</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> přebírání zodpovědnosti za druhé</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> strach vidět pravdu</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> potřebu zraňovat</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> závislost na názoru druhých o mně</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení o vlastní slabosti</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> život v manipulaci</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> strach z projevování vlastních citů a pocitů</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> zákaz prožívání svých emocí, citů a pocitů</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> zbabělost</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že život není fér</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nenávist sama k sobě</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nenávist k rodičům</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nenávist k dětem</li>
-                        <li><input type="checkbox" style="margin-right: 8px;"> nenávist k životu</li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">strach ze změny</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">přesvědčení, že si nedokážu pomoci sama</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nedůvěru v sebe, že můžu cokoliv změnit</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">přesvědčení, že každá změna je jen na chvilku</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">prahnutí po dokonalosti</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">zákaz přijímat pomoc</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">trapnost v požádání o pomoc</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">boj s časem</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">marnivost svého života</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">bezohlednost sama k sobě</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">zmítání se v pochybnostech</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">to, že dáváš sebe na poslední místo</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">těžké průběhy situací</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">marnivost svého času</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">odkládání svého života na potom</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">promarněnost vlastních příležitostí</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">ztrátu naděje na pěkný život</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">roli oběti</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">život v sebelítosti</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nepochopení sama sebe</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nepochopení druhých</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">bezohlednost ve vztazích</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">sebezpůsobování</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">strach vzdát se iluzí</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">život v iluzích</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">chaos ve vztahu sama k sobě</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">přebírání zodpovědnosti za druhé</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">strach vidět pravdu</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">potřebu zraňovat</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">závislost na názoru druhých o mně</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">přesvědčení o vlastní slabosti</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">život v manipulaci</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">strach z projevování vlastních citů a pocitů</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">zákaz prožívání svých emocí, citů a pocitů</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">zbabělost</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">přesvědčení, že život není fér</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nenávist sama k sobě</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nenávist k rodičům</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nenávist k dětem</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
+                        <li class="kulicka-item">
+                            <div class="kulicka-content">
+                                <input type="checkbox" style="margin-right: 8px;">
+                                <span class="kulicka-text">nenávist k životu</span>
+                            </div>
+                            <div class="kulicka-actions">
+                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -1919,68 +2293,452 @@
                 <div class="section">
                     <h3>Témata k zamyšlení</h3>
                     <ul class="topics-list">
-                        <li>ZÁPIS A NÁSTUP DO ŠKOLY
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">ZÁPIS A NÁSTUP DO ŠKOLY</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> strach ze zklamání</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že něco musím</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nutnost být testovaná</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> stresové situace</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> šok z reality</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> strach z nových situací</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> pocit, že jsem ztracená</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> rozpaky z nového prostředí</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> obavy z navazování kontaktů</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">strach ze zklamání</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">přesvědčení, že něco musím</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nutnost být testovaná</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">stresové situace</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">šok z reality</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">strach z nových situací</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">pocit, že jsem ztracená</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">rozpaky z nového prostředí</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">obavy z navazování kontaktů</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li>VÝUKA A ZKOUŠENÍ
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">VÝUKA A ZKOUŠENÍ</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> nemožnost vyjádřit svůj názor</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> být nevyslyšena</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> jsem neschopná</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> jsem terčem posměchu</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> chyba je neomluvitelná</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> ostatní vědí všechno líp</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nedokážu nic vysvětlit</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nechuť se učit nové věci</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nemožnost vyjádřit svůj názor</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">být nevyslyšena</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jsem neschopná</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jsem terčem posměchu</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">chyba je neomluvitelná</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">ostatní vědí všechno líp</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nedokážu nic vysvětlit</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nechuť se učit nové věci</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li>JÁ A RODIČE VE VZTAHU KE ŠKOLE
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">JÁ A RODIČE VE VZTAHU KE ŠKOLE</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> jsem k ničemu</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> jsem černou ovcí rodiny</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> všechny zklamu</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nikdy nic nedokážu</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jsem k ničemu</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jsem černou ovcí rodiny</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">všechny zklamu</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nikdy nic nedokážu</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li>ŠIKANA – UBLIŽOVÁNÍ MNĚ NEBO DRUHÝM
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">ŠIKANA – UBLIŽOVÁNÍ MNĚ NEBO DRUHÝM</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> jsem slabší/slaboch</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nerovné podmínky</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> zesměšnění</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> přání být neviditelná</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> strach někomu pomoci</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> trápení, že nemůžeš pomoc</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> příjmu co se mi nelíbí, abych měla klid</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jsem slabší/slaboch</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nerovné podmínky</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">zesměšnění</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">přání být neviditelná</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">strach někomu pomoci</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">trápení, že nemůžeš pomoc</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">příjmu co se mi nelíbí, abych měla klid</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li>DOSPÍVÁNÍ – RODIČE A JÁ
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">DOSPÍVÁNÍ – RODIČE A JÁ</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> nikdo mi nerozumí</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nikdo mě neposlouchá</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nikdo mě nechápe</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nevěří mi</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> nezajímají se o mě</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> dělám všechno špatně</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> jednají se mnou jako s miminem</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nikdo mi nerozumí</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nikdo mě neposlouchá</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nikdo mě nechápe</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nevěří mi</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">nezajímají se o mě</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">dělám všechno špatně</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jednají se mnou jako s miminem</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
-                        <li>JÁ A PARTA
+                        <li class="topic-item">
+                            <div class="topic-header">
+                                <span class="topic-title">JÁ A PARTA</span>
+                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                            </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
-                                <li><input type="checkbox" style="margin-right: 8px;"> vděk, že někam patřím</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> musím být jako ostatní</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> když budu jiná, budu divná</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> dělat to, co chtějí ostatní</li>
-                                <li><input type="checkbox" style="margin-right: 8px;"> jen oni mi rozumí</li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">vděk, že někam patřím</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">musím být jako ostatní</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">když budu jiná, budu divná</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">dělat to, co chtějí ostatní</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
+                                <li class="kulicka-item">
+                                    <div class="kulicka-content">
+                                        <input type="checkbox" style="margin-right: 8px;">
+                                        <span class="kulicka-text">jen oni mi rozumí</span>
+                                    </div>
+                                    <div class="kulicka-actions">
+                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                    </div>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -3135,12 +3893,51 @@
 
         // Function to handle checkbox changes in kuličky sections
         function handleKulickyCheckbox(checkbox) {
-            const listItem = checkbox.parentElement;
+            // Handle both old structure (checkbox directly in li) and new structure (checkbox in kulicka-content div)
+            let listItem;
+            if (checkbox.parentElement.classList.contains('kulicka-content')) {
+                listItem = checkbox.parentElement.parentElement;
+            } else {
+                listItem = checkbox.parentElement;
+            }
+            
             if (checkbox.checked) {
                 listItem.classList.add('checked');
             } else {
                 listItem.classList.remove('checked');
             }
+        }
+
+        // Function to add new kulicka to a main section
+        function addKulickaToSection(button) {
+            const sectionHeader = button.parentElement;
+            const section = sectionHeader.parentElement;
+            const kulickyList = section.querySelector('.kuličky-list');
+            
+            // Create new kulicka item
+            const newKulicka = document.createElement('li');
+            newKulicka.className = 'kulicka-item';
+            newKulicka.innerHTML = `
+                <div class="kulicka-content">
+                    <input type="checkbox" style="margin-right: 8px;">
+                    <span class="kulicka-text">Nová kulička</span>
+                </div>
+                <div class="kulicka-actions">
+                    <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                    <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                </div>
+            `;
+            
+            kulickyList.appendChild(newKulicka);
+            
+            // Set up event listener for the new checkbox
+            const checkbox = newKulicka.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', function() {
+                handleKulickyCheckbox(this);
+            });
+            
+            // Auto-edit the new item
+            editKulicka(newKulicka.querySelector('.edit-kulicka-btn'));
         }
 
         // Function to add new kulicka to a topic
@@ -3242,22 +4039,90 @@
             }
         }
 
-        // Initialize all checkboxes when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // First, add checkboxes to any list items that don't have them
-            const allKulickyLists = document.querySelectorAll('.kuličky-list');
-            allKulickyLists.forEach(function(list) {
-                const listItems = list.querySelectorAll('li');
-                listItems.forEach(function(item) {
-                    // Check if this item doesn't already have a checkbox
-                    if (!item.querySelector('input[type="checkbox"]')) {
-                        const text = item.textContent.trim();
-                        item.innerHTML = '<input type="checkbox" style="margin-right: 8px;"> ' + text;
+        // Function to convert existing kuličky items to new format
+        function convertKulickyItems() {
+            // Handle main Kuličky sections
+            const allKulickySections = document.querySelectorAll('.section.kuličky');
+            allKulickySections.forEach(function(section) {
+                // Add section header with + button if not already present
+                let sectionHeader = section.querySelector('.section-header');
+                if (!sectionHeader) {
+                    const h3 = section.querySelector('h3');
+                    if (h3) {
+                        sectionHeader = document.createElement('div');
+                        sectionHeader.className = 'section-header';
+                        sectionHeader.innerHTML = `
+                            ${h3.outerHTML}
+                            <button class="add-kulicka-btn" onclick="addKulickaToSection(this)">+</button>
+                        `;
+                        h3.remove();
+                        section.insertBefore(sectionHeader, section.firstChild);
                     }
+                }
+                
+                // Convert list items
+                const kulickyList = section.querySelector('.kuličky-list');
+                if (kulickyList) {
+                    convertKulickyListItems(kulickyList);
+                }
+            });
+            
+            // Handle Témata sections
+            const allTopicsLists = document.querySelectorAll('.topics-list');
+            allTopicsLists.forEach(function(topicsList) {
+                const kulickyLists = topicsList.querySelectorAll('.kuličky-list');
+                kulickyLists.forEach(function(kulickyList) {
+                    convertKulickyListItems(kulickyList);
                 });
             });
+        }
+        
+        // Helper function to convert kuličky list items
+        function convertKulickyListItems(kulickyList) {
+            const listItems = kulickyList.querySelectorAll('li');
+            listItems.forEach(function(item) {
+                // Skip if already converted (has kulicka-item class)
+                if (item.classList.contains('kulicka-item')) {
+                    return;
+                }
+                
+                // Get the text content
+                let text = '';
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    text = item.textContent.replace(checkbox.value || '', '').trim();
+                    // Remove the checkbox from the text
+                    text = text.replace(/^\s*/, '');
+                } else {
+                    text = item.textContent.trim();
+                    // Add a checkbox if none exists
+                    const newCheckbox = document.createElement('input');
+                    newCheckbox.type = 'checkbox';
+                    newCheckbox.style.marginRight = '8px';
+                    item.insertBefore(newCheckbox, item.firstChild);
+                }
+                
+                // Convert to new format
+                item.className = 'kulicka-item';
+                item.innerHTML = `
+                    <div class="kulicka-content">
+                        <input type="checkbox" style="margin-right: 8px;" ${checkbox ? (checkbox.checked ? 'checked' : '') : ''}>
+                        <span class="kulicka-text">${text}</span>
+                    </div>
+                    <div class="kulicka-actions">
+                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
+                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                    </div>
+                `;
+            });
+        }
 
-            // Then set up event listeners for all checkboxes
+        // Initialize all checkboxes when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert all existing kuličky items to new format
+            convertKulickyItems();
+            
+            // Set up event listeners for all checkboxes
             const allCheckboxes = document.querySelectorAll('.kuličky-list input[type="checkbox"]');
             allCheckboxes.forEach(function(checkbox) {
                 // Set up event listener
