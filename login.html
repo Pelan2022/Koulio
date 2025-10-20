@@ -192,6 +192,53 @@
             background: #6c757d;
         }
 
+        /* Checkbox styly */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #2c3e50;
+            margin-bottom: 0;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            height: 18px;
+            width: 18px;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 4px;
+            margin-right: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-container:hover .checkmark {
+            border-color: #667eea;
+            background-color: #f0f2ff;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked + .checkmark {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked + .checkmark:after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
         @media (max-width: 480px) {
             .login-container {
                 margin: 10px;
@@ -234,6 +281,14 @@
                 <div class="form-group">
                     <label for="password">Heslo:</label>
                     <input type="password" id="password" name="password" placeholder="Zadejte vaše heslo" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span class="checkmark"></span>
+                        Zapamatovat si mě
+                    </label>
                 </div>
 
                 <button type="submit" class="login-button">Přihlásit se</button>
@@ -302,7 +357,7 @@
             }
         }
 
-        function login(email, password) {
+        function login(email, password, rememberMe = false) {
             // Simulace přihlašovacího procesu
             setLoading(true);
             
@@ -330,6 +385,18 @@
                     localStorage.setItem('koulio_user_name', userData.fullName);
                     localStorage.setItem('koulio_user_demo', userData.isDemo.toString());
                     
+                    // Uložení "zapamatovat si mě" informace
+                    if (rememberMe) {
+                        localStorage.setItem('koulio_remember_me', 'true');
+                        localStorage.setItem('koulio_remembered_email', email);
+                        localStorage.setItem('koulio_remembered_timestamp', new Date().getTime().toString());
+                    } else {
+                        // Odstranění "zapamatovat si mě" informace pokud není zaškrtnuto
+                        localStorage.removeItem('koulio_remember_me');
+                        localStorage.removeItem('koulio_remembered_email');
+                        localStorage.removeItem('koulio_remembered_timestamp');
+                    }
+                    
                     // Přesměrování na hlavní aplikaci
                     setTimeout(() => {
                         window.location.href = 'koulio_complete_app.html';
@@ -355,6 +422,7 @@
             
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
             
             if (!email || !password) {
                 showError('Prosím vyplňte všechna pole.');
@@ -366,7 +434,7 @@
                 return;
             }
             
-            login(email, password);
+            login(email, password, rememberMe);
         });
 
         function isValidEmail(email) {
@@ -374,12 +442,34 @@
             return emailRegex.test(email);
         }
 
-        // Auto-fill functionality removed
+        // Auto-fill functionality pro "zapamatovat si mě"
         document.addEventListener('DOMContentLoaded', function() {
             // Zobrazení zprávy o úspěšné registraci
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('registered') === 'true') {
                 showSuccess('Registrace byla úspěšná! Nyní se můžete přihlásit.');
+            }
+            
+            // Kontrola "zapamatovat si mě" funkčnosti
+            const rememberMe = localStorage.getItem('koulio_remember_me');
+            const rememberedEmail = localStorage.getItem('koulio_remembered_email');
+            const rememberedTimestamp = localStorage.getItem('koulio_remembered_timestamp');
+            
+            if (rememberMe === 'true' && rememberedEmail && rememberedTimestamp) {
+                // Kontrola, zda není "zapamatovat si mě" příliš staré (30 dní)
+                const thirtyDaysAgo = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
+                const timestamp = parseInt(rememberedTimestamp);
+                
+                if (timestamp > thirtyDaysAgo) {
+                    // Automatické vyplnění emailu a zaškrtnutí checkboxu
+                    document.getElementById('email').value = rememberedEmail;
+                    document.getElementById('rememberMe').checked = true;
+                } else {
+                    // Odstranění starých "zapamatovat si mě" údajů
+                    localStorage.removeItem('koulio_remember_me');
+                    localStorage.removeItem('koulio_remembered_email');
+                    localStorage.removeItem('koulio_remembered_timestamp');
+                }
             }
         });
 
