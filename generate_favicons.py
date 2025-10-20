@@ -1,10 +1,12 @@
 import sys
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageChops
 
 # Configuration
 DEFAULT_SOURCE = "Abstraktní strom.png"  # Fallback if new file not present
 PREFERRED_SOURCE = "novy_favicon.png"    # New requested source
+# Padding ratio keeps a small safe margin so the icon doesn't touch edges
+PADDING_RATIO = 0.04  # 4% of target size
 OUTPUTS = {
     "favicon-16x16.png": (16, 16),
     "favicon-32x32.png": (32, 32),
@@ -23,15 +25,32 @@ def load_source_image(path: Path) -> Image.Image:
     return image
 
 
+def trim_transparent_borders(image: Image.Image) -> Image.Image:
+    """Trim fully transparent borders to maximize visible area."""
+    if image.mode != "RGBA":
+        return image
+    alpha = image.split()[-1]
+    bbox = alpha.getbbox()
+    if bbox:
+        return image.crop(bbox)
+    return image
+
+
 def make_square(image: Image.Image, size: int) -> Image.Image:
     """
     Fit the source image into a square canvas while preserving aspect ratio.
-    Uses transparent background so it looks good in dark/light themes.
+    Trims transparent borders first, then applies a small padding.
     """
-    src_w, src_h = image.size
-    scale = min(size / src_w, size / src_h)
-    new_w, new_h = int(src_w * scale), int(src_h * scale)
-    resized = image.resize((new_w, new_h), Image.LANCZOS)
+    trimmed = trim_transparent_borders(image)
+    src_w, src_h = trimmed.size
+
+    # Leave a small padding so content doesn't touch edges
+    inner_size = int(size * (1.0 - 2 * PADDING_RATIO))
+    inner_size = max(1, inner_size)
+
+    scale = min(inner_size / src_w, inner_size / src_h)
+    new_w, new_h = max(1, int(src_w * scale)), max(1, int(src_h * scale))
+    resized = trimmed.resize((new_w, new_h), Image.LANCZOS)
 
     canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     offset = ((size - new_w) // 2, (size - new_h) // 2)
