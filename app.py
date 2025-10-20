@@ -11,8 +11,13 @@ import secrets
 from datetime import datetime, timedelta
 from functools import wraps
 import json
-import psycopg2
-from psycopg2.extras import RealDictCursor
+# PostgreSQL support (optional)
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    PSYCOPG2_AVAILABLE = True
+except ImportError:
+    PSYCOPG2_AVAILABLE = False
 
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS
@@ -37,17 +42,21 @@ USE_DATABASE = os.environ.get('USE_DATABASE', 'true').lower() == 'true'
 
 def get_db_connection():
     """Získání databázového připojení"""
+    if not PSYCOPG2_AVAILABLE:
+        app.logger.warning("psycopg2 not available, using mock database")
+        return None
+    
     try:
         conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
         return conn
-    except psycopg2.Error as e:
+    except Exception as e:
         app.logger.error(f"Database connection error: {e}")
         return None
 
 def execute_query(query, params=None):
     """Spuštění SQL dotazu"""
-    if not USE_DATABASE:
-        app.logger.warning("Database is disabled, returning mock data")
+    if not USE_DATABASE or not PSYCOPG2_AVAILABLE:
+        app.logger.warning("Database is disabled or psycopg2 not available, returning mock data")
         return mock_database_response(query, params)
     
     conn = get_db_connection()
@@ -64,7 +73,7 @@ def execute_query(query, params=None):
             else:
                 conn.commit()
                 return cursor.rowcount
-    except psycopg2.Error as e:
+    except Exception as e:
         app.logger.error(f"Query execution error: {e}")
         conn.rollback()
         return mock_database_response(query, params)

@@ -68,7 +68,7 @@ FROM nginx:alpine
 COPY --from=frontend /usr/share/nginx/html /usr/share/nginx/html
 
 # Instalace Python a závislostí pro backend
-RUN apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev libpq-dev
+RUN apk add --no-cache python3 py3-pip python3-dev
 
 # Kopírování backend souborů z backend stage
 COPY --from=backend /app /app
