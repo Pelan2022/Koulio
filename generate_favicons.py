@@ -12,6 +12,7 @@ OUTPUTS = {
     "favicon-32x32.png": (32, 32),
     "apple-touch-icon.png": (180, 180),
     "android-chrome-192x192.png": (192, 192),
+    "android-chrome-256x256.png": (256, 256),
     "android-chrome-512x512.png": (512, 512),
     "mstile-150x150.png": (150, 150),
     # maskable icon (transparent padding around) commonly 512x512
