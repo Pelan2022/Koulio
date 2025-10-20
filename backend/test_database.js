@@ -71,28 +71,14 @@ async function testDatabaseConnection() {
         console.log(`   Found by email: ${foundUser ? '✅' : '❌'}`);
         console.log(`   Found by ID: ${foundUserById ? '✅' : '❌'}\n`);
         
-        // 8. Test demo user
-        console.log('8️⃣ Testing demo user...');
-        const demoUser = await User.findByEmail('demo@koulio.cz');
-        if (demoUser) {
-            console.log('✅ Demo user found');
-            console.log(`   Demo user ID: ${demoUser.id}`);
-            console.log(`   Demo user email: ${demoUser.email}`);
-            
-            // Test demo login
-            const isDemoPasswordValid = await demoUser.verifyPassword('demo123');
-            console.log(`   Demo password verification: ${isDemoPasswordValid ? '✅' : '❌'}\n`);
-        } else {
-            console.log('❌ Demo user not found\n');
-        }
         
-        // 9. Test user statistics
-        console.log('9️⃣ Testing user statistics...');
+        // 8. Test user statistics
+        console.log('8️⃣ Testing user statistics...');
         const userCount = await User.count();
         console.log(`✅ Total users in database: ${userCount}\n`);
         
-        // 10. Clean up test user
-        console.log('🔟 Cleaning up test user...');
+        // 9. Clean up test user
+        console.log('9️⃣ Cleaning up test user...');
         await testUser.delete();
         console.log('✅ Test user deleted successfully\n');
         
@@ -108,7 +94,6 @@ async function testDatabaseConnection() {
         console.log('   ✅ JWT token generation');
         console.log('   ✅ JWT token verification');
         console.log('   ✅ User retrieval');
-        console.log('   ✅ Demo user functionality');
         console.log('   ✅ User statistics');
         console.log('   ✅ Data cleanup\n');
         

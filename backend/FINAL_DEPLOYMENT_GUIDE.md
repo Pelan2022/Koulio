@@ -150,6 +150,14 @@ curl -X POST https://koulio-backend.unrollit.aici.cz/api/auth/register \
     "password": "TestPassword123!",
     "confirmPassword": "TestPassword123!"
   }'
+
+# Test přihlášení
+curl -X POST https://koulio-backend.unrollit.aici.cz/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@koulio.cz",
+    "password": "TestPassword123!"
+  }'
 ```
 
 ## 🧪 Testování
@@ -177,6 +185,11 @@ curl https://koulio-backend.unrollit.aici.cz/health
 curl -X POST https://koulio-backend.unrollit.aici.cz/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","fullName":"Test","password":"Test123!","confirmPassword":"Test123!"}'
+
+# Test přihlášení
+curl -X POST https://koulio-backend.unrollit.aici.cz/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Test123!"}'
 ```
 
 ## 🔍 PgAdmin přístup
@@ -211,10 +224,6 @@ Pokud používáte Docker Compose lokálně:
 - `GET /health` - Health check
 - `GET /api` - API dokumentace
 
-## 🔑 Demo přístup
-
-- **Email:** `demo@koulio.cz`
-- **Heslo:** `demo123`
 
 ## 🔒 Bezpečnostní funkce
 

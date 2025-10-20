@@ -29,18 +29,6 @@ async function runMigrations() {
         
         logger.info('Created tables:', tablesResult.rows.map(row => row.table_name));
         
-        // Check demo user
-        const demoUserResult = await database.query(`
-            SELECT id, email, full_name, created_at 
-            FROM users 
-            WHERE email = 'demo@koulio.cz'
-        `);
-        
-        if (demoUserResult.rows.length > 0) {
-            logger.info('Demo user found:', demoUserResult.rows[0]);
-        } else {
-            logger.warn('Demo user not found');
-        }
         
     } catch (error) {
         logger.error('Migration failed:', error);

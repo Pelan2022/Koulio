@@ -9,25 +9,6 @@ async function seedDatabase() {
         // Connect to database
         await database.connect();
         
-        // Create demo user if not exists
-        const existingDemoUser = await User.findByEmail('demo@koulio.cz');
-        if (!existingDemoUser) {
-            const demoUser = await User.create({
-                email: 'demo@koulio.cz',
-                fullName: 'Demo Uživatel',
-                password: 'demo123'
-            });
-            
-            logger.info('Demo user created:', {
-                id: demoUser.id,
-                email: demoUser.email
-            });
-        } else {
-            logger.info('Demo user already exists:', {
-                id: existingDemoUser.id,
-                email: existingDemoUser.email
-            });
-        }
         
         // Create additional test users
         const testUsers = [

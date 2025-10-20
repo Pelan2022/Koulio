@@ -88,8 +88,8 @@ curl -X POST http://localhost:3000/api/auth/register \
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "demo@koulio.cz",
-    "password": "demo123"
+    "email": "test@koulio.cz",
+    "password": "TestPassword123!"
   }'
 ```
 
@@ -111,10 +111,6 @@ curl -X POST http://localhost:3000/api/auth/login \
 - `GET /health` - Health check
 - `GET /api` - API dokumentace
 
-## 🔑 Demo přístup
-
-- **Email:** `demo@koulio.cz`
-- **Heslo:** `demo123`
 
 ## 🗄️ Databáze
 

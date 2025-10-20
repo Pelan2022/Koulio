@@ -145,15 +145,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Insert demo user (for testing)
-INSERT INTO users (email, full_name, password_hash, is_active, is_email_verified)
-VALUES (
-    'demo@koulio.cz',
-    'Demo Uživatel',
-    '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj8LqNqMqKqK', -- 'demo123'
-    true,
-    true
-) ON CONFLICT (email) DO NOTHING;
 
 -- Create view for user statistics
 CREATE OR REPLACE VIEW user_stats AS

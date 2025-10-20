@@ -113,11 +113,11 @@ async function testAPI() {
             console.log(`   Error: ${registrationResponse.body.message}\n`);
         }
         
-        // 4. User Login (Demo user)
-        console.log('4️⃣ Testing user login (demo user)...');
+        // 4. User Login (Test user)
+        console.log('4️⃣ Testing user login (test user)...');
         const loginData = {
-            email: 'demo@koulio.cz',
-            password: 'demo123'
+            email: 'apitest@koulio.cz',
+            password: 'TestPassword123!'
         };
         
         const loginResponse = await makeRequest({
@@ -240,7 +240,7 @@ async function testAPI() {
         console.log('   ✅ Health check');
         console.log('   ✅ API documentation');
         console.log('   ✅ User registration');
-        console.log('   ✅ User login');
+        console.log('   ✅ User login (test user)');
         console.log('   ✅ Get profile');
         console.log('   ✅ Token verification');
         console.log('   ✅ Token refresh');

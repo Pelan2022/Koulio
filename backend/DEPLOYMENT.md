@@ -137,9 +137,6 @@ LOG_LEVEL=info
 - `email_verification_tokens` - Ověření emailu
 - `audit_log` - Audit trail
 
-### Demo uživatel:
-- **Email:** `demo@koulio.cz`
-- **Heslo:** `demo123`
 
 ## 🔍 Testování
 
@@ -165,8 +162,8 @@ curl -X POST http://localhost:3000/api/auth/register \
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "demo@koulio.cz",
-    "password": "demo123"
+    "email": "test@koulio.cz",
+    "password": "TestPassword123!"
   }'
 ```
 
