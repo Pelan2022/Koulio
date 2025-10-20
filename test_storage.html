@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test úložiště KOULIO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test úložiště KOULIO aplikace</h1>
+    
+    <div class="warning">
+        <strong>⚠️ Důležité upozornění:</strong><br>
+        KOULIO aplikace používá <strong>localStorage prohlížeče</strong> pro ukládání dat, nikoliv databázi! 
+        Data se ukládají pouze lokálně v prohlížeči uživatele.
+    </div>
+
+    <div class="container">
+        <h2>📊 Kontrola localStorage dat</h2>
+        
+        <div class="test-section">
+            <h3>🔍 Všechna localStorage data</h3>
+            <button onclick="showAllStorage()">Zobrazit všechna data</button>
+            <pre id="allStorage"></pre>
+        </div>
+
+        <div class="test-section">
+            <h3>👥 Registrovaní uživatelé</h3>
+            <button onclick="showUsers()">Zobrazit uživatele</button>
+            <pre id="usersData"></pre>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Session data</h3>
+            <button onclick="showSession()">Zobrazit session</button>
+            <pre id="sessionData"></pre>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Test vytvoření testovacího uživatele</h3>
+            <button onclick="createTestUser()">Vytvořit testovacího uživatele</button>
+            <button onclick="deleteTestUser()">Smazat testovacího uživatele</button>
+            <pre id="testResult"></pre>
+        </div>
+
+        <div class="test-section">
+            <h3>🗑️ Vymazat všechna data</h3>
+            <button onclick="clearAllData()" style="background: #dc3545;">Vymazat všechna data</button>
+            <p><small>⚠️ Toto smaže všechna data v localStorage včetně registrovaných uživatelů!</small></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📋 Shrnutí</h2>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        function showAllStorage() {
+            const allData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                allData[key] = localStorage.getItem(key);
+            }
+            document.getElementById('allStorage').textContent = JSON.stringify(allData, null, 2);
+        }
+
+        function showUsers() {
+            const users = localStorage.getItem('koulio_users');
+            if (users) {
+                try {
+                    const usersArray = JSON.parse(users);
+                    document.getElementById('usersData').textContent = JSON.stringify(usersArray, null, 2);
+                } catch (e) {
+                    document.getElementById('usersData').textContent = 'Chyba při parsování dat: ' + e.message;
+                }
+            } else {
+                document.getElementById('usersData').textContent = 'Žádní registrovaní uživatelé';
+            }
+        }
+
+        function showSession() {
+            const sessionData = {
+                'koulio_logged_in': localStorage.getItem('koulio_logged_in'),
+                'koulio_user_email': localStorage.getItem('koulio_user_email'),
+                'koulio_user_name': localStorage.getItem('koulio_user_name'),
+                'koulio_user_demo': localStorage.getItem('koulio_user_demo')
+            };
+            document.getElementById('sessionData').textContent = JSON.stringify(sessionData, null, 2);
+        }
+
+        function createTestUser() {
+            const testUser = {
+                id: Date.now().toString(),
+                fullName: 'Test Uživatel',
+                email: 'test@koulio.cz',
+                password: 'test123',
+                createdAt: new Date().toISOString(),
+                isActive: true
+            };
+
+            // Získání existujících uživatelů
+            const existingUsers = localStorage.getItem('koulio_users');
+            let users = existingUsers ? JSON.parse(existingUsers) : [];
+
+            // Kontrola, zda uživatel již existuje
+            if (users.some(u => u.email === testUser.email)) {
+                document.getElementById('testResult').textContent = 'Testovací uživatel již existuje!';
+                return;
+            }
+
+            // Přidání testovacího uživatele
+            users.push(testUser);
+            localStorage.setItem('koulio_users', JSON.stringify(users));
+
+            document.getElementById('testResult').textContent = 'Testovací uživatel vytvořen:\n' + JSON.stringify(testUser, null, 2);
+        }
+
+        function deleteTestUser() {
+            const existingUsers = localStorage.getItem('koulio_users');
+            if (existingUsers) {
+                let users = JSON.parse(existingUsers);
+                users = users.filter(u => u.email !== 'test@koulio.cz');
+                localStorage.setItem('koulio_users', JSON.stringify(users));
+                document.getElementById('testResult').textContent = 'Testovací uživatel smazán';
+            } else {
+                document.getElementById('testResult').textContent = 'Žádní uživatelé k smazání';
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('Opravdu chcete vymazat všechna data? Tato akce je nevratná!')) {
+                localStorage.clear();
+                document.getElementById('summary').innerHTML = '<div class="test-section error">Všechna data byla vymazána!</div>';
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        function generateSummary() {
+            const users = localStorage.getItem('koulio_users');
+            const isLoggedIn = localStorage.getItem('koulio_logged_in');
+            const userEmail = localStorage.getItem('koulio_user_email');
+            
+            let summary = '<div class="test-section info">';
+            summary += '<h3>📊 Stav systému:</h3>';
+            summary += '<ul>';
+            
+            if (users) {
+                try {
+                    const usersArray = JSON.parse(users);
+                    summary += `<li>✅ Registrovaní uživatelé: ${usersArray.length}</li>`;
+                } catch (e) {
+                    summary += '<li>❌ Chyba v datech uživatelů</li>';
+                }
+            } else {
+                summary += '<li>❌ Žádní registrovaní uživatelé</li>';
+            }
+            
+            if (isLoggedIn === 'true') {
+                summary += `<li>✅ Přihlášený uživatel: ${userEmail}</li>`;
+            } else {
+                summary += '<li>❌ Žádný přihlášený uživatel</li>';
+            }
+            
+            summary += '<li>💾 Úložiště: localStorage (lokální v prohlížeči)</li>';
+            summary += '<li>🗄️ Databáze: NEPOUŽÍVÁ SE</li>';
+            summary += '</ul>';
+            summary += '</div>';
+            
+            document.getElementById('summary').innerHTML = summary;
+        }
+
+        // Spuštění při načtení stránky
+        document.addEventListener('DOMContentLoaded', function() {
+            generateSummary();
+        });
+    </script>
+</body>
+</html>
