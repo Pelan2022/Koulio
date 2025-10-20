@@ -11,6 +11,8 @@ import secrets
 from datetime import datetime, timedelta
 from functools import wraps
 import json
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS
@@ -27,15 +29,39 @@ app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
 # Povolení CORS pro frontend
 CORS(app, origins=['http://localhost:3000', 'https://unrollit.aici.cz'])
 
-# Import MCP PostgreSQL client
-import mcp_postgres
-
-# Inicializace databázového připojení
-db = mcp_postgres
+# Databázová konfigurace
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://koulio_user:koulio_password@localhost:5432/koulio_db')
 
 def get_db_connection():
     """Získání databázového připojení"""
-    return db
+    try:
+        conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        return conn
+    except psycopg2.Error as e:
+        app.logger.error(f"Database connection error: {e}")
+        return None
+
+def execute_query(query, params=None):
+    """Spuštění SQL dotazu"""
+    conn = get_db_connection()
+    if not conn:
+        return None
+    
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, params)
+            if query.strip().upper().startswith('SELECT'):
+                result = cursor.fetchall()
+                return result
+            else:
+                conn.commit()
+                return cursor.rowcount
+    except psycopg2.Error as e:
+        app.logger.error(f"Query execution error: {e}")
+        conn.rollback()
+        return None
+    finally:
+        conn.close()
 
 def hash_password(password):
     """Hashování hesla pomocí bcrypt"""
@@ -124,8 +150,7 @@ def register():
             return jsonify({'error': 'Password must be at least 6 characters long'}), 400
         
         # Kontrola existence uživatele
-        conn = get_db_connection()
-        existing_user = conn.execute_query(
+        existing_user = execute_query(
             "SELECT id FROM users WHERE email = %s",
             (email,)
         )
@@ -137,7 +162,7 @@ def register():
         password_hash = hash_password(password)
         
         # Vytvoření nového uživatele
-        user_id = conn.execute_query(
+        user_id = execute_query(
             """INSERT INTO users (email, password_hash, full_name, created_at, updated_at, is_active)
                VALUES (%s, %s, %s, %s, %s, %s) RETURNING id""",
             (email, password_hash, full_name, datetime.utcnow(), datetime.utcnow(), True)
@@ -174,8 +199,7 @@ def login():
         password = data['password']
         
         # Vyhledání uživatele v databázi
-        conn = get_db_connection()
-        user = conn.execute_query(
+        user = execute_query(
             "SELECT id, email, password_hash, full_name, is_active FROM users WHERE email = %s",
             (email,)
         )
@@ -194,7 +218,7 @@ def login():
             return jsonify({'error': 'Invalid credentials'}), 401
         
         # Aktualizace posledního přihlášení
-        conn.execute_query(
+        execute_query(
             "UPDATE users SET last_login = %s WHERE id = %s",
             (datetime.utcnow(), user['id'])
         )
@@ -233,8 +257,7 @@ def refresh_token():
             user_id = payload['user_id']
             
             # Získání uživatele z databáze
-            conn = get_db_connection()
-            user = conn.execute_query(
+            user = execute_query(
                 "SELECT id, email, full_name, is_active FROM users WHERE id = %s",
                 (user_id,)
             )
@@ -269,8 +292,7 @@ def refresh_token():
 def get_profile():
     """Získání profilu uživatele"""
     try:
-        conn = get_db_connection()
-        user = conn.execute_query(
+        user = execute_query(
             """SELECT id, email, full_name, created_at, updated_at, last_login, is_active 
                FROM users WHERE id = %s""",
             (g.current_user_id,)
@@ -307,10 +329,8 @@ def update_profile():
         if not data:
             return jsonify({'error': 'No data provided'}), 400
         
-        conn = get_db_connection()
-        
         # Kontrola, zda uživatel existuje
-        user = conn.execute_query(
+        user = execute_query(
             "SELECT id FROM users WHERE id = %s",
             (g.current_user_id,)
         )
@@ -332,7 +352,7 @@ def update_profile():
                 return jsonify({'error': 'Invalid email format'}), 400
             
             # Kontrola, zda email není už použit jiným uživatelem
-            existing = conn.execute_query(
+            existing = execute_query(
                 "SELECT id FROM users WHERE email = %s AND id != %s",
                 (email, g.current_user_id)
             )
@@ -354,7 +374,7 @@ def update_profile():
         update_values.append(g.current_user_id)
         
         # Aktualizace v databázi
-        conn.execute_query(
+        execute_query(
             f"UPDATE users SET {', '.join(update_fields)} WHERE id = %s",
             tuple(update_values)
         )
@@ -382,10 +402,8 @@ def change_password():
         if len(new_password) < 6:
             return jsonify({'error': 'New password must be at least 6 characters long'}), 400
         
-        conn = get_db_connection()
-        
         # Získání aktuálního hesla
-        user = conn.execute_query(
+        user = execute_query(
             "SELECT password_hash FROM users WHERE id = %s",
             (g.current_user_id,)
         )
@@ -401,7 +419,7 @@ def change_password():
         new_password_hash = hash_password(new_password)
         
         # Aktualizace hesla
-        conn.execute_query(
+        execute_query(
             "UPDATE users SET password_hash = %s, updated_at = %s WHERE id = %s",
             (new_password_hash, datetime.utcnow(), g.current_user_id)
         )
@@ -439,10 +457,8 @@ def delete_account():
         
         password = data['password']
         
-        conn = get_db_connection()
-        
         # Získání uživatele a ověření hesla
-        user = conn.execute_query(
+        user = execute_query(
             "SELECT password_hash FROM users WHERE id = %s",
             (g.current_user_id,)
         )
@@ -455,7 +471,7 @@ def delete_account():
             return jsonify({'error': 'Password is incorrect'}), 401
         
         # Deaktivace účtu (soft delete)
-        conn.execute_query(
+        execute_query(
             "UPDATE users SET is_active = %s, updated_at = %s WHERE id = %s",
             (False, datetime.utcnow(), g.current_user_id)
         )
@@ -486,7 +502,7 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     
     print(f"🚀 Starting KOULIO API server...")
-    print(f"📊 Database: PostgreSQL via MCP")
+    print(f"📊 Database: PostgreSQL via psycopg2")
     print(f"🔐 Authentication: JWT tokens")
     print(f"🔒 Password hashing: bcrypt")
     print(f"🌐 CORS enabled for frontend")
