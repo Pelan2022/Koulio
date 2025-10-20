@@ -1,4 +1,4 @@
-# Nasazení KOULIO aplikace na CapRover
+# Nasazení KOULIO aplikace na CapRover s autentifikací
 
 ## Požadavky
 - CapRover server s nainstalovaným CapRover
@@ -8,10 +8,15 @@
 ## Kroky pro nasazení
 
 ### 1. Příprava aplikace
-Aplikace je již připravena s potřebnými soubory:
+Aplikace je připravena s kompletním autentifikačním systémem:
 - `captain-definition` - konfigurace pro CapRover
 - `Dockerfile` - Docker konfigurace pro nginx
-- `koulio_complete_app.html` - hlavní HTML aplikace
+- `index.html` - vstupní stránka s přesměrováním
+- `login.html` - přihlašovací stránka
+- `register.html` - registrační stránka
+- `profile.html` - správa uživatelského účtu
+- `koulio_complete_app.html` - hlavní aplikace s autentifikací
+- Všechny favicon a manifest soubory
 
 ### 2. Nasazení přes CapRover Dashboard
 
@@ -52,12 +57,38 @@ Po nasazení by měla být aplikace dostupná na:
 
 ## Funkce aplikace
 
+- ✅ Kompletní autentifikační systém (registrace + přihlášení)
+- ✅ Správa uživatelských účtů
+- ✅ Demo účet pro testování
 - ✅ Statická HTML aplikace s CSS a JavaScriptem
 - ✅ Responzivní design
 - ✅ Gzip komprese
 - ✅ Cache pro statické soubory
 - ✅ HTTPS podpora
 - ✅ Let's Encrypt SSL certifikáty
+- ✅ SPA routing s nginx
+
+## Autentifikační systém
+
+### Demo účet
+- **Email:** demo@koulio.cz
+- **Heslo:** demo123
+
+### Registrace
+- Uživatelé se mohou zaregistrovat s vlastním emailem
+- Validace formulářů a kontrola síly hesla
+- Automatické přesměrování po registraci
+
+### Přihlášení
+- Podpora demo i registrovaných účtů
+- Automatické rozpoznání typu účtu
+- Session management
+
+### Správa účtu
+- Změna hesla
+- Export dat
+- Smazání účtu
+- Zobrazení informací o účtu
 
 ## Řešení problémů
 

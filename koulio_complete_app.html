@@ -4153,6 +4153,76 @@
                 }
             });
         });
+
+        // Authentication check
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('koulio_logged_in');
+            if (isLoggedIn !== 'true') {
+                // User is not logged in, redirect to login page
+                window.location.href = 'login.html';
+            } else {
+                // User is logged in, show user info
+                const userEmail = localStorage.getItem('koulio_user_email');
+                if (userEmail) {
+                    showUserInfo(userEmail);
+                }
+            }
+        });
+
+        function showUserInfo(email) {
+            // Add user info to header
+            const header = document.querySelector('.header');
+            const userName = localStorage.getItem('koulio_user_name') || email;
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-info';
+            userInfo.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <span style="font-size: 0.9em; opacity: 0.8;">Přihlášen jako: ${userName}</span>
+                        ${isDemo ? '<span style="font-size: 0.7em; opacity: 0.6; color: #ffc107;">(Demo účet)</span>' : ''}
+                    </div>
+                    <button onclick="window.location.href='profile.html'" style="
+                        background: rgba(255,255,255,0.1); 
+                        color: white; 
+                        border: 1px solid rgba(255,255,255,0.2); 
+                        padding: 8px 12px; 
+                        border-radius: 5px; 
+                        cursor: pointer; 
+                        font-size: 0.8em;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                       onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                        Můj účet
+                    </button>
+                    <button onclick="logout()" style="
+                        background: rgba(255,255,255,0.2); 
+                        color: white; 
+                        border: 1px solid rgba(255,255,255,0.3); 
+                        padding: 8px 15px; 
+                        border-radius: 5px; 
+                        cursor: pointer; 
+                        font-size: 0.85em;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                        Odhlásit
+                    </button>
+                </div>
+            `;
+            header.appendChild(userInfo);
+        }
+
+        function logout() {
+            if (confirm('Opravdu se chcete odhlásit?')) {
+                localStorage.removeItem('koulio_logged_in');
+                localStorage.removeItem('koulio_user_email');
+                localStorage.removeItem('koulio_user_name');
+                localStorage.removeItem('koulio_user_demo');
+                window.location.href = 'login.html';
+            }
+        }
     </script>
 </body>
 </html>
