@@ -74,8 +74,10 @@ RUN apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev libpq-dev
 COPY --from=backend /app /app
 WORKDIR /app
 
-# Instalace Python závislostí přímo v Alpine
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Vytvoření virtual environment a instalace závislostí
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Vytvoření uživatele pro bezpečnost
 RUN adduser -D -u 1000 koulio && chown -R koulio:koulio /app
