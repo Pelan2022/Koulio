@@ -270,9 +270,6 @@
         </div>
     </div>
 
-    <!-- API Client -->
-    <script src="api-client.js"></script>
-    
     <script>
         // Funkce pro zobrazení chybových zpráv
         function showError(message) {
@@ -302,58 +299,58 @@
             }, 3000);
         }
 
-        // Načtení informací o uživateli přes API
-        async function loadUserInfo() {
+        // Funkce pro získání uživatelů z localStorage
+        function getUsers() {
+            const users = localStorage.getItem('koulio_users');
+            return users ? JSON.parse(users) : [];
+        }
+
+        // Funkce pro uložení uživatelů
+        function saveUsers(users) {
+            localStorage.setItem('koulio_users', JSON.stringify(users));
+        }
+
+        // Načtení informací o uživateli
+        function loadUserInfo() {
             const isLoggedIn = localStorage.getItem('koulio_logged_in');
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const userName = localStorage.getItem('koulio_user_name');
             const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
             
-            if (!isLoggedIn) {
+            if (!isLoggedIn || !userEmail) {
                 window.location.href = 'login.html';
                 return;
             }
             
+            // Zobrazení základních informací
+            document.getElementById('userName').textContent = userName || 'Neznámé';
+            document.getElementById('userEmail').textContent = userEmail;
+            
             if (isDemo) {
-                // Demo účet - zobrazení z localStorage
-                const userName = localStorage.getItem('koulio_user_name');
-                const userEmail = localStorage.getItem('koulio_user_email');
-                
-                document.getElementById('userName').textContent = userName || 'Neznámé';
-                document.getElementById('userEmail').textContent = userEmail;
                 document.getElementById('accountType').innerHTML = '<span class="demo-badge">Demo účet</span>';
                 document.getElementById('registrationDate').textContent = 'Demo účet';
                 document.getElementById('lastLogin').textContent = new Date().toLocaleString('cs-CZ');
             } else {
-                // Registrovaný účet - načtení z API
-                try {
-                    const response = await window.koulioAPI.getProfile();
-                    const user = response.user;
-                    
-                    document.getElementById('userName').textContent = user.full_name || 'Neznámé';
-                    document.getElementById('userEmail').textContent = user.email;
+                // Načtení informací o registrovaném uživateli
+                const users = getUsers();
+                const user = users.find(u => u.email === userEmail);
+                
+                if (user) {
                     document.getElementById('accountType').textContent = 'Registrovaný účet';
-                    document.getElementById('registrationDate').textContent = 
-                        user.created_at ? new Date(user.created_at).toLocaleDateString('cs-CZ') : 'Neznámé';
-                    document.getElementById('lastLogin').textContent = 
-                        user.last_login ? new Date(user.last_login).toLocaleString('cs-CZ') : 'Neznámé';
-                        
-                } catch (error) {
-                    console.error('Failed to load profile:', error);
-                    showError('Chyba při načítání profilu. Zkuste to prosím znovu.');
+                    document.getElementById('registrationDate').textContent = new Date(user.createdAt).toLocaleDateString('cs-CZ');
+                    document.getElementById('lastLogin').textContent = new Date().toLocaleString('cs-CZ');
                 }
             }
         }
 
         // Funkce pro změnu hesla
-        async function changePassword() {
+        function changePassword() {
             const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
             
             if (isDemo) {
                 alert('Demo účet nemůže změnit heslo. Zaregistrujte se pro plnou funkcionalnost.');
                 return;
             }
-            
-            const currentPassword = prompt('Zadejte současné heslo:');
-            if (!currentPassword) return;
             
             const newPassword = prompt('Zadejte nové heslo (min. 6 znaků):');
             if (!newPassword) return;
@@ -369,12 +366,17 @@
                 return;
             }
             
-            try {
-                await window.koulioAPI.changePassword(currentPassword, newPassword);
+            // Aktualizace hesla
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.email === userEmail);
+            
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                saveUsers(users);
                 showSuccess('Heslo bylo úspěšně změněno.');
-            } catch (error) {
-                console.error('Change password error:', error);
-                showError(error.message || 'Chyba při změně hesla.');
+            } else {
+                showError('Chyba při aktualizaci hesla.');
             }
         }
 
@@ -424,7 +426,7 @@
         }
 
         // Funkce pro smazání účtu
-        async function deleteAccount() {
+        function deleteAccount() {
             const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
             
             if (isDemo) {
@@ -436,20 +438,26 @@
                 return;
             }
             
-            const password = prompt('Pro potvrzení smazání zadejte vaše heslo:');
-            if (!password) {
-                showError('Zrušeno uživatelem.');
+            const confirmText = prompt('Pro potvrzení smazání napište "SMAZAT":');
+            if (confirmText !== 'SMAZAT') {
+                showError('Potvrzení nebylo správné. Účet nebyl smazán.');
                 return;
             }
             
-            try {
-                await window.koulioAPI.deleteAccount(password);
-                alert('Váš účet byl úspěšně smazán.');
-                window.location.href = 'login.html';
-            } catch (error) {
-                console.error('Delete account error:', error);
-                showError(error.message || 'Chyba při mazání účtu.');
-            }
+            // Smazání uživatele
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const users = getUsers();
+            const filteredUsers = users.filter(u => u.email !== userEmail);
+            saveUsers(filteredUsers);
+            
+            // Odhlášení a přesměrování
+            localStorage.removeItem('koulio_logged_in');
+            localStorage.removeItem('koulio_user_email');
+            localStorage.removeItem('koulio_user_name');
+            localStorage.removeItem('koulio_user_demo');
+            
+            alert('Váš účet byl úspěšně smazán.');
+            window.location.href = 'login.html';
         }
 
         // Inicializace stránky

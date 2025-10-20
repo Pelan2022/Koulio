@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: koulio-postgres
+    environment:
+      POSTGRES_DB: koulio_db
+      POSTGRES_USER: koulio_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password_123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - koulio-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U koulio_user -d koulio_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: koulio-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@koulio.cz
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - koulio-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # KOULIO Backend API
+  backend:
+    build: .
+    container_name: koulio-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: koulio_db
+      DB_USER: koulio_user
+      DB_PASSWORD: ${DB_PASSWORD:-secure_password_123}
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_here_make_it_very_long_and_secure}
+      JWT_EXPIRES_IN: 24h
+      JWT_REFRESH_EXPIRES_IN: 7d
+      CORS_ORIGIN: https://unrollit.aici.cz,http://localhost:3000
+      HTTPS_ENABLED: false
+      LOG_LEVEL: info
+    ports:
+      - "3000:3000"
+    networks:
+      - koulio-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  koulio-network:
+    driver: bridge

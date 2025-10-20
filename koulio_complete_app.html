@@ -4214,29 +4214,12 @@
             header.appendChild(userInfo);
         }
 
-        async function logout() {
+        function logout() {
             if (confirm('Opravdu se chcete odhlásit?')) {
-                try {
-                    // Zkusíme logout přes API (pokud není demo účet)
-                    const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
-                    if (!isDemo && window.koulioAPI) {
-                        await window.koulioAPI.logout();
-                    } else {
-                        // Pro demo účet nebo pokud API není dostupné
-                        localStorage.removeItem('koulio_logged_in');
-                        localStorage.removeItem('koulio_user_email');
-                        localStorage.removeItem('koulio_user_name');
-                        localStorage.removeItem('koulio_user_demo');
-                    }
-                } catch (error) {
-                    console.error('Logout error:', error);
-                    // Fallback - vymazání localStorage dat
-                    localStorage.removeItem('koulio_logged_in');
-                    localStorage.removeItem('koulio_user_email');
-                    localStorage.removeItem('koulio_user_name');
-                    localStorage.removeItem('koulio_user_demo');
-                }
-                
+                localStorage.removeItem('koulio_logged_in');
+                localStorage.removeItem('koulio_user_email');
+                localStorage.removeItem('koulio_user_name');
+                localStorage.removeItem('koulio_user_demo');
                 window.location.href = 'login.html';
             }
         }

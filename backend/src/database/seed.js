@@ -1,0 +1,89 @@
+const User = require('../models/User');
+const database = require('../config/database');
+const logger = require('../config/logger');
+
+async function seedDatabase() {
+    try {
+        logger.info('Starting database seeding...');
+        
+        // Connect to database
+        await database.connect();
+        
+        // Create demo user if not exists
+        const existingDemoUser = await User.findByEmail('demo@koulio.cz');
+        if (!existingDemoUser) {
+            const demoUser = await User.create({
+                email: 'demo@koulio.cz',
+                fullName: 'Demo Uživatel',
+                password: 'demo123'
+            });
+            
+            logger.info('Demo user created:', {
+                id: demoUser.id,
+                email: demoUser.email
+            });
+        } else {
+            logger.info('Demo user already exists:', {
+                id: existingDemoUser.id,
+                email: existingDemoUser.email
+            });
+        }
+        
+        // Create additional test users
+        const testUsers = [
+            {
+                email: 'test1@koulio.cz',
+                fullName: 'Test User 1',
+                password: 'TestPassword123!'
+            },
+            {
+                email: 'test2@koulio.cz',
+                fullName: 'Test User 2',
+                password: 'TestPassword123!'
+            }
+        ];
+        
+        for (const userData of testUsers) {
+            const existingUser = await User.findByEmail(userData.email);
+            if (!existingUser) {
+                const user = await User.create(userData);
+                logger.info('Test user created:', {
+                    id: user.id,
+                    email: user.email
+                });
+            } else {
+                logger.info('Test user already exists:', {
+                    id: existingUser.id,
+                    email: existingUser.email
+                });
+            }
+        }
+        
+        // Get user statistics
+        const userCount = await User.count();
+        logger.info(`Total users in database: ${userCount}`);
+        
+        logger.info('Database seeding completed successfully');
+        
+    } catch (error) {
+        logger.error('Seeding failed:', error);
+        throw error;
+    } finally {
+        await database.disconnect();
+    }
+}
+
+// Run seeding if called directly
+if (require.main === module) {
+    seedDatabase()
+        .then(() => {
+            console.log('✅ Database seeding completed successfully');
+            process.exit(0);
+        })
+        .catch((error) => {
+            console.error('❌ Database seeding failed:', error.message);
+            process.exit(1);
+        });
+}
+
+module.exports = seedDatabase;

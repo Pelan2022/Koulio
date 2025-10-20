@@ -1,0 +1,199 @@
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+require('express-async-errors');
+
+const logger = require('./config/logger');
+const database = require('./config/database');
+
+// Import routes
+const authRoutes = require('./routes/auth');
+
+const app = express();
+
+// Trust proxy (important for CapRover deployment)
+app.set('trust proxy', 1);
+
+// Security middleware
+app.use(helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'"],
+            imgSrc: ["'self'", "data:", "https:"],
+        },
+    },
+}));
+
+// CORS configuration
+const corsOptions = {
+    origin: function (origin, callback) {
+        const allowedOrigins = process.env.CORS_ORIGIN ? 
+            process.env.CORS_ORIGIN.split(',') : 
+            ['http://localhost:3000', 'https://unrollit.aici.cz'];
+        
+        // Allow requests with no origin (mobile apps, Postman, etc.)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+app.use(cors(corsOptions));
+
+// Compression middleware
+app.use(compression());
+
+// Body parsing middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Logging middleware
+if (process.env.NODE_ENV === 'production') {
+    app.use(morgan('combined', {
+        stream: {
+            write: (message) => logger.info(message.trim())
+        }
+    }));
+} else {
+    app.use(morgan('dev'));
+}
+
+// Global rate limiting
+const globalLimiter = rateLimit({
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes
+    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100, // limit each IP to 100 requests per windowMs
+    message: {
+        success: false,
+        message: 'Too many requests from this IP, please try again later'
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.use('/api/', globalLimiter);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({
+        success: true,
+        message: 'KOULIO Backend API is running',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development',
+        database: database.isConnected() ? 'connected' : 'disconnected'
+    });
+});
+
+// API routes
+app.use('/api/auth', authRoutes);
+
+// API documentation endpoint
+app.get('/api', (req, res) => {
+    res.json({
+        success: true,
+        message: 'KOULIO Backend API',
+        version: '1.0.0',
+        endpoints: {
+            auth: {
+                'POST /api/auth/register': 'Register new user',
+                'POST /api/auth/login': 'Login user',
+                'POST /api/auth/refresh': 'Refresh access token',
+                'POST /api/auth/logout': 'Logout user',
+                'GET /api/auth/profile': 'Get user profile',
+                'PUT /api/auth/profile': 'Update user profile',
+                'POST /api/auth/change-password': 'Change password',
+                'DELETE /api/auth/account': 'Delete account',
+                'GET /api/auth/verify': 'Verify token'
+            },
+            health: {
+                'GET /health': 'Health check'
+            }
+        }
+    });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Endpoint not found',
+        path: req.originalUrl
+    });
+});
+
+// Global error handler
+app.use((error, req, res, next) => {
+    logger.error('Unhandled error:', error);
+
+    // Handle specific error types
+    if (error.name === 'ValidationError') {
+        return res.status(400).json({
+            success: false,
+            message: 'Validation error',
+            errors: error.errors
+        });
+    }
+
+    if (error.name === 'UnauthorizedError') {
+        return res.status(401).json({
+            success: false,
+            message: 'Unauthorized access'
+        });
+    }
+
+    if (error.message === 'Not allowed by CORS') {
+        return res.status(403).json({
+            success: false,
+            message: 'CORS policy violation'
+        });
+    }
+
+    // Default error response
+    res.status(error.status || 500).json({
+        success: false,
+        message: process.env.NODE_ENV === 'production' ? 
+            'Internal server error' : 
+            error.message
+    });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+    logger.info('SIGTERM received, shutting down gracefully');
+    
+    try {
+        await database.disconnect();
+        logger.info('Database disconnected');
+        process.exit(0);
+    } catch (error) {
+        logger.error('Error during shutdown:', error);
+        process.exit(1);
+    }
+});
+
+process.on('SIGINT', async () => {
+    logger.info('SIGINT received, shutting down gracefully');
+    
+    try {
+        await database.disconnect();
+        logger.info('Database disconnected');
+        process.exit(0);
+    } catch (error) {
+        logger.error('Error during shutdown:', error);
+        process.exit(1);
+    }
+});
+
+module.exports = app;
