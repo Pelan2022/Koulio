@@ -6,7 +6,7 @@ from PIL import Image, ImageChops
 DEFAULT_SOURCE = "Abstraktní strom.png"  # Fallback if new file not present
 PREFERRED_SOURCE = "novy_favicon.png"    # New requested source
 # Padding ratio keeps a small safe margin so the icon doesn't touch edges
-PADDING_RATIO = 0.04  # 4% of target size
+PADDING_RATIO = 0.01  # 1% of target size for larger visible icon
 OUTPUTS = {
     "favicon-16x16.png": (16, 16),
     "favicon-32x32.png": (32, 32),
