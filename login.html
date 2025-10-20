@@ -211,25 +211,6 @@
             }
         }
 
-        .demo-credentials {
-            background: #e3f2fd;
-            border: 1px solid #bbdefb;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .demo-credentials h4 {
-            color: #1565c0;
-            margin-bottom: 10px;
-            font-size: 0.9em;
-        }
-
-        .demo-credentials p {
-            color: #1976d2;
-            font-size: 0.85em;
-            margin: 5px 0;
-        }
     </style>
 </head>
 <body>
@@ -240,11 +221,6 @@
         </div>
         
         <div class="login-form">
-            <div class="demo-credentials">
-                <h4>Demo přihlašovací údaje:</h4>
-                <p><strong>Email:</strong> demo@koulio.cz</p>
-                <p><strong>Heslo:</strong> demo123</p>
-            </div>
 
             <div id="errorMessage" class="error-message" style="display: none;"></div>
             <div id="successMessage" class="success-message" style="display: none;"></div>
@@ -274,9 +250,6 @@
     </div>
 
     <script>
-        // Demo uživatelské údaje
-        const DEMO_EMAIL = 'demo@koulio.cz';
-        const DEMO_PASSWORD = 'demo123';
 
         // Funkce pro získání uživatelů z localStorage
         function getUsers() {
@@ -337,25 +310,15 @@
                 let loginSuccess = false;
                 let userData = null;
                 
-                // Kontrola demo účtu
-                if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+                // Kontrola registrovaných uživatelů
+                const user = findUserByEmail(email);
+                if (user && user.password === password && user.isActive) {
                     loginSuccess = true;
                     userData = {
-                        email: DEMO_EMAIL,
-                        fullName: 'Demo Uživatel',
-                        isDemo: true
+                        email: user.email,
+                        fullName: user.fullName,
+                        isDemo: false
                     };
-                } else {
-                    // Kontrola registrovaných uživatelů
-                    const user = findUserByEmail(email);
-                    if (user && user.password === password && user.isActive) {
-                        loginSuccess = true;
-                        userData = {
-                            email: user.email,
-                            fullName: user.fullName,
-                            isDemo: false
-                        };
-                    }
                 }
                 
                 if (loginSuccess) {
@@ -411,16 +374,10 @@
             return emailRegex.test(email);
         }
 
-        // Auto-fill demo credentials pro snadné testování
+        // Auto-fill functionality removed
         document.addEventListener('DOMContentLoaded', function() {
-            // Možnost automatického vyplnění demo údajů
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('demo') === 'true') {
-                document.getElementById('email').value = DEMO_EMAIL;
-                document.getElementById('password').value = DEMO_PASSWORD;
-            }
-            
             // Zobrazení zprávy o úspěšné registraci
+            const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('registered') === 'true') {
                 showSuccess('Registrace byla úspěšná! Nyní se můžete přihlásit.');
             }

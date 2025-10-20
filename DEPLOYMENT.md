@@ -70,9 +70,6 @@ Po nasazení by měla být aplikace dostupná na:
 
 ## Autentifikační systém
 
-### Demo účet
-- **Email:** demo@koulio.cz
-- **Heslo:** demo123
 
 ### Registrace
 - Uživatelé se mohou zaregistrovat s vlastním emailem

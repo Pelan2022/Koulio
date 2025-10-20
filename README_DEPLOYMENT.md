@@ -8,7 +8,7 @@ Kompletní autentifikační systém byl úspěšně integrován do KOULIO aplika
 
 ### Nové soubory:
 - ✅ `index.html` - Vstupní stránka s přesměrováním
-- ✅ `login.html` - Přihlašovací stránka s demo a registrovanými účty
+- ✅ `login.html` - Přihlašovací stránka s registrovanými účty
 - ✅ `register.html` - Registrační stránka s validací
 - ✅ `profile.html` - Správa uživatelského účtu
 - ✅ `deploy.sh` / `deploy.bat` - Skripty pro nasazení
@@ -20,10 +20,6 @@ Kompletní autentifikační systém byl úspěšně integrován do KOULIO aplika
 
 ## 🎯 Funkce autentifikačního systému
 
-### 🔐 Demo účet
-- **Email:** `demo@koulio.cz`
-- **Heslo:** `demo123`
-- Automaticky dostupný pro testování
 
 ### 📝 Registrace
 - Validace formulářů
@@ -32,8 +28,7 @@ Kompletní autentifikační systém byl úspěšně integrován do KOULIO aplika
 - Souhlas s podmínkami
 
 ### 🔑 Přihlášení
-- Podpora demo i registrovaných účtů
-- Automatické rozpoznání typu účtu
+- Podpora registrovaných účtů
 - Session management
 
 ### 👤 Správa účtu
@@ -79,10 +74,7 @@ Po nasazení budou dostupné tyto URL:
 ## 📱 Testování
 
 1. **Otevřete aplikaci** na `https://unrollit.aici.cz`
-2. **Demo přihlášení:**
-   - Email: `demo@koulio.cz`
-   - Heslo: `demo123`
-3. **Registrace nového účtu:**
+2. **Registrace nového účtu:**
    - Klikněte "Zaregistrujte se"
    - Vyplňte formulář
    - Přihlaste se novými údaji
