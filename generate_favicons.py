@@ -6,7 +6,7 @@ from PIL import Image, ImageChops
 DEFAULT_SOURCE = "Abstraktní strom.png"  # Fallback if new file not present
 PREFERRED_SOURCE = "novy_favicon.png"    # New requested source
 # Padding ratio keeps a small safe margin so the icon doesn't touch edges
-PADDING_RATIO = 0.01  # 1% of target size for larger visible icon
+PADDING_RATIO = 0.0  # 0% padding to maximize visible size
 OUTPUTS = {
     "favicon-16x16.png": (16, 16),
     "favicon-32x32.png": (32, 32),
@@ -25,6 +25,46 @@ def load_source_image(path: Path) -> Image.Image:
     return image
 
 
+def color_distance(c1, c2) -> int:
+    return sum((c1[i] - c2[i]) ** 2 for i in range(3))
+
+
+def make_background_transparent(image: Image.Image, tolerance: int = 30) -> Image.Image:
+    """
+    Make uniform dark background transparent by sampling the four corners and
+    removing pixels near that color. Keeps white ring and colored logo.
+    """
+    if image.mode != "RGBA":
+        image = image.convert("RGBA")
+    rgb = image.convert("RGB")
+    width, height = image.size
+
+    # Sample corners to estimate background color
+    samples = [
+        rgb.getpixel((0, 0)),
+        rgb.getpixel((width - 1, 0)),
+        rgb.getpixel((0, height - 1)),
+        rgb.getpixel((width - 1, height - 1)),
+    ]
+    # Average corner color
+    avg = tuple(sum(c[i] for c in samples) // 4 for i in range(3))
+
+    # If average is dark, assume it is the background
+    if sum(avg) / 3 > 40:
+        return image  # not a dark background
+
+    px = image.load()
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = px[x, y]
+            if a == 0:
+                continue
+            if color_distance((r, g, b), avg) <= tolerance * tolerance:
+                # make pixel transparent
+                px[x, y] = (r, g, b, 0)
+    return image
+
+
 def trim_transparent_borders(image: Image.Image) -> Image.Image:
     """Trim fully transparent borders to maximize visible area."""
     if image.mode != "RGBA":
@@ -36,12 +76,65 @@ def trim_transparent_borders(image: Image.Image) -> Image.Image:
     return image
 
 
+def trim_uniform_border(image: Image.Image, tolerance: int = 6) -> Image.Image:
+    """If the image has no transparency, trim borders that match the corner color.
+    This helps remove solid background rings/boxes (e.g., black background).
+    """
+    if image.mode not in ("RGB", "RGBA"):
+        return image
+    rgb = image.convert("RGB")
+    width, height = rgb.size
+    corner_color = rgb.getpixel((0, 0))
+
+    def is_similar(c1, c2) -> bool:
+        return all(abs(c1[i] - c2[i]) <= tolerance for i in range(3))
+
+    left = 0
+    while left < width:
+        col = rgb.crop((left, 0, left + 1, height))
+        if any(not is_similar(px, corner_color) for px in col.getdata()):
+            break
+        left += 1
+
+    right = width - 1
+    while right >= 0:
+        col = rgb.crop((right, 0, right + 1, height))
+        if any(not is_similar(px, corner_color) for px in col.getdata()):
+            break
+        right -= 1
+
+    top = 0
+    while top < height:
+        row = rgb.crop((0, top, width, top + 1))
+        if any(not is_similar(px, corner_color) for px in row.getdata()):
+            break
+        top += 1
+
+    bottom = height - 1
+    while bottom >= 0:
+        row = rgb.crop((0, bottom, width, bottom + 1))
+        if any(not is_similar(px, corner_color) for px in row.getdata()):
+            break
+        bottom -= 1
+
+    # If crop would remove everything or nothing, return original
+    if left >= right or top >= bottom:
+        return image
+    if left == 0 and right == width - 1 and top == 0 and bottom == height - 1:
+        return image
+    return image.crop((left, top, right + 1, bottom + 1))
+
+
 def make_square(image: Image.Image, size: int) -> Image.Image:
     """
     Fit the source image into a square canvas while preserving aspect ratio.
-    Trims transparent borders first, then applies a small padding.
+    Trims background and borders first, then applies padding (currently 0%).
     """
-    trimmed = trim_transparent_borders(image)
+    # Remove dark background -> transparent
+    processed = make_background_transparent(image)
+    # First trim transparent borders, then attempt to trim a uniform border color
+    trimmed = trim_transparent_borders(processed)
+    trimmed = trim_uniform_border(trimmed)
     src_w, src_h = trimmed.size
 
     # Leave a small padding so content doesn't touch edges
