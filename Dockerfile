@@ -43,22 +43,12 @@ COPY --from=api /app /app
 COPY backend/src /app/src
 COPY backend/package.json /app/package.json
 
-# Ensure all backend files are properly copied and log everything
-RUN echo "=== Backend Files Structure ===" && \
-    ls -la /app/ && \
-    echo "=== Backend Source Files ===" && \
-    ls -la /app/src/ && \
-    echo "=== Package.json ===" && \
-    cat /app/package.json | head -10 && \
-    echo "=== Environment Variables ===" && \
-    echo "NODE_ENV: $NODE_ENV" && \
-    echo "PORT: $PORT" && \
-    echo "HOST: $HOST" && \
-    echo "DB_HOST: $DB_HOST" && \
-    echo "DB_PORT: $DB_PORT" && \
-    echo "DB_NAME: $DB_NAME" && \
-    echo "DB_USER: $DB_USER" && \
-    echo "ALLOWED_ORIGINS: $ALLOWED_ORIGINS"
+# Debug: Check backend files and environment
+RUN echo "=== DEBUGGING BACKEND ==="
+RUN ls -la /app/
+RUN ls -la /app/src/
+RUN echo "NODE_ENV: $NODE_ENV"
+RUN echo "PORT: $PORT"
 
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
