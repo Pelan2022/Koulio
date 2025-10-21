@@ -42,6 +42,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy supervisor configuration
 COPY supervisord.conf /etc/supervisord.conf
 
+# Create log directory
+RUN mkdir -p /var/log
+
 # Expose ports
 EXPOSE 80 3000
 
