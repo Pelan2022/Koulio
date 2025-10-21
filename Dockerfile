@@ -17,9 +17,14 @@ RUN apk add --no-cache nodejs npm supervisor curl
 # Copy API from builder stage
 COPY --from=api /app /app
 
+# Copy backend source files directly
+COPY backend/src /app/src
+COPY backend/package.json /app/package.json
+
 # Ensure all backend files are properly copied
 RUN ls -la /app/
 RUN ls -la /app/src/
+RUN cat /app/package.json | head -10
 
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/

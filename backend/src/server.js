@@ -1,9 +1,18 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const app = require('./app');
-const database = require('./config/database');
-const logger = require('./utils/logger');
+
+// Try to require modules with error handling
+let app, database, logger;
+
+try {
+    app = require('./app');
+    database = require('./config/database');
+    logger = require('./utils/logger');
+} catch (error) {
+    console.error('Failed to load modules:', error.message);
+    process.exit(1);
+}
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
