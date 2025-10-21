@@ -38,11 +38,10 @@ COPY site.webmanifest /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create startup script
-RUN echo '#!/bin/sh \
-# Start nginx in background \
-nginx & \
-# Start Node.js backend in foreground (so logs show in CapRover) \
-cd /app && npm start' > /start.sh && chmod +x /start.sh
+RUN echo '#!/bin/sh' > /start.sh && \
+    echo 'nginx &' >> /start.sh && \
+    echo 'cd /app && npm start' >> /start.sh && \
+    chmod +x /start.sh
 
 # Expose ports
 EXPOSE 80 3000
