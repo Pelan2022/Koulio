@@ -1,5 +1,16 @@
 # Multi-stage build for Full-Stack Application podle cursorrules
 
+# Build arguments
+ARG NODE_ENV=production
+ARG PORT=3000
+ARG HOST=0.0.0.0
+ARG DB_HOST
+ARG DB_PORT
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+ARG ALLOWED_ORIGINS
+
 # Stage 1: Build Node.js API
 FROM node:18-alpine AS api
 WORKDIR /app
@@ -11,6 +22,17 @@ COPY backend/env.example ./.env
 # Stage 2: Production image with Nginx + Node.js
 FROM nginx:alpine
 
+# Set environment variables
+ENV NODE_ENV=${NODE_ENV}
+ENV PORT=${PORT}
+ENV HOST=${HOST}
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV DB_NAME=${DB_NAME}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+
 # Install Node.js and supervisor for process management
 RUN apk add --no-cache nodejs npm supervisor curl
 
@@ -21,21 +43,22 @@ COPY --from=api /app /app
 COPY backend/src /app/src
 COPY backend/package.json /app/package.json
 
-# Ensure all backend files are properly copied
-RUN ls -la /app/
-RUN ls -la /app/src/
-RUN cat /app/package.json | head -10
-
-# Log environment variables
-RUN echo "=== Environment Variables ==="
-RUN echo "NODE_ENV: $NODE_ENV"
-RUN echo "PORT: $PORT"
-RUN echo "HOST: $HOST"
-RUN echo "DB_HOST: $DB_HOST"
-RUN echo "DB_PORT: $DB_PORT"
-RUN echo "DB_NAME: $DB_NAME"
-RUN echo "DB_USER: $DB_USER"
-RUN echo "ALLOWED_ORIGINS: $ALLOWED_ORIGINS"
+# Ensure all backend files are properly copied and log everything
+RUN echo "=== Backend Files Structure ===" && \
+    ls -la /app/ && \
+    echo "=== Backend Source Files ===" && \
+    ls -la /app/src/ && \
+    echo "=== Package.json ===" && \
+    cat /app/package.json | head -10 && \
+    echo "=== Environment Variables ===" && \
+    echo "NODE_ENV: $NODE_ENV" && \
+    echo "PORT: $PORT" && \
+    echo "HOST: $HOST" && \
+    echo "DB_HOST: $DB_HOST" && \
+    echo "DB_PORT: $DB_PORT" && \
+    echo "DB_NAME: $DB_NAME" && \
+    echo "DB_USER: $DB_USER" && \
+    echo "ALLOWED_ORIGINS: $ALLOWED_ORIGINS"
 
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
