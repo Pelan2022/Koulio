@@ -1,5 +1,4 @@
 const express = require('express');
-const rateLimit = require('express-rate-limit');
 const router = express.Router();
 
 const authController = require('../controllers/authController');
@@ -14,28 +13,11 @@ const {
     sanitizeInput
 } = require('../middleware/validation');
 
-// Rate limiting for auth endpoints
-const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // limit each IP to 5 requests per windowMs
-    message: {
-        success: false,
-        message: 'Too many authentication attempts, please try again later'
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-});
-
-const strictAuthLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 3, // limit each IP to 3 requests per windowMs
-    message: {
-        success: false,
-        message: 'Too many requests, please try again later'
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-});
+// Import security middleware
+const {
+    registerRateLimit,
+    passwordChangeRateLimit
+} = require('../middleware/security');
 
 // Public routes (no authentication required)
 
@@ -45,7 +27,7 @@ const strictAuthLimiter = rateLimit({
  * @access  Public
  */
 router.post('/register', 
-    authLimiter,
+    registerRateLimit,
     sanitizeInput,
     validate(validateRegistration),
     authController.register
@@ -115,7 +97,7 @@ router.put('/profile',
  * @access  Private
  */
 router.post('/change-password', 
-    strictAuthLimiter,
+    passwordChangeRateLimit,
     authenticateToken,
     sanitizeInput,
     validate(validatePasswordChange),

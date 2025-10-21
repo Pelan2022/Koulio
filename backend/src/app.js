@@ -6,12 +6,33 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 require('express-async-errors');
 
-const logger = require('./config/logger');
+const logger = require('./utils/logger');
 const database = require('./config/database');
+
+// Import security middleware
+const {
+    helmetConfig,
+    authRateLimit,
+    registerRateLimit,
+    apiRateLimit,
+    passwordChangeRateLimit,
+    suspiciousActivityDetection,
+    trackFailedAttempts,
+    inputSanitization
+} = require('./middleware/security');
+
+// Import monitoring middleware
+const {
+    performanceMonitoring,
+    errorMonitoring,
+    rateLimitMonitoring,
+    databaseMonitoring
+} = require('./middleware/monitoring');
 
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const healthRoutes = require('./routes/health');
 
 const app = express();
 
@@ -19,17 +40,15 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Security middleware
-app.use(helmet({
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: {
-        directives: {
-            defaultSrc: ["'self'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            scriptSrc: ["'self'"],
-            imgSrc: ["'self'", "data:", "https:"],
-        },
-    },
-}));
+app.use(helmetConfig);
+
+// Monitoring middleware
+app.use(performanceMonitoring);
+app.use(databaseMonitoring);
+app.use(rateLimitMonitoring);
+app.use(suspiciousActivityDetection);
+app.use(trackFailedAttempts);
+app.use(inputSanitization);
 
 // CORS configuration
 const corsOptions = {
@@ -97,9 +116,10 @@ app.get('/health', (req, res) => {
     });
 });
 
-// API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+// API routes with rate limiting
+app.use('/api/auth', authRateLimit, authRoutes);
+app.use('/api/user', apiRateLimit, userRoutes);
+app.use('/health', healthRoutes);
 
 // API documentation endpoint
 app.get('/api', (req, res) => {
@@ -142,9 +162,19 @@ app.use('*', (req, res) => {
     });
 });
 
+// Error monitoring middleware
+app.use(errorMonitoring);
+
 // Global error handler
 app.use((error, req, res, next) => {
-    logger.error('Unhandled error:', error);
+    logger.error('Unhandled error', {
+        error: error.message,
+        stack: error.stack,
+        url: req.url,
+        method: req.method,
+        ip: req.ip,
+        userId: req.user?.id || 'anonymous'
+    });
 
     // Handle specific error types
     if (error.name === 'ValidationError') {

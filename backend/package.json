@@ -8,7 +8,11 @@
     "dev": "nodemon src/server.js",
     "test": "jest",
     "migrate": "node src/database/migrate.js",
-    "seed": "node src/database/seed.js"
+    "seed": "node src/database/seed.js",
+    "backup": "node scripts/backup.js",
+    "backup:cron": "node scripts/backup-cron.js",
+    "logs": "tail -f logs/combined-$(date +%Y-%m-%d).log",
+    "logs:error": "tail -f logs/error-$(date +%Y-%m-%d).log"
   },
   "keywords": ["koulio", "api", "postgresql", "jwt", "authentication"],
   "author": "KOULIO Team",
@@ -25,9 +29,11 @@
     "express-validator": "^7.0.1",
     "dotenv": "^16.3.1",
     "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1",
     "compression": "^1.7.4",
     "morgan": "^1.10.0",
-    "express-async-errors": "^3.1.1"
+    "express-async-errors": "^3.1.1",
+    "@sentry/node": "^7.77.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
