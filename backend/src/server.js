@@ -11,9 +11,13 @@ const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
 async function startServer() {
     try {
-        // Connect to database
+        // Connect to database (optional for health checks)
         logger.info('Connecting to database...');
-        await database.connect();
+        try {
+            await database.connect();
+        } catch (dbError) {
+            logger.warn('Database connection failed, but continuing without database:', dbError.message);
+        }
         
         let server;
         
