@@ -43,14 +43,10 @@ COPY --from=api /app /app
 COPY backend/src /app/src
 COPY backend/package.json /app/package.json
 
-# Debug: Check backend files and environment
+# Debug: Check backend files (environment variables are set at runtime, not build time)
 RUN echo "=== DEBUGGING BACKEND ==="
 RUN echo "Checking /app directory:" && ls -la /app/
 RUN echo "Checking /app/src directory:" && ls -la /app/src/
-RUN echo "Environment variables:"
-RUN echo "NODE_ENV: $NODE_ENV"
-RUN echo "PORT: $PORT"
-RUN echo "DB_HOST: $DB_HOST"
 
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
