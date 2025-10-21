@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const app = require('./app');
 const database = require('./config/database');
-const logger = require('./config/logger');
+const logger = require('./utils/logger');
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';

@@ -15,6 +15,7 @@ const {
 
 // Import security middleware
 const {
+    authRateLimit,
     registerRateLimit,
     passwordChangeRateLimit
 } = require('../middleware/security');
@@ -39,7 +40,7 @@ router.post('/register',
  * @access  Public
  */
 router.post('/login', 
-    authLimiter,
+    authRateLimit,
     sanitizeInput,
     validate(validateLogin),
     authController.login
@@ -109,7 +110,7 @@ router.post('/change-password',
  * @access  Private
  */
 router.delete('/account', 
-    strictAuthLimiter,
+    authRateLimit,
     authenticateToken,
     sanitizeInput,
     authController.deleteAccount

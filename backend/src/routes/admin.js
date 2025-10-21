@@ -4,7 +4,8 @@ const router = express.Router();
 const { requireAdminAccess } = require('../middleware/rbac');
 const { auditAdminAction } = require('../middleware/audit');
 const AuditLog = require('../models/AuditLog');
-const LOG = require('../models/User');
+const User = require('../models/User');
+const database = require('../config/database');
 const logger = require('../utils/logger');
 
 /**

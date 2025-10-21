@@ -1,6 +1,6 @@
 const database = require('../config/database');
 const security = require('../config/security');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 class User {
     constructor(data) {
@@ -219,13 +219,6 @@ class User {
     }
 
     /**
-     * Check if account is locked
-     */
-    isLocked() {
-        return this.lockedUntil && this.lockedUntil > new Date();
-    }
-
-    /**
      * Update refresh token
      */
     async updateRefreshToken(token, expiresAt) {
@@ -285,9 +278,6 @@ class User {
     }
 
     /**
-     * Get user data without sensitive information
-     */
-    /**
      * Kontrola role uživatele
      */
     hasRole(role) {
@@ -299,13 +289,6 @@ class User {
      */
     isAdmin() {
         return this.role === 'admin';
-    }
-
-    /**
-     * Kontrola zda je účet zamčený
-     */
-    isLocked() {
-        return this.lockedUntil && this.lockedUntil > new Date();
     }
 
     toJSON() {

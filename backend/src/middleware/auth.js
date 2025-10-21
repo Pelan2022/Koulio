@@ -1,6 +1,6 @@
 const security = require('../config/security');
 const User = require('../models/User');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 /**
  * Middleware to verify JWT token

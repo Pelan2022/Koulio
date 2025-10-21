@@ -123,7 +123,7 @@ app.get('/health', (req, res) => {
 // API routes with rate limiting
 app.use('/api/auth', authRateLimit, authRoutes);
 app.use('/api/user', apiRateLimit, userRoutes);
-app.use('/api/admin', requireAdmin, adminRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/health', healthRoutes);
 
 // Swagger API documentation
