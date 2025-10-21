@@ -19,13 +19,12 @@ class ApiClient {
             return 'http://localhost:3000';
         }
         
-        // Pro produkci - API běží na stejné doméně na portu 3000
-        // CapRover proxy routuje požadavky na backend
+        // Pro produkci - Nginx proxy routuje /api/* na backend
         const protocol = window.location.protocol;
         const hostname = window.location.hostname;
         
-        // API je dostupné přímo na portu 3000
-        return `${protocol}//${hostname}:3000`;
+        // API je dostupné přes nginx proxy na /api/*
+        return `${protocol}//${hostname}/api`;
     }
 
     /**
