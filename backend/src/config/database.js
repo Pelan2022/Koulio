@@ -18,7 +18,7 @@ class DatabaseConnection {
                 max: 20,
                 idleTimeoutMillis: 30000,
                 connectionTimeoutMillis: 2000,
-                ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+                ssl: false
             });
 
             // Test connection
