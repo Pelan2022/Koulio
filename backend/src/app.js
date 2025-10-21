@@ -54,12 +54,12 @@ app.use(suspiciousActivityDetection);
 app.use(trackFailedAttempts);
 app.use(inputSanitization);
 
-// CORS configuration
+// CORS configuration podle cursorrules
 const corsOptions = {
     origin: function (origin, callback) {
-        const allowedOrigins = process.env.CORS_ORIGIN ? 
-            process.env.CORS_ORIGIN.split(',') : 
-            ['http://localhost:3000', 'https://unrollit.aici.cz'];
+        const allowedOrigins = process.env.ALLOWED_ORIGINS ? 
+            process.env.ALLOWED_ORIGINS.split(',') : 
+            ['http://localhost:3000', 'http://localhost', 'https://unrollit.aici.cz'];
         
         // Allow requests with no origin (mobile apps, Postman, etc.)
         if (!origin) return callback(null, true);

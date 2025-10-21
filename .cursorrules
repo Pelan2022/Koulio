@@ -1,0 +1,372 @@
+# Full-Stack Web Application - Cursor Rules
+
+## 🏗️ Architektura projektu
+
+### Obecný přehled
+- **Typ**: Full-stack webová aplikace
+- **Frontend**: Vanilla HTML/CSS/JS s Tailwind CSS (nebo jiný framework dle potřeby)
+- **Backend**: Node.js/Express API připojený k PostgreSQL
+- **Deployment**: Docker + CapRover + Nginx
+- **Database**: PostgreSQL s JSONB pro flexibilní data
+- **Source Control**: Git repository pro verzování kódu
+- **Deployment**: Git → CapRover na hostovaném serveru
+- **Database Access**: Předvytvořená DB s MCP serverem pro Cursor
+- **Data Management**: pgAdmin pro správu dat
+
+### Struktura aplikace
+```
+Project/
+├── Frontend (Static)
+│   ├── index.html          # Hlavní HTML soubor s Tailwind CSS
+│   ├── api-client.js       # API komunikace s backendem
+│   └── favicon.ico         # Favicon
+├── Backend (Node.js API)
+│   ├── server.js           # Express server připojený k PostgreSQL
+│   ├── package.json        # Dependencies (express, pg, cors, dotenv)
+│   └── env.example         # Environment variables template
+├── Database
+│   ├── create_database.sql  # Database schema
+│   ├── migration_data.sql  # Sample data
+│   └── setup_complete.sql  # All-in-one setup
+├── Deployment
+│   ├── Dockerfile          # Multi-stage build (Node.js + Nginx)
+│   ├── captain-definition  # CapRover configuration
+│   ├── nginx.conf          # Nginx reverse proxy config
+│   └── supervisord.conf    # Process management
+└── Documentation
+    ├── README.md           # Main documentation
+    ├── DEPLOYMENT.md       # Deployment guide
+    └── DATABASE_SETUP.md   # Database setup
+```
+
+## 🛠️ Technologie a závislosti
+
+### Frontend
+- **HTML5**: Semantic markup, modern features
+- **CSS Framework**: Tailwind CSS (nebo jiný framework dle potřeby)
+- **JavaScript**: Vanilla JS nebo framework dle potřeby
+- **Icons**: Lucide Icons nebo jiná knihovna dle potřeby
+- **API Client**: Custom client pro komunikaci s backendem
+
+### Backend
+- **Node.js**: >=18.0.0 (ES modules)
+- **Express**: Web framework
+- **PostgreSQL**: Externí databáze s pg driver
+- **CORS**: Cross-origin resource sharing
+- **dotenv**: Environment variables
+
+### Database
+- **PostgreSQL**: Externě hostovaná databáze
+- **JSONB**: Flexible data storage
+- **Indexes**: GIN indexes pro JSONB queries
+- **Views**: Pre-computed statistics a recent data
+- **Triggers**: Auto-update timestamps
+
+### Deployment
+- **Docker**: Multi-stage build (Node.js + Nginx Alpine)
+- **CapRover**: Container orchestration
+- **Nginx**: Reverse proxy a static file serving
+- **Supervisor**: Process management
+
+## 🗄️ Database Schema Patterns
+
+### Základní tabulka struktura
+```sql
+CREATE TABLE main_table (
+    id SERIAL PRIMARY KEY,
+    date DATE,
+    data JSONB,              -- Flexibilní data
+    metadata JSONB,           -- Metadata
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### Indexy pro optimalizaci
+- `idx_table_date` - Rychlé vyhledávání dle data
+- `idx_table_updated_at` - Sortování dle aktualizace
+- `idx_table_data_gin` - JSONB queries pro flexibilní data
+- `idx_table_metadata_gin` - JSONB queries pro metadata
+
+### Views pro často používané dotazy
+- `v_recent_data` - Posledních 30 dní s agregovanými daty
+- `v_statistics` - Celkové statistiky (počet záznamů, průměry, atd.)
+
+## 🚀 Deployment Architecture
+
+### Git-based Deployment
+1. **Source Control**: Kód je verzován v Git repository
+2. **Deployment Process**: Git push → CapRover automatický build
+3. **Hosting**: CapRover na hostovaném serveru
+4. **Build Process**: Docker multi-stage build
+5. **Runtime**: Nginx + Node.js via Supervisor
+6. **Health Checks**: `/health` endpoint
+7. **SSL**: Let's Encrypt automaticky
+8. **Scaling**: Horizontal scaling podporováno
+
+### Docker Configuration Example
+```dockerfile
+# Multi-stage build for Full-Stack Application
+
+# Stage 1: Build Node.js API
+FROM node:18-alpine AS api
+WORKDIR /app
+COPY package.json ./
+RUN npm install --production
+COPY server.js ./
+COPY env.example ./.env
+
+# Stage 2: Production image with Nginx + Node.js
+FROM nginx:alpine
+
+# Install Node.js and supervisor for process management
+RUN apk add --no-cache nodejs npm supervisor curl
+
+# Copy API from builder stage
+COPY --from=api /app /app
+
+# Copy frontend files
+COPY index.html /usr/share/nginx/html/
+COPY api-client.js /usr/share/nginx/html/
+COPY favicon.ico /usr/share/nginx/html/
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy supervisor configuration
+COPY supervisord.conf /etc/supervisord.conf
+
+# Expose ports
+EXPOSE 80 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD curl --fail http://localhost/health || exit 1
+
+# Start supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+```
+
+### Dockerfile Template Features
+- **Multi-stage Build**: Optimalizace velikosti image
+- **Stage 1**: Node.js API build s dependencies
+- **Stage 2**: Production image s Nginx + Node.js
+- **Process Management**: Supervisor pro správu obou procesů
+- **Health Check**: Automatická kontrola zdraví aplikace
+- **Port Exposure**: 80 (Nginx) + 3000 (Node.js API)
+- **Static Files**: Frontend soubory přes Nginx
+- **API Proxy**: Nginx proxy pro API requests
+
+### Nginx Configuration
+- **Static Files**: Served directly by Nginx
+- **API Proxy**: `/api/*` → Node.js backend (port 3000)
+- **Health Check**: `/health` → Node.js health endpoint
+- **Gzip**: Compression enabled
+- **Security Headers**: X-Frame-Options, X-XSS-Protection, atd.
+- **Caching**: 1 year cache pro static assets
+
+## 🔧 Development Guidelines
+
+### Code Style
+- **JavaScript**: ES6+ modules, async/await
+- **SQL**: PostgreSQL specific syntax, JSONB operations
+- **HTML**: Semantic markup, accessibility
+- **CSS**: Tailwind utility classes, custom CSS variables
+
+### API Design
+- **RESTful**: Standard HTTP methods (GET, POST, PATCH, DELETE)
+- **JSON**: All responses in JSON format
+- **Error Handling**: Consistent error response structure
+- **CORS**: Configurable origins
+- **Health Checks**: `/health` endpoint pro monitoring
+
+### Database Operations
+- **Connection Pooling**: pg.Pool s 20 max connections
+- **Error Handling**: Graceful degradation, proper logging
+- **JSONB**: Use JSONB pro flexible data storage
+- **Transactions**: Use transactions pro data consistency
+- **MCP Integration**: Cursor má přístup k DB přes MCP server
+- **Data Management**: pgAdmin pro vizuální správu dat
+- **Pre-created DB**: Databáze je předvytvořená a připravená
+
+## 🔐 Security Considerations
+
+### Environment Variables
+```bash
+# Database
+DB_HOST=your_host
+DB_PORT=5432
+DB_NAME=your_database
+DB_USER=your_user
+DB_PASSWORD=your_password
+
+# API
+PORT=3000
+NODE_ENV=production
+ALLOWED_ORIGINS=http://localhost:8080,https://yourdomain.com
+```
+
+**Poznámka**: Environment variables se nastavují přímo v CapRover dashboardu. Uživatel je nastavuje přes CapRover interface, není potřeba je commitovat do kódu.
+
+### Security Headers
+- **X-Frame-Options**: SAMEORIGIN
+- **X-Content-Type-Options**: nosniff
+- **X-XSS-Protection**: 1; mode=block
+- **CORS**: Configurable origins
+
+### Database Security
+- **Connection Pooling**: Limit connections
+- **Prepared Statements**: SQL injection protection
+- **User Permissions**: Separate app user s omezenými právy
+
+## 📊 Monitoring a Logging
+
+### Health Checks
+- **Endpoint**: `/health`
+- **Response**: `{status: 'healthy', timestamp: '...', database: 'connected'}`
+- **Docker**: HEALTHCHECK directive v Dockerfile
+
+### Logging
+- **Request Logging**: All HTTP requests logged
+- **Database Logging**: Connection status, query errors
+- **Error Handling**: Uncaught exceptions, unhandled rejections
+- **Graceful Shutdown**: SIGTERM/SIGINT handling
+
+## 🔄 Data Flow
+
+### Frontend → Backend
+1. **API Client**: Custom client handles all API calls
+2. **Endpoints**: `/api/*` pro CRUD operations
+3. **Error Handling**: Consistent error responses
+4. **Caching**: Browser caching pro static assets
+
+### Backend → Database
+1. **Connection Pool**: pg.Pool manages connections
+2. **JSONB Storage**: Flexible data structure
+3. **Views**: Pre-computed statistics
+4. **Indexes**: Optimized queries
+
+## 🚨 Troubleshooting
+
+### Common Issues
+1. **Database Connection**: Check DB_HOST, DB_PORT, credentials
+2. **CORS Issues**: Verify ALLOWED_ORIGINS setting
+3. **Build Failures**: Check Docker build logs
+4. **SSL Issues**: Verify domain configuration v CapRover
+
+### Debug Commands
+```bash
+# Check database connection
+psql -h your_host -p 5432 -U your_user -d your_database
+
+# Check CapRover logs
+caprover logs -a your_app_name -f
+
+# Test API endpoints
+curl https://your_app_name.aici.cz/health
+curl https://your_app_name.aici.cz/api/your_endpoint
+```
+
+## 📝 Development Workflow
+
+### Git-based Deployment Process
+1. **Code Changes**: Commit a push do Git repository
+2. **Automatic Build**: CapRover automaticky buildí z Git
+3. **Deployment**: CapRover deployuje na hostovaný server
+4. **Health Check**: Verify `/health` endpoint
+5. **SSL**: Automatic Let's Encrypt
+6. **Monitoring**: Check logs a metrics
+
+### Database Management
+1. **MCP Access**: Cursor má přímý přístup k DB přes MCP
+2. **pgAdmin**: Vizuální správa dat přes pgAdmin
+3. **Pre-created Schema**: Databáze je předvytvořená
+4. **Data Validation**: Kontrola dat přes pgAdmin
+
+## 🎯 Best Practices
+
+### Code Organization
+- **Separation of Concerns**: Frontend/Backend/Database
+- **Error Handling**: Consistent error responses
+- **Logging**: Comprehensive logging
+- **Documentation**: Clear comments a README files
+
+### Performance
+- **Gzip Compression**: Nginx gzip enabled
+- **Browser Caching**: 1 year cache pro static assets
+- **Database Indexes**: Optimized queries
+- **Connection Pooling**: Efficient database connections
+
+### Security
+- **Environment Variables**: Never commit secrets
+- **CORS**: Restrict origins v production
+- **SQL Injection**: Use prepared statements
+- **HTTPS**: Force HTTPS v production
+
+## 🔧 Maintenance
+
+### Regular Tasks
+- **Database Backups**: Automated backups
+- **Log Rotation**: Manage log file sizes
+- **Security Updates**: Keep dependencies updated
+- **Monitoring**: Check health endpoints
+
+### Scaling
+- **Horizontal Scaling**: Multiple instances
+- **Load Balancing**: CapRover handles this
+- **Database**: Consider read replicas for large datasets
+- **CDN**: Consider CDN pro static assets
+
+## 📋 Customization Checklist
+
+Při použití této šablony pro nový projekt:
+
+### 1. Název a popis
+- [ ] Změňte název aplikace v dokumentaci
+- [ ] Upravte popis funkcionalit
+- [ ] Aktualizujte README.md
+
+### 2. Database Schema
+- [ ] Definujte specifické tabulky pro vaši aplikaci
+- [ ] Vytvořte indexy pro vaše query patterns
+- [ ] Nastavte views pro často používané dotazy
+
+### 3. API Endpoints
+- [ ] Definujte RESTful endpoints pro vaše entity
+- [ ] Implementujte CRUD operace
+- [ ] Nastavte error handling
+
+### 4. Frontend
+- [ ] Upravte HTML strukturu pro vaše potřeby
+- [ ] Implementujte JavaScript funkcionality
+- [ ] Nastavte CSS framework (Tailwind, Bootstrap, nebo jiný)
+- [ ] Zvolte vhodný frontend approach (SPA, MPA, nebo hybrid)
+
+### 5. Environment Variables
+- [ ] Nastavte environment variables v CapRover dashboardu
+- [ ] Aktualizujte env.example jako template
+- [ ] Konfigurujte CORS origins (nahraďte yourdomain.com za konkrétní název aplikace na aici.cz)
+
+### 6. Deployment
+- [ ] Upravte Dockerfile pro specifické potřeby
+- [ ] Nastavte nginx.conf
+- [ ] Konfigurujte CapRover settings
+- [ ] Nastavte Git → CapRover deployment
+- [ ] Ověřte MCP server připojení k DB
+- [ ] Nastavte pgAdmin přístup pro data management
+
+### 7. Dockerfile Customization
+- [ ] Upravte COPY příkazy pro vaše frontend soubory
+- [ ] Přidejte/odeberte dependencies v package.json
+- [ ] Upravte porty podle potřeby
+- [ ] Nastavte health check endpoint
+- [ ] Přidejte další build stages pokud potřebujete
+
+---
+
+**Poznámky:**
+- Tato šablona je navržena pro full-stack webové aplikace
+- Frontend je standalone HTML soubor s API komunikací
+- Backend je lightweight Express API
+- Deployment je optimalizovaný pro CapRover s Docker
+- Database schema je navržena pro flexibilní data storage

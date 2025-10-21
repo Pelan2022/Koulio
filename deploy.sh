@@ -1,66 +1,38 @@
 #!/bin/bash
 
-# Skript pro nasazení KOULIO aplikace na CapRover
-# Použití: ./deploy.sh [app-name] [captain-domain]
+# KOULIO Deployment Script podle cursorrules
+# Tento script nasadí aplikaci na CapRover server
 
-APP_NAME=${1:-"koulio"}
-CAPTAIN_DOMAIN=${2:-"captain.yourdomain.com"}
+echo "🚀 KOULIO Deployment Script"
+echo "=========================="
 
-echo "🚀 Nasazení KOULIO aplikace na CapRover..."
-echo "📱 Název aplikace: $APP_NAME"
-echo "🌐 CapRover doména: $CAPTAIN_DOMAIN"
+# Zkontroluj, zda je git repository čistý
+if [ -n "$(git status --porcelain)" ]; then
+    echo "❌ Git repository není čistý. Commitněte změny před nasazením."
+    exit 1
+fi
 
-# Kontrola, zda jsou všechny potřebné soubory přítomny
-echo "📋 Kontrola souborů..."
+# Push změn do Git repository
+echo "📤 Push změn do Git repository..."
+git push origin main
 
-required_files=(
-    "captain-definition"
-    "Dockerfile"
-    "index.html"
-    "login.html"
-    "register.html"
-    "profile.html"
-    "koulio_complete_app.html"
-)
+if [ $? -eq 0 ]; then
+    echo "✅ Git push úspěšný"
+    echo "🔄 CapRover automaticky nasadí aplikaci z Git repository"
+    echo "⏳ Počkejte na dokončení build procesu"
+    echo "🌐 Aplikace bude dostupná na: https://your-app-name.aici.cz"
+    echo "🔍 Health check: https://your-app-name.aici.cz/health"
+else
+    echo "❌ Git push selhal"
+    exit 1
+fi
 
-for file in "${required_files[@]}"; do
-    if [ ! -f "$file" ]; then
-        echo "❌ Chyba: Soubor $file nebyl nalezen!"
-        exit 1
-    fi
-done
-
-echo "✅ Všechny potřebné soubory jsou přítomny"
-
-# Vytvoření tar archivu
-echo "📦 Vytváření tar archivu..."
-tar -czf koulio-app.tar.gz \
-    captain-definition \
-    Dockerfile \
-    index.html \
-    login.html \
-    register.html \
-    profile.html \
-    koulio_complete_app.html \
-    *.png \
-    *.ico \
-    *.jpg \
-    *.webmanifest
-
-echo "✅ Tar archiv vytvořen: koulio-app.tar.gz"
-
-# Instrukce pro nasazení
 echo ""
-echo "🎯 Nyní postupujte podle těchto kroků:"
+echo "📋 Deployment checklist:"
+echo "  ✅ Git push dokončen"
+echo "  ⏳ CapRover build probíhá"
+echo "  🔍 Zkontrolujte health endpoint"
+echo "  🌐 Ověřte funkčnost aplikace"
 echo ""
-echo "1. Otevřete CapRover dashboard: https://$CAPTAIN_DOMAIN"
-echo "2. Přihlaste se do dashboardu"
-echo "3. Vytvořte novou aplikaci s názvem: $APP_NAME"
-echo "4. V sekci 'Deployment' klikněte na 'Upload tar file'"
-echo "5. Nahrajte soubor: koulio-app.tar.gz"
-echo "6. Počkejte na dokončení nasazení"
-echo "7. V sekci 'HTTP Settings' zapněte HTTPS"
-echo "8. Aplikace bude dostupná na: https://$APP_NAME.yourdomain.com"
-echo ""
-echo ""
-echo "✨ Nasazení dokončeno! Váš autentifikační systém je připraven."
+echo "🎯 Pro monitoring použijte:"
+echo "  caprover logs -a your-app-name -f"

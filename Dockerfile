@@ -1,103 +1,53 @@
-# Použij oficiální nginx image
+# Multi-stage build for Full-Stack Application podle cursorrules
+
+# Stage 1: Build Node.js API
+FROM node:18-alpine AS api
+WORKDIR /app
+COPY backend/package*.json ./
+RUN npm install --production
+COPY backend/src ./src
+COPY backend/env.example ./.env
+
+# Stage 2: Production image with Nginx + Node.js
 FROM nginx:alpine
 
-# Zkopíruj všechny HTML soubory do nginx html složky
-COPY koulio_complete_app.html /usr/share/nginx/html/koulio_complete_app.html
-COPY login.html /usr/share/nginx/html/login.html
-COPY register.html /usr/share/nginx/html/register.html
-COPY profile.html /usr/share/nginx/html/profile.html
-COPY index.html /usr/share/nginx/html/index.html
+# Install Node.js and supervisor for process management
+RUN apk add --no-cache nodejs npm supervisor curl
 
-# Zkopíruj frontend API klienta
+# Copy API from builder stage
+COPY --from=api /app /app
+
+# Copy frontend files
+COPY index.html /usr/share/nginx/html/
+COPY koulio_complete_app.html /usr/share/nginx/html/
+COPY login.html /usr/share/nginx/html/
+COPY register.html /usr/share/nginx/html/
+COPY profile.html /usr/share/nginx/html/
 COPY src/ /usr/share/nginx/html/src/
+COPY favicon.ico /usr/share/nginx/html/
+COPY favicon-16x16.png /usr/share/nginx/html/
+COPY favicon-32x32.png /usr/share/nginx/html/
+COPY apple-touch-icon.png /usr/share/nginx/html/
+COPY android-chrome-192x192.png /usr/share/nginx/html/
+COPY android-chrome-256x256.png /usr/share/nginx/html/
+COPY android-chrome-512x512.png /usr/share/nginx/html/
+COPY maskable-icon-512x512.png /usr/share/nginx/html/
+COPY mstile-150x150.png /usr/share/nginx/html/
+COPY manifest.webmanifest /usr/share/nginx/html/
+COPY site.webmanifest /usr/share/nginx/html/
 
-# Zkopíruj obrázky pokud existují
-COPY vanocni_koule.jpg /usr/share/nginx/html/vanocni_koule.jpg
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Zkopíruj favicon soubory
-COPY favicon.ico /usr/share/nginx/html/favicon.ico
-COPY favicon-16x16.png /usr/share/nginx/html/favicon-16x16.png
-COPY favicon-32x32.png /usr/share/nginx/html/favicon-32x32.png
-COPY apple-touch-icon.png /usr/share/nginx/html/apple-touch-icon.png
-COPY android-chrome-192x192.png /usr/share/nginx/html/android-chrome-192x192.png
-COPY android-chrome-256x256.png /usr/share/nginx/html/android-chrome-256x256.png
-COPY android-chrome-512x512.png /usr/share/nginx/html/android-chrome-512x512.png
-COPY maskable-icon-512x512.png /usr/share/nginx/html/maskable-icon-512x512.png
-COPY mstile-150x150.png /usr/share/nginx/html/mstile-150x150.png
+# Copy supervisor configuration
+COPY supervisord.conf /etc/supervisord.conf
 
-# Zkopíruj manifest soubory
-COPY manifest.webmanifest /usr/share/nginx/html/manifest.webmanifest
-COPY site.webmanifest /usr/share/nginx/html/site.webmanifest
+# Expose ports
+EXPOSE 80 3000
 
-# Vytvoř nginx konfiguraci pro SPA s API proxy
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    \
-    # Povol gzip kompresi \
-    gzip on; \
-    gzip_vary on; \
-    gzip_min_length 1024; \
-    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json; \
-    \
-    # API proxy - routuje /api/* požadavky na backend \
-    location /api/ { \
-        proxy_pass http://koulio-backend:3000/api/; \
-        proxy_http_version 1.1; \
-        proxy_set_header Upgrade $http_upgrade; \
-        proxy_set_header Connection "upgrade"; \
-        proxy_set_header Host $host; \
-        proxy_set_header X-Real-IP $remote_addr; \
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
-        proxy_set_header X-Forwarded-Proto $scheme; \
-        proxy_cache_bypass $http_upgrade; \
-        proxy_read_timeout 300s; \
-        proxy_connect_timeout 75s; \
-    } \
-    \
-    # Health check proxy \
-    location /health { \
-        proxy_pass http://koulio-backend:3000/health; \
-        proxy_http_version 1.1; \
-        proxy_set_header Host $host; \
-        proxy_set_header X-Real-IP $remote_addr; \
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
-        proxy_set_header X-Forwarded-Proto $scheme; \
-    } \
-    \
-    # Cache pro statické soubory \
-    location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg|webmanifest)$ { \
-        expires 1y; \
-        add_header Cache-Control "public, immutable"; \
-    } \
-    \
-    # Specifické routy pro autentifikaci \
-    location /login { \
-        try_files /login.html =404; \
-    } \
-    \
-    location /register { \
-        try_files /register.html =404; \
-    } \
-    \
-    location /profile { \
-        try_files /profile.html =404; \
-    } \
-    \
-    location /app { \
-        try_files /koulio_complete_app.html =404; \
-    } \
-    \
-    # Fallback pro SPA routing \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD curl --fail http://localhost/health || exit 1
 
-# Exponuj port 80
-EXPOSE 80
-
-# Spusť nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

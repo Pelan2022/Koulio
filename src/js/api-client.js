@@ -11,7 +11,7 @@ class ApiClient {
     }
 
     /**
-     * Automatická detekce backend URL
+     * Automatická detekce backend URL podle cursorrules
      */
     detectBackendURL() {
         // Pro lokální vývoj
@@ -19,13 +19,13 @@ class ApiClient {
             return 'http://localhost:3000';
         }
         
-        // Pro produkci - API běží na stejném doméně, ale na jiném portu
-        // Nginx bude proxy routovat /api/* požadavky na backend
+        // Pro produkci - podle cursorrules API běží na stejné doméně
+        // Nginx proxy routuje /api/* požadavky na backend (port 3000)
+        // Frontend a backend běží v jednom kontejneru
         const protocol = window.location.protocol;
         const hostname = window.location.hostname;
         
-        // API běží na portu 3000, nginx na portu 80
-        // Nginx bude proxy routovat /api/* na localhost:3000
+        // API je dostupné přes nginx proxy na /api/*
         return `${protocol}//${hostname}/api`;
     }
 
@@ -59,16 +59,16 @@ class ApiClient {
     }
 
     /**
-     * Make HTTP request with SSL fallback
+     * Make HTTP request podle cursorrules
      */
     async request(endpoint, options = {}) {
         return await this.makeRequest(endpoint, options);
     }
 
     /**
-     * Make HTTP request with automatic fallback
+     * Make HTTP request with proper error handling
      */
-    async makeRequest(endpoint, options = {}, isRetry = false) {
+    async makeRequest(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
         
         const config = {
@@ -86,47 +86,55 @@ class ApiClient {
 
         try {
             const response = await fetch(url, config);
-            const data = await response.json();
+            
+            // Check if response is ok
+            if (!response.ok) {
+                // Try to parse error response
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch {
+                    errorData = { message: `HTTP ${response.status}: ${response.statusText}` };
+                }
 
-            // If token is expired or invalid, clear auth
-            if (response.status === 401 && data.message?.includes('token')) {
-                this.clearAuth();
-                window.location.href = '/login.html';
-                return null;
+                // If token is expired or invalid, clear auth
+                if (response.status === 401 && errorData.message?.includes('token')) {
+                    this.clearAuth();
+                    window.location.href = '/login.html';
+                    return null;
+                }
+
+                return {
+                    success: false,
+                    status: response.status,
+                    data: errorData
+                };
             }
 
+            // Parse successful response
+            const data = await response.json();
+
             return {
-                success: response.ok,
+                success: true,
                 status: response.status,
                 data: data
             };
         } catch (error) {
             console.error('API request failed:', error);
             
-            // Pokud je to SSL chyba a ještě jsme nezkusili fallback
-            if (!isRetry && (error.message.includes('CERT') || error.message.includes('SSL') || error.message.includes('certificate'))) {
-                console.log('SSL error detected, trying HTTP fallback...');
-                
-                // Zkusíme HTTP místo HTTPS
-                const httpURL = this.baseURL.replace('https://', 'http://');
-                if (httpURL !== this.baseURL) {
-                    const originalURL = this.baseURL;
-                    this.baseURL = httpURL;
-                    
-                    try {
-                        const result = await this.makeRequest(endpoint, options, true);
-                        return result;
-                    } catch (fallbackError) {
-                        console.error('HTTP fallback also failed:', fallbackError);
-                        this.baseURL = originalURL; // Vrátíme původní URL
-                    }
-                }
+            // Handle specific error types
+            let errorMessage = error.message;
+            
+            if (error.message.includes('Failed to fetch')) {
+                errorMessage = 'Nelze se připojit k serveru. Zkontrolujte připojení k internetu.';
+            } else if (error.message.includes('CERT') || error.message.includes('SSL') || error.message.includes('certificate')) {
+                errorMessage = 'Problém s připojením k serveru. Zkuste to prosím znovu.';
             }
             
             return {
                 success: false,
                 status: 0,
-                error: error.message
+                error: errorMessage
             };
         }
     }
