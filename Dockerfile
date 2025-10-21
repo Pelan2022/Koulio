@@ -9,8 +9,8 @@ COPY backend/src ./src
 # Stage 2: Production with Nginx + Node.js
 FROM nginx:alpine
 
-# Install Node.js
-RUN apk add --no-cache nodejs npm
+# Install Node.js and supervisor
+RUN apk add --no-cache nodejs npm supervisor
 
 # Copy backend from stage 1
 COPY --from=backend /app /app
@@ -37,11 +37,11 @@ COPY site.webmanifest /usr/share/nginx/html/
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Create startup script
-RUN echo '#!/bin/sh' > /start.sh && \
-    echo 'nginx &' >> /start.sh && \
-    echo 'cd /app && npm start' >> /start.sh && \
-    chmod +x /start.sh
+# Copy supervisor configuration
+COPY supervisord.conf /etc/supervisord.conf
+
+# Create log directory for supervisor
+RUN mkdir -p /var/log
 
 # Expose ports
 EXPOSE 80 3000
@@ -50,5 +50,5 @@ EXPOSE 80 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
 
-# Start both services
-CMD ["/start.sh"]
+# Start supervisor to manage both services
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
