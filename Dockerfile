@@ -67,10 +67,10 @@ RUN echo 'server { \
 
 # Create startup script
 RUN echo '#!/bin/sh \
-# Start Node.js backend in background \
-cd /app && npm start & \
-# Start nginx in foreground \
-nginx -g "daemon off;"' > /start.sh && chmod +x /start.sh
+# Start nginx in background \
+nginx & \
+# Start Node.js backend in foreground (so logs show in CapRover) \
+cd /app && npm start' > /start.sh && chmod +x /start.sh
 
 # Expose ports
 EXPOSE 80 3000
