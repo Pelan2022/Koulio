@@ -18,6 +18,21 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
+// Log startup information
+console.log('=== KOULIO Backend Startup ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('PORT:', PORT);
+console.log('HOST:', HOST);
+console.log('HTTPS_ENABLED:', HTTPS_ENABLED);
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
+console.log('DB_NAME:', process.env.DB_NAME);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('ALLOWED_ORIGINS:', process.env.ALLOWED_ORIGINS);
+console.log('Working directory:', process.cwd());
+console.log('Node version:', process.version);
+console.log('===============================');
+
 async function startServer() {
     try {
         // Connect to database (optional for health checks)

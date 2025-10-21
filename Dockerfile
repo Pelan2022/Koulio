@@ -26,6 +26,17 @@ RUN ls -la /app/
 RUN ls -la /app/src/
 RUN cat /app/package.json | head -10
 
+# Log environment variables
+RUN echo "=== Environment Variables ==="
+RUN echo "NODE_ENV: $NODE_ENV"
+RUN echo "PORT: $PORT"
+RUN echo "HOST: $HOST"
+RUN echo "DB_HOST: $DB_HOST"
+RUN echo "DB_PORT: $DB_PORT"
+RUN echo "DB_NAME: $DB_NAME"
+RUN echo "DB_USER: $DB_USER"
+RUN echo "ALLOWED_ORIGINS: $ALLOWED_ORIGINS"
+
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
 COPY koulio_complete_app.html /usr/share/nginx/html/
