@@ -80,6 +80,9 @@ app.use(cors(corsOptions));
 // Compression middleware
 app.use(compression());
 
+// Serve static files
+app.use(express.static(__dirname + '/../..'));
+
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

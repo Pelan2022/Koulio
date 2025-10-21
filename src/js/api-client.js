@@ -11,7 +11,7 @@ class ApiClient {
     }
 
     /**
-     * Automatická detekce backend URL podle cursorrules
+     * Automatická detekce backend URL
      */
     detectBackendURL() {
         // Pro lokální vývoj
@@ -19,14 +19,13 @@ class ApiClient {
             return 'http://localhost:3000';
         }
         
-        // Pro produkci - podle cursorrules API běží na stejné doméně
-        // Nginx proxy routuje /api/* požadavky na backend (port 3000)
-        // Frontend a backend běží v jednom kontejneru
+        // Pro produkci - API běží na stejné doméně na portu 3000
+        // CapRover proxy routuje požadavky na backend
         const protocol = window.location.protocol;
         const hostname = window.location.hostname;
         
-        // API je dostupné přes nginx proxy na /api/*
-        return `${protocol}//${hostname}/api`;
+        // API je dostupné přímo na portu 3000
+        return `${protocol}//${hostname}:3000`;
     }
 
     /**
