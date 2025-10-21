@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=4">
     <meta property="og:image" content="./android-chrome-512x512.png?v=7">
     <meta name="twitter:image" content="./android-chrome-512x512.png?v=7">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Koulio">
     <link rel="manifest" href="/manifest.webmanifest">
@@ -443,12 +443,7 @@
                 return;
             }
             
-            if (userExists(email)) {
-                showError('Uživatel s tímto emailem již existuje.');
-                document.getElementById('email').parentElement.classList.add('error');
-                hasErrors = true;
-                return;
-            }
+            // Kontrola existence uživatele se nyní provádí na serveru přes API
             
             if (!password) {
                 showError('Prosím zadejte heslo.');
