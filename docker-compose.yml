@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # PostgreSQL databáze
+  postgres:
+    image: postgres:15-alpine
+    container_name: koulio-postgres
+    environment:
+      POSTGRES_DB: koulio_db
+      POSTGRES_USER: koulio_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-your_secure_password_here}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/src/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - koulio-network
+    restart: unless-stopped
+
+  # Backend API (Node.js)
+  koulio-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: koulio-backend
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://koulio_user:${DB_PASSWORD:-your_secure_password_here}@postgres:5432/koulio_db?sslmode=require
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_here_make_it_very_long_and_secure_at_least_32_characters}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost,https://unrollit.aici.cz}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - koulio-network
+    restart: unless-stopped
+    volumes:
+      - ./backend/logs:/app/logs
+      - ./backend/backups:/app/backups
+
+  # Frontend (Nginx)
+  koulio-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: koulio-frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - koulio-backend
+    networks:
+      - koulio-network
+    restart: unless-stopped
+
+networks:
+  koulio-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

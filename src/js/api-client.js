@@ -14,19 +14,19 @@ class ApiClient {
      * Automatická detekce backend URL
      */
     detectBackendURL() {
-        // Zkusíme nejdříve HTTP pro lokální vývoj
+        // Pro lokální vývoj
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return 'http://localhost:3000';
         }
         
-        // Pro produkci zkusíme HTTPS, ale s fallback na HTTP
-        const currentHost = window.location.hostname;
-        if (currentHost.includes('unrollit.aici.cz')) {
-            return 'https://koulio-backend.unrollit.aici.cz';
-        }
+        // Pro produkci - API běží na stejném doméně, ale na jiném portu
+        // Nginx bude proxy routovat /api/* požadavky na backend
+        const protocol = window.location.protocol;
+        const hostname = window.location.hostname;
         
-        // Fallback na HTTP
-        return 'http://koulio-backend.unrollit.aici.cz';
+        // API běží na portu 3000, nginx na portu 80
+        // Nginx bude proxy routovat /api/* na localhost:3000
+        return `${protocol}//${hostname}/api`;
     }
 
     /**

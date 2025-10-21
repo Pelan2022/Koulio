@@ -29,7 +29,7 @@ COPY mstile-150x150.png /usr/share/nginx/html/mstile-150x150.png
 COPY manifest.webmanifest /usr/share/nginx/html/manifest.webmanifest
 COPY site.webmanifest /usr/share/nginx/html/site.webmanifest
 
-# Vytvoř nginx konfiguraci pro SPA s autentifikací
+# Vytvoř nginx konfiguraci pro SPA s API proxy
 RUN echo 'server { \
     listen 80; \
     server_name _; \
@@ -41,6 +41,31 @@ RUN echo 'server { \
     gzip_vary on; \
     gzip_min_length 1024; \
     gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json; \
+    \
+    # API proxy - routuje /api/* požadavky na backend \
+    location /api/ { \
+        proxy_pass http://koulio-backend:3000/api/; \
+        proxy_http_version 1.1; \
+        proxy_set_header Upgrade $http_upgrade; \
+        proxy_set_header Connection "upgrade"; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+        proxy_cache_bypass $http_upgrade; \
+        proxy_read_timeout 300s; \
+        proxy_connect_timeout 75s; \
+    } \
+    \
+    # Health check proxy \
+    location /health { \
+        proxy_pass http://koulio-backend:3000/health; \
+        proxy_http_version 1.1; \
+        proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
     \
     # Cache pro statické soubory \
     location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg|webmanifest)$ { \
