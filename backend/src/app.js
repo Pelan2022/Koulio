@@ -109,17 +109,6 @@ const globalLimiter = rateLimit({
 
 app.use('/api/', globalLimiter);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-    res.json({
-        success: true,
-        message: 'KOULIO Backend API is running',
-        timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV || 'development',
-        database: database.isConnected() ? 'connected' : 'disconnected'
-    });
-});
-
 // API routes with rate limiting
 app.use('/api/auth', authRateLimit, authRoutes);
 app.use('/api/user', apiRateLimit, userRoutes);
