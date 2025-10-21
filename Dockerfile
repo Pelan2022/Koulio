@@ -45,10 +45,12 @@ COPY backend/package.json /app/package.json
 
 # Debug: Check backend files and environment
 RUN echo "=== DEBUGGING BACKEND ==="
-RUN ls -la /app/
-RUN ls -la /app/src/
+RUN echo "Checking /app directory:" && ls -la /app/
+RUN echo "Checking /app/src directory:" && ls -la /app/src/
+RUN echo "Environment variables:"
 RUN echo "NODE_ENV: $NODE_ENV"
 RUN echo "PORT: $PORT"
+RUN echo "DB_HOST: $DB_HOST"
 
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
