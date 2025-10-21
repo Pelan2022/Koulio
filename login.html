@@ -304,19 +304,8 @@
         </div>
     </div>
 
+    <script src="./src/js/api-client.js"></script>
     <script>
-
-        // Funkce pro získání uživatelů z localStorage
-        function getUsers() {
-            const users = localStorage.getItem('koulio_users');
-            return users ? JSON.parse(users) : [];
-        }
-
-        // Funkce pro nalezení uživatele podle emailu
-        function findUserByEmail(email) {
-            const users = getUsers();
-            return users.find(user => user.email.toLowerCase() === email.toLowerCase());
-        }
 
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
@@ -357,55 +346,28 @@
             }
         }
 
-        function login(email, password, rememberMe = false) {
-            // Simulace přihlašovacího procesu
+        async function login(email, password, rememberMe = false) {
             setLoading(true);
             
-            setTimeout(() => {
-                let loginSuccess = false;
-                let userData = null;
+            try {
+                const response = await apiClient.login(email, password, rememberMe);
                 
-                // Kontrola registrovaných uživatelů
-                const user = findUserByEmail(email);
-                if (user && user.password === password && user.isActive) {
-                    loginSuccess = true;
-                    userData = {
-                        email: user.email,
-                        fullName: user.fullName,
-                        isDemo: false
-                    };
-                }
-                
-                if (loginSuccess) {
+                if (response && response.success) {
                     showSuccess('Přihlášení úspěšné! Přesměrovávám...');
-                    
-                    // Uložení informace o přihlášení do localStorage
-                    localStorage.setItem('koulio_logged_in', 'true');
-                    localStorage.setItem('koulio_user_email', userData.email);
-                    localStorage.setItem('koulio_user_name', userData.fullName);
-                    localStorage.setItem('koulio_user_demo', userData.isDemo.toString());
-                    
-                    // Uložení "zapamatovat si mě" informace
-                    if (rememberMe) {
-                        localStorage.setItem('koulio_remember_me', 'true');
-                        localStorage.setItem('koulio_remembered_email', email);
-                        localStorage.setItem('koulio_remembered_timestamp', new Date().getTime().toString());
-                    } else {
-                        // Odstranění "zapamatovat si mě" informace pokud není zaškrtnuto
-                        localStorage.removeItem('koulio_remember_me');
-                        localStorage.removeItem('koulio_remembered_email');
-                        localStorage.removeItem('koulio_remembered_timestamp');
-                    }
                     
                     // Přesměrování na hlavní aplikaci
                     setTimeout(() => {
                         window.location.href = 'koulio_complete_app.html';
                     }, 1500);
                 } else {
-                    showError('Neplatné přihlašovací údaje. Zkuste to prosím znovu.');
+                    showError(response?.data?.message || 'Neplatné přihlašovací údaje. Zkuste to prosím znovu.');
                 }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Chyba při přihlašování. Zkuste to prosím znovu.');
+            } finally {
                 setLoading(false);
-            }, 1000);
+            }
         }
 
         function forgotPassword() {
@@ -450,33 +412,13 @@
                 showSuccess('Registrace byla úspěšná! Nyní se můžete přihlásit.');
             }
             
-            // Kontrola "zapamatovat si mě" funkčnosti
-            const rememberMe = localStorage.getItem('koulio_remember_me');
-            const rememberedEmail = localStorage.getItem('koulio_remembered_email');
-            const rememberedTimestamp = localStorage.getItem('koulio_remembered_timestamp');
-            
-            if (rememberMe === 'true' && rememberedEmail && rememberedTimestamp) {
-                // Kontrola, zda není "zapamatovat si mě" příliš staré (30 dní)
-                const thirtyDaysAgo = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
-                const timestamp = parseInt(rememberedTimestamp);
-                
-                if (timestamp > thirtyDaysAgo) {
-                    // Automatické vyplnění emailu a zaškrtnutí checkboxu
-                    document.getElementById('email').value = rememberedEmail;
-                    document.getElementById('rememberMe').checked = true;
-                } else {
-                    // Odstranění starých "zapamatovat si mě" údajů
-                    localStorage.removeItem('koulio_remember_me');
-                    localStorage.removeItem('koulio_remembered_email');
-                    localStorage.removeItem('koulio_remembered_timestamp');
-                }
-            }
+            // Auto-fill remember me data using API client
+            apiClient.autoFillRememberMe();
         });
 
         // Kontrola, zda je uživatel již přihlášen
         document.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('koulio_logged_in');
-            if (isLoggedIn === 'true') {
+            if (apiClient.isLoggedIn()) {
                 // Uživatel je již přihlášen, přesměrování na hlavní aplikaci
                 window.location.href = 'koulio_complete_app.html';
             }

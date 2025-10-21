@@ -3887,6 +3887,7 @@
         </div>
     </div>
 
+    <script src="./src/js/api-client.js"></script>
     <script>
         function showTab(tabName) {
             // Skryj všechny tab obsahy
@@ -4155,16 +4156,29 @@
         });
 
         // Authentication check
-        document.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('koulio_logged_in');
-            if (isLoggedIn !== 'true') {
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (!apiClient.isLoggedIn()) {
                 // User is not logged in, redirect to login page
                 window.location.href = 'login.html';
             } else {
-                // User is logged in, show user info
-                const userEmail = localStorage.getItem('koulio_user_email');
-                if (userEmail) {
-                    showUserInfo(userEmail);
+                // Verify token with backend
+                try {
+                    const response = await apiClient.verifyToken();
+                    if (response && response.success) {
+                        // User is logged in, show user info
+                        const userData = apiClient.getUserData();
+                        if (userData) {
+                            showUserInfo(userData.email);
+                        }
+                    } else {
+                        // Token is invalid, redirect to login
+                        apiClient.clearAuth();
+                        window.location.href = 'login.html';
+                    }
+                } catch (error) {
+                    console.error('Token verification failed:', error);
+                    apiClient.clearAuth();
+                    window.location.href = 'login.html';
                 }
             }
         });
@@ -4172,8 +4186,9 @@
         function showUserInfo(email) {
             // Add user info to header
             const header = document.querySelector('.header');
-            const userName = localStorage.getItem('koulio_user_name') || email;
-            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            const userData = apiClient.getUserData();
+            const userName = userData ? userData.fullName : email;
+            const isDemo = userData ? userData.isDemo : false;
             
             const userInfo = document.createElement('div');
             userInfo.className = 'user-info';
@@ -4214,13 +4229,16 @@
             header.appendChild(userInfo);
         }
 
-        function logout() {
+        async function logout() {
             if (confirm('Opravdu se chcete odhlásit?')) {
-                localStorage.removeItem('koulio_logged_in');
-                localStorage.removeItem('koulio_user_email');
-                localStorage.removeItem('koulio_user_name');
-                localStorage.removeItem('koulio_user_demo');
-                window.location.href = 'login.html';
+                try {
+                    await apiClient.logout();
+                } catch (error) {
+                    console.error('Logout error:', error);
+                } finally {
+                    apiClient.clearAuth();
+                    window.location.href = 'login.html';
+                }
             }
         }
     </script>

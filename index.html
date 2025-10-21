@@ -92,12 +92,11 @@
         <a href="login.html" class="manual-link">Pokračovat ručně</a>
     </div>
 
+    <script src="./src/js/api-client.js"></script>
     <script>
         // Check if user is already logged in
         document.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('koulio_logged_in');
-            
-            if (isLoggedIn === 'true') {
+            if (apiClient.isLoggedIn()) {
                 // User is already logged in, redirect to main app
                 window.location.href = 'koulio_complete_app.html';
             } else {

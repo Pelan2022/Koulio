@@ -11,6 +11,7 @@ const database = require('./config/database');
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -98,6 +99,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 // API documentation endpoint
 app.get('/api', (req, res) => {
@@ -116,6 +118,13 @@ app.get('/api', (req, res) => {
                 'POST /api/auth/change-password': 'Change password',
                 'DELETE /api/auth/account': 'Delete account',
                 'GET /api/auth/verify': 'Verify token'
+            },
+            user: {
+                'GET /api/user/profile': 'Get user profile',
+                'PUT /api/user/profile': 'Update user profile',
+                'DELETE /api/user/account': 'Delete user account',
+                'GET /api/user/stats': 'Get user statistics',
+                'GET /api/user/export': 'Export user data'
             },
             health: {
                 'GET /health': 'Health check'

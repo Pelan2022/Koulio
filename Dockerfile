@@ -8,6 +8,9 @@ COPY register.html /usr/share/nginx/html/register.html
 COPY profile.html /usr/share/nginx/html/profile.html
 COPY index.html /usr/share/nginx/html/index.html
 
+# Zkopíruj frontend API klienta
+COPY src/ /usr/share/nginx/html/src/
+
 # Zkopíruj obrázky pokud existují
 COPY vanocni_koule.jpg /usr/share/nginx/html/vanocni_koule.jpg
 

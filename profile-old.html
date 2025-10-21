@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOULIO - Můj účet</title>
+    <link rel="shortcut icon" href="./favicon.ico?v=6" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico?v=6" type="image/x-icon" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png?v=4">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=4">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=4">
+    <meta property="og:image" content="./android-chrome-512x512.png?v=7">
+    <meta name="twitter:image" content="./android-chrome-512x512.png?v=7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Koulio">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./mstile-150x150.png?v=3">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .profile-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .profile-content {
+            padding: 40px 30px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .info-value {
+            color: #6c757d;
+        }
+
+        .demo-badge {
+            background: #ffc107;
+            color: #856404;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .back-link {
+            margin-bottom: 20px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link a:hover {
+            color: #764ba2;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            border: 1px solid #c3e6cb;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 10px;
+                max-width: none;
+            }
+            
+            .profile-header {
+                padding: 30px 20px;
+            }
+            
+            .profile-content {
+                padding: 30px 20px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>KOULIO</h1>
+            <p>Můj účet</p>
+        </div>
+        
+        <div class="profile-content">
+            <div class="back-link">
+                <a href="koulio_complete_app.html">← Zpět do aplikace</a>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+
+            <div class="user-info">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">Informace o účtu</h3>
+                
+                <div class="info-row">
+                    <span class="info-label">Jméno:</span>
+                    <span class="info-value" id="userName">-</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value" id="userEmail">-</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Typ účtu:</span>
+                    <span class="info-value" id="accountType">-</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Datum registrace:</span>
+                    <span class="info-value" id="registrationDate">-</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Poslední přihlášení:</span>
+                    <span class="info-value" id="lastLogin">-</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="changePassword()">Změnit heslo</button>
+                <button class="btn btn-secondary" onclick="exportData()">Exportovat data</button>
+                <button class="btn btn-outline" onclick="backupAccount()">Zálohovat účet</button>
+                <button class="btn btn-danger" onclick="deleteAccount()">Smazat účet</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./src/js/api-client.js"></script>
+    <script>
+        // Funkce pro zobrazení chybových zpráv
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            
+            successDiv.style.display = 'none';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Funkce pro zobrazení úspěšných zpráv
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            
+            errorDiv.style.display = 'none';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+
+        // Načtení informací o uživateli
+        function loadUserInfo() {
+            const isLoggedIn = localStorage.getItem('koulio_logged_in');
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const userName = localStorage.getItem('koulio_user_name');
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            if (!isLoggedIn || !userEmail) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Zobrazení základních informací
+            document.getElementById('userName').textContent = userName || 'Neznámé';
+            document.getElementById('userEmail').textContent = userEmail;
+            
+            if (isDemo) {
+                document.getElementById('accountType').innerHTML = '<span class="demo-badge">Demo účet</span>';
+                document.getElementById('registrationDate').textContent = 'Demo účet';
+                document.getElementById('lastLogin').textContent = new Date().toLocaleString('cs-CZ');
+            } else {
+                // Načtení informací o registrovaném uživateli
+                const users = getUsers();
+                const user = users.find(u => u.email === userEmail);
+                
+                if (user) {
+                    document.getElementById('accountType').textContent = 'Registrovaný účet';
+                    document.getElementById('registrationDate').textContent = new Date(user.createdAt).toLocaleDateString('cs-CZ');
+                    document.getElementById('lastLogin').textContent = new Date().toLocaleString('cs-CZ');
+                }
+            }
+        }
+
+        // Funkce pro změnu hesla
+        function changePassword() {
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            if (isDemo) {
+                alert('Demo účet nemůže změnit heslo. Zaregistrujte se pro plnou funkcionalnost.');
+                return;
+            }
+            
+            const newPassword = prompt('Zadejte nové heslo (min. 6 znaků):');
+            if (!newPassword) return;
+            
+            if (newPassword.length < 6) {
+                showError('Heslo musí mít minimálně 6 znaků.');
+                return;
+            }
+            
+            const confirmPassword = prompt('Potvrďte nové heslo:');
+            if (newPassword !== confirmPassword) {
+                showError('Hesla se neshodují.');
+                return;
+            }
+            
+            // Aktualizace hesla
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.email === userEmail);
+            
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                saveUsers(users);
+                showSuccess('Heslo bylo úspěšně změněno.');
+            } else {
+                showError('Chyba při aktualizaci hesla.');
+            }
+        }
+
+        // Funkce pro export dat
+        function exportData() {
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            if (isDemo) {
+                alert('Demo účet nemůže exportovat data. Zaregistrujte se pro plnou funkcionalnost.');
+                return;
+            }
+            
+            // Získání všech dat uživatele
+            const userData = {
+                user: {
+                    email: userEmail,
+                    name: localStorage.getItem('koulio_user_name'),
+                    lastExport: new Date().toISOString()
+                },
+                settings: {},
+                notes: {}
+            };
+            
+            // Export do JSON souboru
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `koulio_data_${userEmail}_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showSuccess('Data byla úspěšně exportována.');
+        }
+
+        // Funkce pro zálohu účtu
+        function backupAccount() {
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            if (isDemo) {
+                alert('Demo účet nemůže vytvořit zálohu. Zaregistrujte se pro plnou funkcionalnost.');
+                return;
+            }
+            
+            showSuccess('Záloha účtu byla vytvořena. Vaše data jsou uložena lokálně v prohlížeči.');
+        }
+
+        // Funkce pro smazání účtu
+        function deleteAccount() {
+            const isDemo = localStorage.getItem('koulio_user_demo') === 'true';
+            
+            if (isDemo) {
+                alert('Demo účet nemůže být smazán. Zaregistrujte se pro plnou funkcionalnost.');
+                return;
+            }
+            
+            if (!confirm('Opravdu chcete smazat váš účet? Tato akce je nevratná!')) {
+                return;
+            }
+            
+            const confirmText = prompt('Pro potvrzení smazání napište "SMAZAT":');
+            if (confirmText !== 'SMAZAT') {
+                showError('Potvrzení nebylo správné. Účet nebyl smazán.');
+                return;
+            }
+            
+            // Smazání uživatele
+            const userEmail = localStorage.getItem('koulio_user_email');
+            const users = getUsers();
+            const filteredUsers = users.filter(u => u.email !== userEmail);
+            saveUsers(filteredUsers);
+            
+            // Odhlášení a přesměrování
+            localStorage.removeItem('koulio_logged_in');
+            localStorage.removeItem('koulio_user_email');
+            localStorage.removeItem('koulio_user_name');
+            localStorage.removeItem('koulio_user_demo');
+            
+            alert('Váš účet byl úspěšně smazán.');
+            window.location.href = 'login.html';
+        }
+
+        // Inicializace stránky
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+        });
+    </script>
+</body>
+</html>

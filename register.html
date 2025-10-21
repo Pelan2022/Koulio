@@ -281,6 +281,7 @@
         </div>
     </div>
 
+    <script src="./src/js/api-client.js"></script>
     <script>
         // Funkce pro zobrazení chybových zpráv
         function showError(message) {
@@ -372,48 +373,29 @@
             }
         }
 
-        // Funkce pro kontrolu existence uživatele
-        function userExists(email) {
-            const users = getUsers();
-            return users.some(user => user.email.toLowerCase() === email.toLowerCase());
-        }
-
-        // Funkce pro získání uživatelů z localStorage
-        function getUsers() {
-            const users = localStorage.getItem('koulio_users');
-            return users ? JSON.parse(users) : [];
-        }
-
-        // Funkce pro uložení uživatele
-        function saveUser(userData) {
-            const users = getUsers();
-            users.push(userData);
-            localStorage.setItem('koulio_users', JSON.stringify(users));
-        }
-
         // Funkce pro registraci
-        function registerUser(userData) {
+        async function registerUser(userData) {
             setLoading(true);
             
-            // Simulace registračního procesu
-            setTimeout(() => {
-                try {
-                    // Uložení uživatele
-                    saveUser(userData);
+            try {
+                const response = await apiClient.register(userData);
+                
+                if (response && response.success) {
+                    showSuccess('Registrace byla úspěšná! Přesměrovávám na přihlášení...');
                     
-                    showSuccess('Registrace úspěšná! Přesměrovávám na přihlášení...');
-                    
-                    // Přesměrování na přihlášení po 2 sekundách
+                    // Přesměrování na přihlašovací stránku
                     setTimeout(() => {
                         window.location.href = 'login.html?registered=true';
                     }, 2000);
-                    
-                } catch (error) {
-                    showError('Chyba při registraci. Zkuste to prosím znovu.');
+                } else {
+                    showError(response?.data?.message || 'Chyba při registraci. Zkuste to prosím znovu.');
                 }
-                
+            } catch (error) {
+                console.error('Registration error:', error);
+                showError('Chyba při registraci. Zkuste to prosím znovu.');
+            } finally {
                 setLoading(false);
-            }, 1500);
+            }
         }
 
         // Event listener pro kontrolu síly hesla
@@ -523,8 +505,7 @@
 
         // Kontrola, zda je uživatel již přihlášen
         document.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('koulio_logged_in');
-            if (isLoggedIn === 'true') {
+            if (apiClient.isLoggedIn()) {
                 // Uživatel je již přihlášen, přesměrování na hlavní aplikaci
                 window.location.href = 'koulio_complete_app.html';
             }
