@@ -4,9 +4,29 @@
  */
 
 class ApiClient {
-    constructor(baseURL = 'https://koulio-backend.unrollit.aici.cz') {
-        this.baseURL = baseURL;
+    constructor(baseURL = null) {
+        // Automatická detekce backend URL
+        this.baseURL = baseURL || this.detectBackendURL();
         this.token = this.getStoredToken();
+    }
+
+    /**
+     * Automatická detekce backend URL
+     */
+    detectBackendURL() {
+        // Zkusíme nejdříve HTTP pro lokální vývoj
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            return 'http://localhost:3000';
+        }
+        
+        // Pro produkci zkusíme HTTPS, ale s fallback na HTTP
+        const currentHost = window.location.hostname;
+        if (currentHost.includes('unrollit.aici.cz')) {
+            return 'https://koulio-backend.unrollit.aici.cz';
+        }
+        
+        // Fallback na HTTP
+        return 'http://koulio-backend.unrollit.aici.cz';
     }
 
     /**
@@ -39,9 +59,16 @@ class ApiClient {
     }
 
     /**
-     * Make HTTP request
+     * Make HTTP request with SSL fallback
      */
     async request(endpoint, options = {}) {
+        return await this.makeRequest(endpoint, options);
+    }
+
+    /**
+     * Make HTTP request with automatic fallback
+     */
+    async makeRequest(endpoint, options = {}, isRetry = false) {
         const url = `${this.baseURL}${endpoint}`;
         
         const config = {
@@ -75,6 +102,27 @@ class ApiClient {
             };
         } catch (error) {
             console.error('API request failed:', error);
+            
+            // Pokud je to SSL chyba a ještě jsme nezkusili fallback
+            if (!isRetry && (error.message.includes('CERT') || error.message.includes('SSL') || error.message.includes('certificate'))) {
+                console.log('SSL error detected, trying HTTP fallback...');
+                
+                // Zkusíme HTTP místo HTTPS
+                const httpURL = this.baseURL.replace('https://', 'http://');
+                if (httpURL !== this.baseURL) {
+                    const originalURL = this.baseURL;
+                    this.baseURL = httpURL;
+                    
+                    try {
+                        const result = await this.makeRequest(endpoint, options, true);
+                        return result;
+                    } catch (fallbackError) {
+                        console.error('HTTP fallback also failed:', fallbackError);
+                        this.baseURL = originalURL; // Vrátíme původní URL
+                    }
+                }
+            }
+            
             return {
                 success: false,
                 status: 0,

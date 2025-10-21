@@ -388,11 +388,30 @@
                         window.location.href = 'login.html?registered=true';
                     }, 2000);
                 } else {
-                    showError(response?.data?.message || 'Chyba při registraci. Zkuste to prosím znovu.');
+                    // Lepší error handling
+                    let errorMessage = 'Chyba při registraci. Zkuste to prosím znovu.';
+                    
+                    if (response?.data?.message) {
+                        errorMessage = response.data.message;
+                    } else if (response?.error) {
+                        if (response.error.includes('CERT') || response.error.includes('SSL')) {
+                            errorMessage = 'Problém s připojením k serveru. Zkuste to prosím znovu.';
+                        } else if (response.error.includes('Failed to fetch')) {
+                            errorMessage = 'Nelze se připojit k serveru. Zkontrolujte připojení k internetu.';
+                        }
+                    }
+                    
+                    showError(errorMessage);
                 }
             } catch (error) {
                 console.error('Registration error:', error);
-                showError('Chyba při registraci. Zkuste to prosím znovu.');
+                
+                let errorMessage = 'Chyba při registraci. Zkuste to prosím znovu.';
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Nelze se připojit k serveru. Zkontrolujte připojení k internetu.';
+                }
+                
+                showError(errorMessage);
             } finally {
                 setLoading(false);
             }
