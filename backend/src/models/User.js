@@ -8,6 +8,7 @@ class User {
         this.email = data.email;
         this.fullName = data.full_name;
         this.passwordHash = data.password_hash;
+        this.role = data.role || 'user';
         this.isActive = data.is_active;
         this.isEmailVerified = data.is_email_verified;
         this.createdAt = data.created_at;
@@ -286,11 +287,33 @@ class User {
     /**
      * Get user data without sensitive information
      */
+    /**
+     * Kontrola role uživatele
+     */
+    hasRole(role) {
+        return this.role === role;
+    }
+
+    /**
+     * Kontrola zda je uživatel admin
+     */
+    isAdmin() {
+        return this.role === 'admin';
+    }
+
+    /**
+     * Kontrola zda je účet zamčený
+     */
+    isLocked() {
+        return this.lockedUntil && this.lockedUntil > new Date();
+    }
+
     toJSON() {
         return {
             id: this.id,
             email: this.email,
             fullName: this.fullName,
+            role: this.role,
             isActive: this.isActive,
             isEmailVerified: this.isEmailVerified,
             createdAt: this.createdAt,

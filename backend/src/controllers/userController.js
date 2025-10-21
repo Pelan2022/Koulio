@@ -1,6 +1,9 @@
 const User = require('../models/User');
+const AuditLog = require('../models/AuditLog');
+const exportService = require('../services/exportService');
+const emailService = require('../services/emailService');
 const database = require('../config/database');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 /**
  * Get user profile
@@ -175,20 +178,55 @@ const getUserStats = async (req, res) => {
  */
 const exportUserData = async (req, res) => {
     try {
+        const { format = 'json', type = 'profile' } = req.query;
         const user = req.user;
-        
-        const exportData = {
-            user: user.toJSON(),
-            exportedAt: new Date().toISOString(),
-            version: '1.0'
-        };
 
-        logger.info('User data exported', { userId: user.id });
+        // Export podle formátu
+        if (format === 'csv' || format === 'pdf') {
+            const exportResult = await exportService.exportData(user.toJSON(), format, type);
+            
+            // Nastavit headers pro download
+            res.setHeader('Content-Type', exportResult.contentType);
+            res.setHeader('Content-Disposition', `attachment; filename="${exportResult.filename}"`);
+            res.setHeader('Content-Length', exportResult.size);
 
-        res.json({
-            success: true,
-            message: 'User data exported successfully',
-            data: exportData
+            // Číst a odeslat soubor
+            const fileData = await exportService.readExportFile(exportResult.filepath);
+            res.send(fileData);
+
+            // Vyčistit temp soubor
+            setTimeout(() => {
+                try {
+                    const fs = require('fs');
+                    fs.unlinkSync(exportResult.filepath);
+                } catch (error) {
+                    logger.error('Error deleting temp file', { error: error.message });
+                }
+            }, 5000);
+
+        } else {
+            // JSON export
+            const auditLogs = await AuditLog.findByUserId(user.id, 100);
+            
+            const exportData = {
+                userProfile: user.toJSON(),
+                auditLogs: auditLogs.map(log => log.toJSON()),
+                exportInfo: {
+                    exportedAt: new Date().toISOString(),
+                    format: 'json',
+                    version: '1.0'
+                }
+            };
+
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Content-Disposition', `attachment; filename="koulio_user_data_${user.id}.json"`);
+            res.json(exportData);
+        }
+
+        logger.info('User data exported', {
+            userId: user.id,
+            format,
+            type
         });
 
     } catch (error) {

@@ -1,263 +1,361 @@
 # 🚀 KOULIO Backend API
 
-Moderní backend API pro KOULIO aplikaci s PostgreSQL databází, JWT autentifikací a pokročilými bezpečnostními funkcemi.
+Modernní REST API pro aplikaci KOULIO s PostgreSQL databází, JWT autentifikací a pokročilými bezpečnostními funkcemi.
 
 ## ✨ Funkce
 
-- 🔐 **JWT autentifikace** s refresh tokeny
-- 🔒 **Argon2 + bcrypt** hashování hesel
-- 🗄️ **PostgreSQL** databáze s kompletním schématem
-- 🛡️ **Bezpečnostní middleware** (Helmet, CORS, Rate limiting)
-- 📊 **Strukturované logování** s Winston
-- 🐳 **Docker** kontejnerizace
-- 🔍 **Input validace** a sanitizace
-- 📈 **Account lockout** po neúspěšných pokusech
-- 🔄 **HTTPS podpora** pro produkci
+### 🔐 **Autentifikace a autorizace**
+- **JWT autentifikace** s access a refresh tokeny
+- **Role-based Access Control (RBAC)** - admin, user, guest role
+- **Bezpečné hashování hesel** pomocí Argon2/bcrypt
+- **Rate limiting** pro ochranu proti útokům
+- **Session management** s automatickým refresh tokenů
 
-## 🏗️ Architektura
+### 📊 **Monitoring a logování**
+- **Strukturované logování** s Winston
+- **Audit trail** pro všechny uživatelské akce
+- **Health checks** pro CapRover/Kubernetes
+- **Performance monitoring** s metrikami
+- **Error tracking** s detaillovanými logy
 
-```
-backend/
-├── src/
-│   ├── config/          # Konfigurace (database, security, logger)
-│   ├── controllers/     # API controllery
-│   ├── middleware/      # Middleware (auth, validation)
-│   ├── models/          # Databázové modely
-│   ├── routes/          # API routes
-│   ├── database/        # Databázové schéma a migrace
-│   ├── app.js           # Express aplikace
-│   └── server.js        # Server entry point
-├── logs/                # Log soubory
-├── certs/               # SSL certifikáty
-├── Dockerfile           # Docker konfigurace
-├── docker-compose.yml   # Lokální development
-└── captain-definition   # CapRover deployment
-```
+### 🔒 **Bezpečnost**
+- **Helmet.js** pro HTTP security headers
+- **Input sanitization** proti XSS útokům
+- **SQL injection detection** a ochrana
+- **Suspicious activity monitoring**
+- **CORS konfigurace** pouze pro povolené domény
+
+### 📧 **Email notifikace**
+- **Registrační potvrzení** s email verification
+- **Reset hesla** s bezpečnými tokeny
+- **Notifikace o změnách** účtu
+- **SendGrid/SMTP podpora**
+
+### 📤 **Export dat**
+- **CSV export** uživatelských dat
+- **PDF export** s formátováním
+- **JSON export** s audit logy
+- **Automatické čištění** temp souborů
+
+### 🧪 **Testování a CI/CD**
+- **Jest testování** s coverage reporty
+- **ESLint + Prettier** pro code quality
+- **GitHub Actions** CI/CD pipeline
+- **Automatické deployment** na CapRover
+
+### 📚 **Dokumentace**
+- **Swagger/OpenAPI** dokumentace
+- **Automatická generace** z kódu
+- **Interaktivní API explorer**
+- **Comprehensive README**
+
+## 🛠️ Technologie
+
+- **Node.js** 18+ s Express.js
+- **PostgreSQL** 15+ s SSL připojením
+- **JWT** pro token-based autentifikaci
+- **Winston** pro logování
+- **Jest** pro testování
+- **Swagger** pro dokumentaci
+- **Docker** pro containerizaci
 
 ## 🚀 Rychlý start
 
-### 1. Lokální development
+### Předpoklady
+- Node.js 18+
+- PostgreSQL 15+
+- npm nebo yarn
+
+### Instalace
 
 ```bash
-# Instalace dependencies
+# Klonování repository
+git clone <repository-url>
+cd koulio-backend
+
+# Instalace závislostí
 npm install
 
 # Nastavení environment proměnných
 cp env.example .env
-# Upravte .env soubor
+# Upravte .env soubor podle vašeho prostředí
 
-# Spuštění s Docker Compose
-docker-compose up -d
-
-# Nebo spuštění bez Dockeru (vyžaduje PostgreSQL)
+# Spuštění databázových migrací
 npm run migrate
-npm run seed
+
+# Spuštění aplikace
 npm run dev
 ```
 
-### 2. Testování databáze
+### Environment proměnné
 
-```bash
-# Test připojení k databázi
-node test_database.js
-
-# Spuštění migrací
-npm run migrate
-
-# Naplnění databáze testovacími daty
-npm run seed
-```
-
-### 3. API testování
-
-```bash
-# Health check
-curl http://localhost:3000/health
-
-# Registrace uživatele
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@koulio.cz",
-    "fullName": "Test User",
-    "password": "TestPassword123!",
-    "confirmPassword": "TestPassword123!"
-  }'
-
-# Přihlášení
-curl -X POST http://localhost:3000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@koulio.cz",
-    "password": "TestPassword123!"
-  }'
-```
-
-## 📊 API Endpoints
-
-### 🔐 Autentifikace
-- `POST /api/auth/register` - Registrace nového uživatele
-- `POST /api/auth/login` - Přihlášení uživatele
-- `POST /api/auth/refresh` - Obnovení access tokenu
-- `POST /api/auth/logout` - Odhlášení uživatele
-
-### 👤 Uživatelský profil
-- `GET /api/auth/profile` - Získání profilu uživatele
-- `PUT /api/auth/profile` - Aktualizace profilu
-- `POST /api/auth/change-password` - Změna hesla
-- `DELETE /api/auth/account` - Smazání účtu
-
-### 🏥 Systém
-- `GET /health` - Health check
-- `GET /api` - API dokumentace
-
-
-## 🗄️ Databáze
-
-### PostgreSQL schéma:
-- `users` - Uživatelské účty
-- `user_sessions` - Sledování relací
-- `password_reset_tokens` - Reset hesla
-- `email_verification_tokens` - Ověření emailu
-- `audit_log` - Audit trail
-
-### PgAdmin přístup:
-- **URL:** http://localhost:5050
-- **Email:** admin@koulio.cz
-- **Heslo:** admin123
-
-## 🔧 Environment proměnné
-
-```bash
+```env
 # Server
-NODE_ENV=production
+NODE_ENV=development
 PORT=3000
 HOST=0.0.0.0
 
-# Databáze
-DB_HOST=postgres
-DB_PORT=5432
-DB_NAME=koulio_db
-DB_USER=koulio_user
-DB_PASSWORD=your_secure_password
+# Database
+DATABASE_URL=postgresql://user:pass@host:5432/db?sslmode=require
 
 # JWT
-JWT_SECRET=your_super_secret_jwt_key_here_make_it_very_long_and_secure
+JWT_SECRET=your-super-secret-jwt-key
 JWT_EXPIRES_IN=24h
 JWT_REFRESH_EXPIRES_IN=7d
 
-# Bezpečnost
-BCRYPT_ROUNDS=12
-ARGON2_MEMORY_COST=65536
-ARGON2_TIME_COST=3
-ARGON2_PARALLELISM=1
+# Email
+EMAIL_FROM=noreply@koulio.cz
+SENDGRID_API_KEY=your-sendgrid-key
 
-# HTTPS
-HTTPS_ENABLED=true
-SSL_CERT_PATH=./certs/cert.pem
-SSL_KEY_PATH=./certs/key.pem
-
-# CORS
-CORS_ORIGIN=https://unrollit.aici.cz,http://localhost:3000
-
-# Rate limiting
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
-
-# Logging
-LOG_LEVEL=info
+# Security
+CORS_ORIGIN=https://unrollit.aici.cz
 ```
 
-## 🐳 Docker deployment
+## 📖 API dokumentace
 
-### Lokální development:
-```bash
-docker-compose up -d
+Po spuštění aplikace je dokumentace dostupná na:
+- **Swagger UI**: `http://localhost:3000/api-docs`
+- **Health check**: `http://localhost:3000/health`
+
+### Hlavní endpointy
+
 ```
+POST /api/auth/register     # Registrace uživatele
+POST /api/auth/login        # Přihlášení
+POST /api/auth/refresh      # Refresh token
+POST /api/auth/logout       # Odhlášení
+GET  /api/auth/profile      # Profil uživatele
 
-### CapRover deployment:
-```bash
-# Vytvoření deployment balíčku
-tar -czf koulio-backend.tar.gz \
-    src/ \
-    package.json \
-    Dockerfile \
-    captain-definition \
-    logs/
+GET  /api/user/profile      # Uživatelský profil
+PUT  /api/user/profile      # Aktualizace profilu
+POST /api/user/change-password # Změna hesla
+GET  /api/user/export       # Export dat
+DELETE /api/user/account    # Smazání účtu
 
-# Nasaďte přes CapRover dashboard
+GET  /api/admin/users       # Seznam uživatelů (admin)
+GET  /api/admin/audit       # Audit logy (admin)
+GET  /api/admin/stats       # Statistiky (admin)
+
+GET  /health                # Health check
+GET  /api-docs              # API dokumentace
 ```
 
 ## 🧪 Testování
 
-### Jednotkové testy:
 ```bash
+# Spuštění všech testů
 npm test
+
+# Testy s coverage
+npm run test:coverage
+
+# Testy ve watch módu
+npm run test:watch
+
+# CI testy
+npm run test:ci
 ```
 
-### Test databáze:
+### Test coverage
+- **Branches**: 70%
+- **Functions**: 70%
+- **Lines**: 70%
+- **Statements**: 70%
+
+## 🔧 Vývoj
+
+### Code quality
+
 ```bash
-node test_database.js
+# Linting
+npm run lint
+npm run lint:fix
+
+# Formátování
+npm run format
+npm run format:check
+
+# Security audit
+npm run security:check
 ```
 
-### API testování:
+### Databáze
+
 ```bash
-# Health check
-curl http://localhost:3000/health
+# Migrace
+npm run migrate
 
-# Test registrace
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","fullName":"Test","password":"Test123!","confirmPassword":"Test123!"}'
+# Seed data
+npm run seed
+
+# Backup
+npm run backup
 ```
 
-## 📝 Logy
+### Logy a monitoring
 
-Logy se ukládají do:
-- `logs/app.log` - Všechny logy
-- `logs/error.log` - Pouze chyby
-- `logs/exceptions.log` - Nezpracované výjimky
+```bash
+# Sledování logů
+npm run logs
+npm run logs:error
+
+# Vyčištění temp souborů
+npm run cleanup:temp
+
+# Vyčištění starých logů
+npm run cleanup:logs
+```
+
+## 🐳 Docker
+
+```bash
+# Build image
+docker build -t koulio-backend .
+
+# Run container
+docker run -d \
+  --name koulio-backend \
+  -p 3000:3000 \
+  -e DATABASE_URL=postgresql://... \
+  koulio-backend
+```
+
+### Docker Compose
+
+```yaml
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://user:pass@postgres:5432/db
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: koulio_db
+      POSTGRES_USER: koulio_user
+      POSTGRES_PASSWORD: your_password
+
+  redis:
+    image: redis:7-alpine
+```
+
+## 🚀 Deployment
+
+### CapRover
+
+1. **Příprava aplikace**:
+```bash
+tar -czf koulio-backend.tar.gz \
+    src/ scripts/ package.json Dockerfile captain-definition
+```
+
+2. **Upload do CapRover** a nastavení environment proměnných
+
+3. **Deploy** - automaticky přes GitHub Actions
+
+### Environment proměnné pro produkci
+
+```env
+NODE_ENV=production
+DATABASE_URL=postgresql://user:pass@host:5432/db?sslmode=require
+JWT_SECRET=your-production-jwt-secret
+CORS_ORIGIN=https://unrollit.aici.cz
+EMAIL_FROM=noreply@koulio.cz
+SENDGRID_API_KEY=your-sendgrid-key
+LOG_LEVEL=info
+```
+
+## 📊 Monitoring
+
+### Health checks
+- `GET /health` - Kompletní health check
+- `GET /health/ready` - Readiness probe
+- `GET /health/live` - Liveness probe
+
+### Metriky
+- Response time tracking
+- Memory usage monitoring
+- Database performance
+- Error rate tracking
+
+### Logy
+- **Error logy**: `logs/error-YYYY-MM-DD.log`
+- **Combined logy**: `logs/combined-YYYY-MM-DD.log`
+- **Retention**: 30 dní
 
 ## 🔒 Bezpečnost
 
-- **Helmet.js** pro HTTP bezpečnostní hlavičky
-- **CORS** konfigurace pro cross-origin requests
-- **Rate limiting** proti DDoS útokům
-- **Input validation** a sanitizace
-- **Password hashing** s Argon2 (fallback bcrypt)
-- **JWT tokeny** s expirací
-- **Account lockout** po neúspěšných pokusech
-- **HTTPS** podpora pro produkci
+### Rate limiting
+- **Auth endpoints**: 5 requests / 15 min
+- **Registration**: 3 requests / 1 hour
+- **API endpoints**: 100 requests / 15 min
 
-## 🚨 Řešení problémů
+### Security headers
+- Content Security Policy
+- HSTS s preload
+- X-Frame-Options
+- X-Content-Type-Options
 
-### Databáze se nepřipojuje:
+### Audit logging
+- Všechny uživatelské akce
+- Login/logout events
+- Profile changes
+- Admin actions
+
+## 🛠️ Údržba
+
+### Zálohování
 ```bash
-# Kontrola PostgreSQL
-docker-compose logs postgres
+# Manuální záloha
+npm run backup
 
-# Test připojení
-docker-compose exec postgres psql -U koulio_user -d koulio_db -c "SELECT NOW();"
+# Automatické zálohování (cron)
+0 2 * * * cd /app && npm run backup:cron
 ```
 
-### Backend se nespouští:
+### Čištění
 ```bash
-# Kontrola logů
-docker-compose logs backend
+# Vyčištění temp souborů
+npm run cleanup:temp
 
-# Kontrola dependencies
-npm install
+# Vyčištění starých logů
+npm run cleanup:logs
+
+# Všechno najednou
+npm run cleanup:all
 ```
 
-### HTTPS problémy:
-- Zkontrolujte SSL certifikáty v `certs/` složce
-- Ověřte `HTTPS_ENABLED=true` v environment proměnných
-- Zkontrolujte CapRover SSL nastavení
+## 🤝 Contributing
 
-## 📞 Podpora
+1. Fork repository
+2. Vytvořte feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit změny (`git commit -m 'Add amazing feature'`)
+4. Push do branch (`git push origin feature/amazing-feature`)
+5. Otevřete Pull Request
 
-Pro technickou podporu kontaktujte vývojový tým nebo vytvořte issue v repository.
+### Code style
+- ESLint + Prettier konfigurace
+- Jest testy pro nové funkce
+- Swagger dokumentace pro API endpointy
 
 ## 📄 Licence
 
-MIT License - viz LICENSE soubor pro detaily.
+Tento projekt je licencován pod MIT licencí - viz [LICENSE](LICENSE) soubor.
+
+## 📞 Support
+
+- **Email**: admin@koulio.cz
+- **Dokumentace**: `/api-docs`
+- **Health check**: `/health`
+- **Logy**: `logs/` adresář
+
+---
+
+**🎯 Backend je připraven pro produkční nasazení s enterprise-level funkcionalitami!**

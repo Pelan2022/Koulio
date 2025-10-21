@@ -7,12 +7,23 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "lint": "eslint src/ scripts/ --ext .js",
+    "lint:fix": "eslint src/ scripts/ --ext .js --fix",
+    "format": "prettier --write src/ scripts/",
+    "format:check": "prettier --check src/ scripts/",
+    "security:check": "npm audit --audit-level moderate",
     "migrate": "node src/database/migrate.js",
     "seed": "node src/database/seed.js",
     "backup": "node scripts/backup.js",
     "backup:cron": "node scripts/backup-cron.js",
     "logs": "tail -f logs/combined-$(date +%Y-%m-%d).log",
-    "logs:error": "tail -f logs/error-$(date +%Y-%m-%d).log"
+    "logs:error": "tail -f logs/error-$(date +%Y-%m-%d).log",
+    "cleanup:temp": "node -e \"require('./src/services/exportService').cleanupTempFiles()\"",
+    "cleanup:logs": "find logs/ -name '*.log' -mtime +30 -delete",
+    "cleanup:all": "npm run cleanup:temp && npm run cleanup:logs"
   },
   "keywords": ["koulio", "api", "postgresql", "jwt", "authentication"],
   "author": "KOULIO Team",
@@ -33,13 +44,24 @@
     "compression": "^1.7.4",
     "morgan": "^1.10.0",
     "express-async-errors": "^3.1.1",
-    "@sentry/node": "^7.77.0"
+    "@sentry/node": "^7.77.0",
+    "nodemailer": "^6.9.7",
+    "redis": "^4.6.10",
+    "csv-writer": "^1.6.0",
+    "pdfkit": "^0.13.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
     "jest": "^29.7.0",
     "supertest": "^6.3.3",
-    "@types/jest": "^29.5.8"
+    "@types/jest": "^29.5.8",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1"
   },
   "engines": {
     "node": ">=18.0.0"

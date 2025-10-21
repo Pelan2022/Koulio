@@ -32,7 +32,11 @@ const {
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
 const healthRoutes = require('./routes/health');
+
+// Import Swagger
+const { specs, swaggerUi, swaggerOptions } = require('./config/swagger');
 
 const app = express();
 
@@ -119,7 +123,13 @@ app.get('/health', (req, res) => {
 // API routes with rate limiting
 app.use('/api/auth', authRateLimit, authRoutes);
 app.use('/api/user', apiRateLimit, userRoutes);
+app.use('/api/admin', requireAdmin, adminRoutes);
 app.use('/health', healthRoutes);
+
+// Swagger API documentation
+if (process.env.API_DOCS_ENABLED !== 'false') {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
+}
 
 // API documentation endpoint
 app.get('/api', (req, res) => {

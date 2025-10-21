@@ -1,6 +1,9 @@
 const User = require('../models/User');
+const RefreshToken = require('../models/RefreshToken');
+const AuditLog = require('../models/AuditLog');
+const jwt = require('jsonwebtoken');
 const security = require('../config/security');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 /**
  * Register a new user
@@ -399,6 +402,99 @@ const deleteAccount = async (req, res) => {
     }
 };
 
+/**
+ * Refresh access token using refresh token
+ */
+const refreshAccessToken = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+
+        if (!refreshToken) {
+            return res.status(400).json({
+                success: false,
+                message: 'Refresh token is required'
+            });
+        }
+
+        // Najít refresh token v databázi
+        const tokenRecord = await RefreshToken.findByToken(refreshToken);
+        if (!tokenRecord || !tokenRecord.isValid()) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid or expired refresh token'
+            });
+        }
+
+        // Najít uživatele
+        const user = await User.findById(tokenRecord.userId);
+        if (!user || !user.isActive) {
+            return res.status(401).json({
+                success: false,
+                message: 'User not found or inactive'
+            });
+        }
+
+        // Generovat nový access token
+        const accessToken = tokenRecord.generateAccessToken();
+
+        // Logování
+        logger.auth.tokenRefresh(user.id, true);
+
+        res.json({
+            success: true,
+            data: {
+                accessToken,
+                expiresIn: process.env.JWT_EXPIRES_IN || '24h'
+            }
+        });
+
+    } catch (error) {
+        logger.error('Refresh token error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to refresh token'
+        });
+    }
+};
+
+/**
+ * Logout user and revoke refresh token
+ */
+const logoutUser = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        const userId = req.user?.id;
+
+        if (refreshToken) {
+            // Zneplatnit konkrétní refresh token
+            const tokenRecord = await RefreshToken.findByToken(refreshToken);
+            if (tokenRecord) {
+                await tokenRecord.revoke();
+            }
+        } else if (userId) {
+            // Zneplatnit všechny refresh tokeny pro uživatele
+            await RefreshToken.revokeAllForUser(userId);
+        }
+
+        // Logování
+        if (userId) {
+            logger.auth.logout(userId, req.user.email);
+        }
+
+        res.json({
+            success: true,
+            message: 'Logged out successfully'
+        });
+
+    } catch (error) {
+        logger.error('Logout error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to logout'
+        });
+    }
+};
+
 module.exports = {
     register,
     login,
@@ -407,5 +503,7 @@ module.exports = {
     getProfile,
     updateProfile,
     changePassword,
-    deleteAccount
+    deleteAccount,
+    refreshAccessToken,
+    logoutUser
 };

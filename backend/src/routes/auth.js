@@ -53,8 +53,7 @@ router.post('/login',
 router.post('/refresh', 
     sanitizeInput,
     validate(validateRefreshToken),
-    authenticateRefreshToken,
-    authController.refreshToken
+    authController.refreshAccessToken
 );
 
 // Protected routes (authentication required)
@@ -66,7 +65,7 @@ router.post('/refresh',
  */
 router.post('/logout', 
     authenticateToken,
-    authController.logout
+    authController.logoutUser
 );
 
 /**
