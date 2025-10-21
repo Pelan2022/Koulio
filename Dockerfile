@@ -17,6 +17,10 @@ RUN apk add --no-cache nodejs npm supervisor curl
 # Copy API from builder stage
 COPY --from=api /app /app
 
+# Copy backend source files
+COPY backend/src /app/src
+COPY backend/package.json /app/package.json
+
 # Copy frontend files
 COPY index.html /usr/share/nginx/html/
 COPY koulio_complete_app.html /usr/share/nginx/html/
