@@ -27,40 +27,36 @@ const createRateLimit = (windowMs, max, message) => {
 };
 
 /**
- * Rate limiting pro autentifikaci - relaxed for testing
+ * Rate limiting pro autentifikaci - completely disabled for testing
  */
-const authRateLimit = createRateLimit(
-    15 * 60 * 1000, // 15 minut
-    50, // 50 pokusů (zvýšeno pro testování)
-    'Too many authentication attempts, please try again later.'
-);
+const authRateLimit = (req, res, next) => {
+    // Dočasně vypnuto - žádné rate limiting
+    next();
+};
 
 /**
- * Rate limiting pro registraci - relaxed for testing
+ * Rate limiting pro registraci - completely disabled for testing
  */
-const registerRateLimit = createRateLimit(
-    60 * 60 * 1000, // 1 hodina
-    20, // 20 registrací za hodinu (zvýšeno pro testování)
-    'Too many registration attempts, please try again later.'
-);
+const registerRateLimit = (req, res, next) => {
+    // Dočasně vypnuto - žádné rate limiting
+    next();
+};
 
 /**
- * Rate limiting pro API
+ * Rate limiting pro API - completely disabled for testing
  */
-const apiRateLimit = createRateLimit(
-    15 * 60 * 1000, // 15 minut
-    100, // 100 requestů za 15 minut
-    'Too many API requests, please try again later.'
-);
+const apiRateLimit = (req, res, next) => {
+    // Dočasně vypnuto - žádné rate limiting
+    next();
+};
 
 /**
- * Rate limiting pro změnu hesla
+ * Rate limiting pro změnu hesla - completely disabled for testing
  */
-const passwordChangeRateLimit = createRateLimit(
-    60 * 60 * 1000, // 1 hodina
-    3, // 3 pokusy za hodinu
-    'Too many password change attempts, please try again later.'
-);
+const passwordChangeRateLimit = (req, res, next) => {
+    // Dočasně vypnuto - žádné rate limiting
+    next();
+};
 
 /**
  * Helmet konfigurace pro bezpečnost

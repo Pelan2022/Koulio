@@ -98,7 +98,7 @@ const globalLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-// Global rate limiting temporarily disabled for testing
+// Global rate limiting completely disabled for testing
 // app.use('/api/', globalLimiter);
 
 // API routes - rate limiting temporarily disabled for testing
