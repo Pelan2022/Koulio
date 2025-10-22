@@ -27,36 +27,44 @@ const createRateLimit = (windowMs, max, message) => {
 };
 
 /**
- * Rate limiting pro autentifikaci - completely disabled for testing
+ * Rate limiting pro autentifikaci
+ * Max 5 pokusů za 15 minut
  */
-const authRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const authRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    5, // max 5 pokusů
+    'Too many login attempts, please try again later.'
+);
 
 /**
- * Rate limiting pro registraci - completely disabled for testing
+ * Rate limiting pro registraci
+ * Max 3 registrace za hodinu z jedné IP
  */
-const registerRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const registerRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    3, // max 3 registrace
+    'Too many registration attempts, please try again later.'
+);
 
 /**
- * Rate limiting pro API - completely disabled for testing
+ * Rate limiting pro API
+ * Max 100 požadavků za 15 minut
  */
-const apiRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const apiRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    100, // max 100 požadavků
+    'Too many API requests, please try again later.'
+);
 
 /**
- * Rate limiting pro změnu hesla - completely disabled for testing
+ * Rate limiting pro změnu hesla
+ * Max 3 pokusy za hodinu
  */
-const passwordChangeRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const passwordChangeRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    3, // max 3 pokusy
+    'Too many password change attempts, please try again later.'
+);
 
 /**
  * Helmet konfigurace pro bezpečnost
@@ -226,39 +234,74 @@ const trackFailedAttempts = (req, res, next) => {
 };
 
 /**
+ * Sanitize string to prevent XSS attacks
+ * NOTE: For production, consider using a library like DOMPurify or xss
+ */
+const sanitizeString = (str) => {
+    if (typeof str !== 'string') return str;
+
+    return str
+        // Remove script tags
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        // Remove iframe tags
+        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+        // Remove object tags
+        .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+        // Remove embed tags
+        .replace(/<embed\b[^<]*>/gi, '')
+        // Remove javascript: protocol
+        .replace(/javascript:/gi, '')
+        // Remove data: protocol for images (can be used for XSS)
+        .replace(/data:text\/html/gi, '')
+        // Remove event handlers (onclick, onerror, onload, etc.)
+        .replace(/on\w+\s*=/gi, '')
+        // Remove vbscript: protocol
+        .replace(/vbscript:/gi, '')
+        // Remove style tags that could contain expressions
+        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+        // Remove expression() from CSS
+        .replace(/expression\s*\(/gi, '')
+        // Remove import statements
+        .replace(/@import/gi, '')
+        // Remove meta refresh
+        .replace(/<meta\b[^>]*http-equiv\s*=\s*["\']?refresh["\']?[^>]*>/gi, '')
+        // Remove base tag
+        .replace(/<base\b[^>]*>/gi, '')
+        // Remove link tags with suspicious rel
+        .replace(/<link\b[^>]*rel\s*=\s*["\']?(stylesheet|import)["\']?[^>]*>/gi, '');
+};
+
+/**
  * Middleware pro sanitizaci vstupů
+ * NOTE: This provides basic XSS protection. For production use, consider:
+ * - npm install xss (https://www.npmjs.com/package/xss)
+ * - npm install isomorphic-dompurify (https://www.npmjs.com/package/isomorphic-dompurify)
  */
 const inputSanitization = (req, res, next) => {
     // Sanitizace query parametrů
     if (req.query) {
         for (const key in req.query) {
             if (typeof req.query[key] === 'string') {
-                req.query[key] = req.query[key]
-                    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-                    .replace(/javascript:/gi, '')
-                    .replace(/on\w+\s*=/gi, '');
+                req.query[key] = sanitizeString(req.query[key]);
             }
         }
     }
-    
+
     // Sanitizace body
     if (req.body) {
         const sanitizeObject = (obj) => {
             for (const key in obj) {
                 if (typeof obj[key] === 'string') {
-                    obj[key] = obj[key]
-                        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-                        .replace(/javascript:/gi, '')
-                        .replace(/on\w+\s*=/gi, '');
+                    obj[key] = sanitizeString(obj[key]);
                 } else if (typeof obj[key] === 'object' && obj[key] !== null) {
                     sanitizeObject(obj[key]);
                 }
             }
         };
-        
+
         sanitizeObject(req.body);
     }
-    
+
     next();
 };
 

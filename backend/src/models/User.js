@@ -291,6 +291,13 @@ class User {
         return this.role === 'admin';
     }
 
+    /**
+     * Kontrola zda je účet uzamčen
+     */
+    isLocked() {
+        return this.lockedUntil && this.lockedUntil > new Date();
+    }
+
     toJSON() {
         return {
             id: this.id,

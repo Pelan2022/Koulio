@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const database = require('../config/database');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 async function seedDatabase() {
     try {
@@ -58,11 +58,11 @@ async function seedDatabase() {
 if (require.main === module) {
     seedDatabase()
         .then(() => {
-            console.log('✅ Database seeding completed successfully');
+            logger.info('✅ Database seeding completed successfully');
             process.exit(0);
         })
         .catch((error) => {
-            console.error('❌ Database seeding failed:', error.message);
+            logger.error('❌ Database seeding failed:', { message: error.message, stack: error.stack });
             process.exit(1);
         });
 }

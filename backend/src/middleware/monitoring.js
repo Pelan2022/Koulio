@@ -97,28 +97,12 @@ const rateLimitMonitoring = (req, res, next) => {
 
 /**
  * Middleware pro sledování databázových operací
+ * NOTE: Database monitoring is now handled directly in database.js query method
+ * This middleware is kept as a pass-through for backward compatibility
  */
 const databaseMonitoring = (req, res, next) => {
-    // Zachytit původní query metodu
-    const database = require('../config/database');
-    const originalQuery = database.query;
-    
-    database.query = function(text, params) {
-        const startTime = Date.now();
-        
-        return originalQuery.call(this, text, params)
-            .then(result => {
-                const duration = Date.now() - startTime;
-                logger.database.query(text, params, duration);
-                return result;
-            })
-            .catch(error => {
-                const duration = Date.now() - startTime;
-                logger.database.error(error, text);
-                throw error;
-            });
-    };
-    
+    // Database queries are already logged in database.js:55-59
+    // No need to wrap the query method here as it would cause memory leaks
     next();
 };
 

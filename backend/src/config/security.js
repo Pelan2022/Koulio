@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const logger = require('../utils/logger');
 
 class SecurityService {
     constructor() {
@@ -31,7 +32,7 @@ class SecurityService {
             // Try Argon2 first (more secure)
             return await argon2.hash(password, this.argon2Options);
         } catch (error) {
-            console.warn('Argon2 failed, falling back to bcrypt:', error.message);
+            logger.warn('Argon2 failed, falling back to bcrypt:', { message: error.message });
             // Fallback to bcrypt
             return await bcrypt.hash(password, this.bcryptRounds);
         }
@@ -50,7 +51,7 @@ class SecurityService {
                 return await bcrypt.compare(password, hash);
             }
         } catch (error) {
-            console.error('Password verification error:', error);
+            logger.error('Password verification error:', { message: error.message, stack: error.stack });
             return false;
         }
     }

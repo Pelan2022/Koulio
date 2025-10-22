@@ -19,19 +19,21 @@ const HOST = process.env.HOST || '0.0.0.0';
 const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
 // Log startup information
-console.log('=== KOULIO Backend Startup ===');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('PORT:', PORT);
-console.log('HOST:', HOST);
-console.log('HTTPS_ENABLED:', HTTPS_ENABLED);
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_PORT:', process.env.DB_PORT);
-console.log('DB_NAME:', process.env.DB_NAME);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('ALLOWED_ORIGINS:', process.env.ALLOWED_ORIGINS);
-console.log('Working directory:', process.cwd());
-console.log('Node version:', process.version);
-console.log('===============================');
+logger.info('=== KOULIO Backend Startup ===');
+logger.info('Configuration:', {
+    NODE_ENV: process.env.NODE_ENV,
+    PORT,
+    HOST,
+    HTTPS_ENABLED,
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT,
+    DB_NAME: process.env.DB_NAME,
+    DB_USER: process.env.DB_USER,
+    ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
+    workingDirectory: process.cwd(),
+    nodeVersion: process.version
+});
+logger.info('===============================');
 
 async function startServer() {
     try {
@@ -69,13 +71,17 @@ async function startServer() {
             logger.info(`🗄️  Database: ${database.isConnected() ? 'Connected' : 'Disconnected'}`);
             logger.info(`🔐 Security: ${HTTPS_ENABLED ? 'HTTPS Enabled' : 'HTTP Only'}`);
             
-            console.log('\n' + '='.repeat(50));
-            console.log('🎯 KOULIO Backend API');
-            console.log('='.repeat(50));
-            console.log(`🌐 Server: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}`);
-            console.log(`📊 Health: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}/health`);
-            console.log(`📚 API Docs: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}/api`);
-            console.log('='.repeat(50));
+            // Display server info banner
+            const banner = [
+                '\n' + '='.repeat(50),
+                '🎯 KOULIO Backend API',
+                '='.repeat(50),
+                `🌐 Server: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}`,
+                `📊 Health: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}/health`,
+                `📚 API Docs: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}/api`,
+                '='.repeat(50)
+            ].join('\n');
+            logger.info(banner);
         });
 
         // Handle server errors

@@ -46,20 +46,39 @@ app.set('trust proxy', 1);
 // Security middleware
 app.use(helmetConfig);
 
-// Monitoring middleware - minimal for testing
+// Monitoring middleware
 app.use(performanceMonitoring);
-app.use(databaseMonitoring);
-// app.use(rateLimitMonitoring); // disabled for testing
-// app.use(suspiciousActivityDetection); // disabled for testing
-// app.use(trackFailedAttempts); // disabled for testing
+// Note: Database monitoring is now handled in database.js directly
+app.use(rateLimitMonitoring);
+app.use(suspiciousActivityDetection);
+app.use(trackFailedAttempts);
 app.use(inputSanitization);
 
-// CORS configuration podle cursorrules
+// CORS configuration
+const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',').filter(origin => origin.trim());
 const corsOptions = {
     origin: function (origin, callback) {
-        // Dočasně povolím všechny origins pro debug
-        console.log('CORS origin check:', origin);
-        callback(null, true);
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.length === 0) {
+            // If no origins configured, allow localhost in development
+            if (process.env.NODE_ENV !== 'production' &&
+                (origin.includes('localhost') || origin.includes('127.0.0.1'))) {
+                return callback(null, true);
+            }
+            logger.warn('CORS: No allowed origins configured and origin not localhost', { origin });
+            return callback(new Error('Not allowed by CORS'));
+        }
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            logger.warn('CORS: Origin not in whitelist', { origin, allowedOrigins });
+            callback(new Error('Not allowed by CORS'));
+        }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -98,10 +117,10 @@ const globalLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-// Global rate limiting completely disabled for testing
-// app.use('/api/', globalLimiter);
+// Global rate limiting
+app.use('/api/', globalLimiter);
 
-// API routes - no rate limiting at all
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);

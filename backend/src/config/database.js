@@ -18,7 +18,9 @@ class DatabaseConnection {
                 max: 20,
                 idleTimeoutMillis: 30000,
                 connectionTimeoutMillis: 2000,
-                ssl: false
+                ssl: process.env.DB_SSL === 'false' ? false : {
+                    rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false'
+                }
             });
 
             // Test connection

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const database = require('../config/database');
-const logger = require('../config/logger');
+const logger = require('../utils/logger');
 
 async function runMigrations() {
     try {
@@ -42,11 +42,11 @@ async function runMigrations() {
 if (require.main === module) {
     runMigrations()
         .then(() => {
-            console.log('✅ Migration completed successfully');
+            logger.info('✅ Migration completed successfully');
             process.exit(0);
         })
         .catch((error) => {
-            console.error('❌ Migration failed:', error.message);
+            logger.error('❌ Migration failed:', { message: error.message, stack: error.stack });
             process.exit(1);
         });
 }
