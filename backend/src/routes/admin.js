@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { requireAdminAccess } = require('../middleware/rbac');
 const { auditAdminAction } = require('../middleware/audit');
+const { adminActionRateLimit } = require('../middleware/security');
 const AuditLog = require('../models/AuditLog');
 const User = require('../models/User');
 const database = require('../config/database');
@@ -153,7 +154,8 @@ router.get('/users',
  * @desc    Update user (admin only)
  * @access  Private (Admin)
  */
-router.put('/users/:id', 
+router.put('/users/:id',
+    adminActionRateLimit,
     requireAdminAccess,
     auditAdminAction('USER_UPDATE'),
     async (req, res) => {
@@ -220,7 +222,8 @@ router.put('/users/:id',
  * @desc    Delete user (admin only)
  * @access  Private (Admin)
  */
-router.delete('/users/:id', 
+router.delete('/users/:id',
+    adminActionRateLimit,
     requireAdminAccess,
     auditAdminAction('USER_DELETE'),
     async (req, res) => {

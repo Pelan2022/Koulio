@@ -16,6 +16,7 @@ const {
     registerRateLimit,
     apiRateLimit,
     passwordChangeRateLimit,
+    docsRateLimit,
     suspiciousActivityDetection,
     trackFailedAttempts,
     inputSanitization
@@ -124,11 +125,11 @@ app.use(express.static(__dirname + '/../../'));
 
 // Swagger API documentation
 if (process.env.API_DOCS_ENABLED !== 'false') {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
+    app.use('/api-docs', docsRateLimit, swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
 }
 
 // API documentation endpoint
-app.get('/api', (req, res) => {
+app.get('/api', docsRateLimit, (req, res) => {
     res.json({
         success: true,
         message: 'KOULIO Backend API',

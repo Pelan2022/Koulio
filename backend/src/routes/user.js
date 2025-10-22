@@ -3,12 +3,18 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const { authenticateToken } = require('../middleware/auth');
-const { 
-    validate, 
-    validatePasswordChange, 
+const {
+    validate,
+    validatePasswordChange,
     validateProfileUpdate,
     sanitizeInput
 } = require('../middleware/validation');
+
+// Import security middleware
+const {
+    exportRateLimit,
+    accountDeletionRateLimit
+} = require('../middleware/security');
 
 // Protected routes (authentication required)
 
@@ -39,7 +45,8 @@ router.put('/profile',
  * @desc    Delete user account
  * @access  Private
  */
-router.delete('/account', 
+router.delete('/account',
+    accountDeletionRateLimit,
     authenticateToken,
     sanitizeInput,
     userController.deleteAccount
@@ -60,7 +67,8 @@ router.get('/stats',
  * @desc    Export user data
  * @access  Private
  */
-router.get('/export', 
+router.get('/export',
+    exportRateLimit,
     authenticateToken,
     userController.exportUserData
 );

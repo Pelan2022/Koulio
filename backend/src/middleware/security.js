@@ -2,11 +2,55 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const logger = require('../utils/logger');
 
+// Redis store for rate limiting (optional - gracefully degrades to memory store)
+let RedisStore;
+let redisClient;
+
+try {
+    const RedisStoreLib = require('rate-limit-redis');
+    const redis = require('redis');
+
+    RedisStore = RedisStoreLib;
+
+    // Only create Redis client if REDIS_URL is provided
+    if (process.env.REDIS_URL) {
+        redisClient = redis.createClient({
+            url: process.env.REDIS_URL,
+            password: process.env.REDIS_PASSWORD || undefined,
+            socket: {
+                connectTimeout: 5000,
+                reconnectStrategy: (retries) => {
+                    if (retries > 3) {
+                        logger.warn('Redis reconnection failed after 3 attempts, using memory store');
+                        return false; // Stop reconnecting
+                    }
+                    return Math.min(retries * 100, 3000);
+                }
+            }
+        });
+
+        redisClient.on('error', (err) => {
+            logger.warn('Redis client error, falling back to memory store:', err.message);
+        });
+
+        redisClient.on('connect', () => {
+            logger.info('Redis connected successfully for rate limiting');
+        });
+
+        // Don't await - connect in background
+        redisClient.connect().catch(err => {
+            logger.warn('Redis connection failed, using memory store:', err.message);
+        });
+    }
+} catch (error) {
+    logger.info('Redis store not available, using memory store for rate limiting');
+}
+
 /**
- * Konfigurace rate limitingu
+ * Konfigurace rate limitingu s Redis podporou
  */
 const createRateLimit = (windowMs, max, message) => {
-    return rateLimit({
+    const config = {
         windowMs,
         max,
         message: {
@@ -19,11 +63,24 @@ const createRateLimit = (windowMs, max, message) => {
             logger.security.rateLimit(req.ip, req.url);
             res.status(429).json({
                 success: false,
-                message: 'Too many requests, please try again later.',
+                message: message || 'Too many requests, please try again later.',
                 retryAfter: Math.round(windowMs / 1000)
             });
         }
-    });
+    };
+
+    // Add Redis store if available and connected
+    if (RedisStore && redisClient && redisClient.isReady) {
+        config.store = new RedisStore({
+            client: redisClient,
+            prefix: 'rl:', // rate limit prefix
+        });
+        logger.debug('Using Redis store for rate limiting');
+    } else {
+        logger.debug('Using memory store for rate limiting');
+    }
+
+    return rateLimit(config);
 };
 
 /**
@@ -60,6 +117,51 @@ const passwordChangeRateLimit = createRateLimit(
     60 * 60 * 1000, // 1 hodina
     3, // maximálně 3 změny hesla
     'Too many password change attempts, please try again later.'
+);
+
+/**
+ * Rate limiting pro refresh token
+ */
+const refreshTokenRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    20, // maximálně 20 refresh pokusů (více než login, protože se používá častěji)
+    'Too many token refresh attempts, please login again.'
+);
+
+/**
+ * Rate limiting pro export dat
+ */
+const exportRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    5, // maximálně 5 exportů/hodina (náročná operace)
+    'Too many export requests, please try again later.'
+);
+
+/**
+ * Rate limiting pro smazání účtu
+ */
+const accountDeletionRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    3, // maximálně 3 pokusy/hodinu (destruktivní operace)
+    'Too many account deletion attempts.'
+);
+
+/**
+ * Rate limiting pro admin operace
+ */
+const adminActionRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    30, // maximálně 30 admin akcí
+    'Too many admin actions, please slow down.'
+);
+
+/**
+ * Rate limiting pro API dokumentaci
+ */
+const docsRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    50, // maximálně 50 přístupů k dokumentaci
+    'Too many documentation requests, please slow down.'
 );
 
 /**
@@ -275,6 +377,11 @@ module.exports = {
     registerRateLimit,
     apiRateLimit,
     passwordChangeRateLimit,
+    refreshTokenRateLimit,
+    exportRateLimit,
+    accountDeletionRateLimit,
+    adminActionRateLimit,
+    docsRateLimit,
     suspiciousActivityDetection,
     ipWhitelist,
     trackFailedAttempts,

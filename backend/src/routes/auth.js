@@ -17,7 +17,9 @@ const {
 const {
     authRateLimit,
     registerRateLimit,
-    passwordChangeRateLimit
+    passwordChangeRateLimit,
+    refreshTokenRateLimit,
+    accountDeletionRateLimit
 } = require('../middleware/security');
 
 // Public routes (no authentication required)
@@ -51,7 +53,8 @@ router.post('/login',
  * @desc    Refresh access token
  * @access  Public (but requires valid refresh token)
  */
-router.post('/refresh', 
+router.post('/refresh',
+    refreshTokenRateLimit,
     sanitizeInput,
     validate(validateRefreshToken),
     authController.refreshAccessToken
@@ -109,8 +112,8 @@ router.post('/change-password',
  * @desc    Delete user account
  * @access  Private
  */
-router.delete('/account', 
-    authRateLimit,
+router.delete('/account',
+    accountDeletionRateLimit,
     authenticateToken,
     sanitizeInput,
     authController.deleteAccount
