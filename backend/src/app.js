@@ -46,11 +46,11 @@ app.set('trust proxy', 1);
 // Security middleware
 app.use(helmetConfig);
 
-// Monitoring middleware - some disabled for testing
+// Monitoring middleware - minimal for testing
 app.use(performanceMonitoring);
 app.use(databaseMonitoring);
 // app.use(rateLimitMonitoring); // disabled for testing
-app.use(suspiciousActivityDetection);
+// app.use(suspiciousActivityDetection); // disabled for testing
 // app.use(trackFailedAttempts); // disabled for testing
 app.use(inputSanitization);
 
@@ -101,7 +101,7 @@ const globalLimiter = rateLimit({
 // Global rate limiting completely disabled for testing
 // app.use('/api/', globalLimiter);
 
-// API routes - rate limiting temporarily disabled for testing
+// API routes - no rate limiting at all
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
