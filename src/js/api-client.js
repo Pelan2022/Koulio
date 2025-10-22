@@ -142,7 +142,7 @@ class ApiClient {
      */
 
     async register(userData) {
-        const response = await this.request('/api/auth/register', {
+        const response = await this.request('/auth/register', {
             method: 'POST',
             body: JSON.stringify(userData)
         });
@@ -157,7 +157,7 @@ class ApiClient {
     }
 
     async login(email, password, rememberMe = false) {
-        const response = await this.request('/api/auth/login', {
+        const response = await this.request('/auth/login', {
             method: 'POST',
             body: JSON.stringify({ email, password })
         });
@@ -183,7 +183,7 @@ class ApiClient {
     }
 
     async logout() {
-        const response = await this.request('/api/auth/logout', {
+        const response = await this.request('/auth/logout', {
             method: 'POST'
         });
 
@@ -197,7 +197,7 @@ class ApiClient {
             return { success: false, error: 'No refresh token available' };
         }
 
-        const response = await this.request('/api/auth/refresh', {
+        const response = await this.request('/auth/refresh', {
             method: 'POST',
             body: JSON.stringify({ refreshToken })
         });
@@ -213,13 +213,13 @@ class ApiClient {
     }
 
     async verifyToken() {
-        return await this.request('/api/auth/verify', {
+        return await this.request('/auth/verify', {
             method: 'GET'
         });
     }
 
     async changePassword(currentPassword, newPassword) {
-        return await this.request('/api/auth/change-password', {
+        return await this.request('/auth/change-password', {
             method: 'POST',
             body: JSON.stringify({
                 currentPassword,
@@ -234,20 +234,20 @@ class ApiClient {
      */
 
     async getUserProfile() {
-        return await this.request('/api/user/profile', {
+        return await this.request('/user/profile', {
             method: 'GET'
         });
     }
 
     async updateUserProfile(profileData) {
-        return await this.request('/api/user/profile', {
+        return await this.request('/user/profile', {
             method: 'PUT',
             body: JSON.stringify(profileData)
         });
     }
 
     async deleteAccount(password) {
-        const response = await this.request('/api/user/account', {
+        const response = await this.request('/user/account', {
             method: 'DELETE',
             body: JSON.stringify({ password })
         });
@@ -260,13 +260,13 @@ class ApiClient {
     }
 
     async getUserStats() {
-        return await this.request('/api/user/stats', {
+        return await this.request('/user/stats', {
             method: 'GET'
         });
     }
 
     async exportUserData() {
-        return await this.request('/api/user/export', {
+        return await this.request('/user/export', {
             method: 'GET'
         });
     }
