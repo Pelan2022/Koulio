@@ -11,6 +11,10 @@ const logger = require('../utils/logger');
 const register = async (req, res) => {
     try {
         const { email, fullName, password } = req.body;
+        
+        // Debug logging
+        console.log('Register request received:', { email, fullName, password: password ? '***' : 'missing' });
+        console.log('Request body:', req.body);
 
         // Create new user
         const user = await User.create({
@@ -55,6 +59,10 @@ const register = async (req, res) => {
         });
 
     } catch (error) {
+        // Debug logging
+        console.log('Registration error:', error.message);
+        console.log('Error stack:', error.stack);
+        
         logger.error('Registration error:', error);
         
         if (error.message.includes('already exists')) {
@@ -70,7 +78,7 @@ const register = async (req, res) => {
                 message: error.message
             });
         }
-
+        
         res.status(500).json({
             success: false,
             message: 'Registration failed'
