@@ -27,36 +27,40 @@ const createRateLimit = (windowMs, max, message) => {
 };
 
 /**
- * Rate limiting pro autentifikaci - completely disabled for testing
+ * Rate limiting pro autentifikaci
  */
-const authRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const authRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    10, // maximálně 10 pokusů
+    'Too many authentication attempts, please try again later.'
+);
 
 /**
- * Rate limiting pro registraci - completely disabled for testing
+ * Rate limiting pro registraci
  */
-const registerRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const registerRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    5, // maximálně 5 registrací
+    'Too many registration attempts, please try again later.'
+);
 
 /**
- * Rate limiting pro API - completely disabled for testing
+ * Rate limiting pro API
  */
-const apiRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const apiRateLimit = createRateLimit(
+    15 * 60 * 1000, // 15 minut
+    100, // maximálně 100 požadavků
+    'Too many API requests, please try again later.'
+);
 
 /**
- * Rate limiting pro změnu hesla - completely disabled for testing
+ * Rate limiting pro změnu hesla
  */
-const passwordChangeRateLimit = (req, res, next) => {
-    // Dočasně vypnuto - žádné rate limiting
-    next();
-};
+const passwordChangeRateLimit = createRateLimit(
+    60 * 60 * 1000, // 1 hodina
+    3, // maximálně 3 změny hesla
+    'Too many password change attempts, please try again later.'
+);
 
 /**
  * Helmet konfigurace pro bezpečnost
@@ -87,29 +91,32 @@ const helmetConfig = helmet({
  * Middleware pro detekci podezřelých aktivit
  */
 const suspiciousActivityDetection = (req, res, next) => {
-    const userAgent = req.get('User-Agent');
+    const userAgent = req.get('User-Agent') || '';
     const ip = req.ip;
-    
-    // Detekce podezřelých User-Agent
+
+    // Detekce pouze nebezpečných security scanning nástrojů
+    // curl, wget, prohlížeče atd. jsou legitimní
     const suspiciousPatterns = [
-        /bot/i,
-        /crawler/i,
-        /spider/i,
-        /scraper/i,
-        /curl/i,
-        /wget/i,
-        /python/i,
-        /php/i
+        /sqlmap/i,
+        /nikto/i,
+        /nmap/i,
+        /masscan/i,
+        /metasploit/i,
+        /havij/i,
+        /acunetix/i,
+        /burpsuite/i,
+        /zap/i
     ];
-    
+
     const isSuspicious = suspiciousPatterns.some(pattern => pattern.test(userAgent));
-    
+
     if (isSuspicious) {
-        logger.security.suspiciousActivity(ip, 'Suspicious User-Agent', {
+        logger.security.suspiciousActivity(ip, 'Security scanning tool detected', {
             userAgent,
             url: req.url,
             method: req.method
         });
+        // Pouze logovat, neblokovat - rate limiting se postará o ochranu
     }
     
     // Detekce SQL injection pokusů

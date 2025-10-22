@@ -46,20 +46,31 @@ app.set('trust proxy', 1);
 // Security middleware
 app.use(helmetConfig);
 
-// Monitoring middleware - minimal for testing
+// Monitoring middleware
 app.use(performanceMonitoring);
 app.use(databaseMonitoring);
-// app.use(rateLimitMonitoring); // disabled for testing
-// app.use(suspiciousActivityDetection); // disabled for testing
-// app.use(trackFailedAttempts); // disabled for testing
+app.use(rateLimitMonitoring);
+app.use(suspiciousActivityDetection);
+app.use(trackFailedAttempts);
 app.use(inputSanitization);
 
-// CORS configuration podle cursorrules
+// CORS configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+    : ['http://localhost:3000'];
+
 const corsOptions = {
     origin: function (origin, callback) {
-        // Dočasně povolím všechny origins pro debug
-        console.log('CORS origin check:', origin);
-        callback(null, true);
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        // Check if origin is in allowed list
+        if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+            callback(null, true);
+        } else {
+            logger.warn('CORS blocked origin:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -98,10 +109,10 @@ const globalLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-// Global rate limiting completely disabled for testing
-// app.use('/api/', globalLimiter);
+// Global rate limiting
+app.use('/api/', globalLimiter);
 
-// API routes - no rate limiting at all
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);

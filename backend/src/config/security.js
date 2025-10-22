@@ -31,8 +31,7 @@ class SecurityService {
             // Try Argon2 first (more secure)
             return await argon2.hash(password, this.argon2Options);
         } catch (error) {
-            console.warn('Argon2 failed, falling back to bcrypt:', error.message);
-            // Fallback to bcrypt
+            // Fallback to bcrypt if Argon2 fails
             return await bcrypt.hash(password, this.bcryptRounds);
         }
     }
