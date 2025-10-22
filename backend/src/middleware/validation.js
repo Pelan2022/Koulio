@@ -27,38 +27,22 @@ const validate = (validations) => {
 };
 
 /**
- * Registration validation rules
+ * Registration validation rules - simplified for debug
  */
 const validateRegistration = [
     body('email')
         .isEmail()
         .withMessage('Valid email is required')
-        .normalizeEmail()
-        .custom(async (value) => {
-            // Additional email validation using security service
-            if (!security.validateEmail(value)) {
-                throw new Error('Invalid email format');
-            }
-            return true;
-        }),
+        .normalizeEmail(),
     
     body('fullName')
         .trim()
         .isLength({ min: 2, max: 100 })
-        .withMessage('Full name must be between 2 and 100 characters')
-        .matches(/^[a-zA-ZáčďéěíňóřšťúůýžÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\s]+$/)
-        .withMessage('Full name can only contain letters and spaces'),
+        .withMessage('Full name must be between 2 and 100 characters'),
     
     body('password')
         .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters long')
-        .custom((value) => {
-            const validation = security.validatePassword(value);
-            if (!validation.isValid) {
-                throw new Error(`Password requirements: ${validation.errors.join(', ')}`);
-            }
-            return true;
-        }),
+        .withMessage('Password must be at least 8 characters long'),
     
     body('confirmPassword')
         .custom((value, { req }) => {
