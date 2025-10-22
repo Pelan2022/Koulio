@@ -107,6 +107,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/health', healthRoutes);
 app.use('/health', healthRoutes);
 
+// Serve static files from frontend
+app.use(express.static(__dirname + '/../../'));
+
 // Swagger API documentation
 if (process.env.API_DOCS_ENABLED !== 'false') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));

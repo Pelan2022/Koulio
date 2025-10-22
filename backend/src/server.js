@@ -14,7 +14,7 @@ try {
     process.exit(1);
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 const HOST = process.env.HOST || '0.0.0.0';
 const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
