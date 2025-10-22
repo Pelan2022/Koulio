@@ -331,6 +331,38 @@
             return emailRegex.test(email);
         }
 
+        // Validace složitosti hesla podle backend požadavků
+        function validatePasswordComplexity(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            const errors = [];
+            
+            if (password.length < minLength) {
+                errors.push(`minimálně ${minLength} znaků`);
+            }
+            if (!hasUpperCase) {
+                errors.push('velké písmeno');
+            }
+            if (!hasLowerCase) {
+                errors.push('malé písmeno');
+            }
+            if (!hasNumbers) {
+                errors.push('číslice');
+            }
+            if (!hasSpecialChar) {
+                errors.push('speciální znak (!@#$%^&*(),.?":{}|<>)');
+            }
+
+            return {
+                isValid: errors.length === 0,
+                errors: errors
+            };
+        }
+
         // Funkce pro kontrolu síly hesla
         function checkPasswordStrength(password) {
             const strengthDiv = document.getElementById('passwordStrength');
@@ -340,34 +372,14 @@
                 return 'none';
             }
             
-            let score = 0;
-            let feedback = [];
+            const validation = validatePasswordComplexity(password);
             
-            if (password.length >= 6) score++;
-            else feedback.push('minimálně 6 znaků');
-            
-            if (/[a-z]/.test(password)) score++;
-            else feedback.push('malá písmena');
-            
-            if (/[A-Z]/.test(password)) score++;
-            else feedback.push('velká písmena');
-            
-            if (/[0-9]/.test(password)) score++;
-            else feedback.push('číslice');
-            
-            if (/[^A-Za-z0-9]/.test(password)) score++;
-            else feedback.push('speciální znaky');
-            
-            if (score <= 2) {
-                strengthDiv.textContent = `Slabé heslo - doporučujeme: ${feedback.join(', ')}`;
+            if (!validation.isValid) {
+                strengthDiv.textContent = `Heslo nesplňuje požadavky: ${validation.errors.join(', ')}`;
                 strengthDiv.className = 'password-strength strength-weak';
                 return 'weak';
-            } else if (score <= 3) {
-                strengthDiv.textContent = 'Střední síla hesla';
-                strengthDiv.className = 'password-strength strength-medium';
-                return 'medium';
             } else {
-                strengthDiv.textContent = 'Silné heslo';
+                strengthDiv.textContent = 'Heslo splňuje všechny požadavky';
                 strengthDiv.className = 'password-strength strength-strong';
                 return 'strong';
             }
@@ -388,11 +400,30 @@
                         window.location.href = 'login.html?registered=true';
                     }, 2000);
                 } else {
-                    // Lepší error handling
+                    // Lepší error handling s detailními chybami
                     let errorMessage = 'Chyba při registraci. Zkuste to prosím znovu.';
                     
                     if (response?.data?.message) {
                         errorMessage = response.data.message;
+                        
+                        // Zpracování specifických validačních chyb
+                        if (response.data.errors && Array.isArray(response.data.errors)) {
+                            const fieldErrors = response.data.errors.map(err => {
+                                switch(err.field) {
+                                    case 'email':
+                                        return 'Neplatný email formát';
+                                    case 'fullName':
+                                        return 'Jméno musí mít 2-100 znaků';
+                                    case 'password':
+                                        return 'Heslo musí mít minimálně 8 znaků';
+                                    case 'confirmPassword':
+                                        return 'Hesla se neshodují';
+                                    default:
+                                        return err.message;
+                                }
+                            });
+                            errorMessage = fieldErrors.join(', ');
+                        }
                     } else if (response?.error) {
                         if (response.error.includes('CERT') || response.error.includes('SSL')) {
                             errorMessage = 'Problém s připojením k serveru. Zkuste to prosím znovu.';
@@ -471,8 +502,17 @@
                 return;
             }
             
-            if (password.length < 6) {
-                showError('Heslo musí mít minimálně 6 znaků.');
+            if (password.length < 8) {
+                showError('Heslo musí mít minimálně 8 znaků.');
+                document.getElementById('password').parentElement.classList.add('error');
+                hasErrors = true;
+                return;
+            }
+            
+            // Kontrola složitosti hesla podle backend validace
+            const passwordValidation = validatePasswordComplexity(password);
+            if (!passwordValidation.isValid) {
+                showError(`Heslo nesplňuje požadavky: ${passwordValidation.errors.join(', ')}`);
                 document.getElementById('password').parentElement.classList.add('error');
                 hasErrors = true;
                 return;
