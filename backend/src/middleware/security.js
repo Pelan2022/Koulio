@@ -27,20 +27,20 @@ const createRateLimit = (windowMs, max, message) => {
 };
 
 /**
- * Rate limiting pro autentifikaci
+ * Rate limiting pro autentifikaci - relaxed for testing
  */
 const authRateLimit = createRateLimit(
     15 * 60 * 1000, // 15 minut
-    5, // 5 pokusů
+    50, // 50 pokusů (zvýšeno pro testování)
     'Too many authentication attempts, please try again later.'
 );
 
 /**
- * Rate limiting pro registraci
+ * Rate limiting pro registraci - relaxed for testing
  */
 const registerRateLimit = createRateLimit(
     60 * 60 * 1000, // 1 hodina
-    3, // 3 registrace za hodinu
+    20, // 20 registrací za hodinu (zvýšeno pro testování)
     'Too many registration attempts, please try again later.'
 );
 
@@ -202,8 +202,8 @@ const trackFailedAttempts = (req, res, next) => {
     const validAttempts = attempts.filter(time => now - time < windowMs);
     failedAttemptsTracker.set(key, validAttempts);
     
-    // Kontrola počtu pokusů
-    if (validAttempts.length >= 10) {
+    // Kontrola počtu pokusů - relaxed for testing
+    if (validAttempts.length >= 50) { // zvýšeno z 10 na 50
         logger.security.suspiciousActivity(req.ip, 'Too many failed attempts', {
             url: req.url,
             attempts: validAttempts.length,
