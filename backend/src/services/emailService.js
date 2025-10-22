@@ -15,7 +15,7 @@ class EmailService {
         try {
             // Konfigurace pro SendGrid nebo SMTP
             if (process.env.SENDGRID_API_KEY) {
-                this.transporter = nodemailer.createTransporter({
+                this.transporter = nodemailer.createTransport({
                     service: 'SendGrid',
                     auth: {
                         user: 'apikey',
@@ -24,7 +24,7 @@ class EmailService {
                 });
             } else {
                 // SMTP konfigurace
-                this.transporter = nodemailer.createTransporter({
+                this.transporter = nodemailer.createTransport({
                     host: process.env.SMTP_HOST || 'localhost',
                     port: process.env.SMTP_PORT || 587,
                     secure: process.env.SMTP_SECURE === 'true',
