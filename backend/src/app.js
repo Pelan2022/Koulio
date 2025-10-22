@@ -113,6 +113,7 @@ app.use('/api/', globalLimiter);
 app.use('/api/auth', authRateLimit, authRoutes);
 app.use('/api/user', apiRateLimit, userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/health', healthRoutes);
 app.use('/health', healthRoutes);
 
 // Swagger API documentation
