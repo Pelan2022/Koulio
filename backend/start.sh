@@ -1,51 +1,33 @@
 #!/bin/bash
 
 # KOULIO Backend Startup Script
-echo "🚀 Starting KOULIO Backend API..."
+echo "🚀 Starting KOULIO Backend..."
 
-# Check if .env file exists
-if [ ! -f .env ]; then
-    echo "⚠️  .env file not found, copying from env.example..."
-    cp env.example .env
-    echo "📝 Please edit .env file with your configuration"
-fi
+# Set default environment variables if not set
+export NODE_ENV=${NODE_ENV:-production}
+export PORT=${PORT:-3000}
+export HOST=${HOST:-0.0.0.0}
 
-# Create necessary directories
-mkdir -p logs
-mkdir -p certs
+# Log environment info
+echo "📋 Environment Configuration:"
+echo "   NODE_ENV: $NODE_ENV"
+echo "   PORT: $PORT"
+echo "   HOST: $HOST"
+echo "   DB_HOST: ${DB_HOST:-'not set'}"
+echo "   DB_PORT: ${DB_PORT:-'not set'}"
+echo "   DB_NAME: ${DB_NAME:-'not set'}"
+echo "   DB_USER: ${DB_USER:-'not set'}"
 
-# Check if running in Docker
-if [ -f /.dockerenv ]; then
-    echo "🐳 Running in Docker container"
-    
-    # Wait for database to be ready
-    echo "⏳ Waiting for database to be ready..."
-    until nc -z postgres 5432; do
-        echo "Waiting for PostgreSQL..."
-        sleep 2
-    done
-    echo "✅ Database is ready"
-    
-    # Run database migration
-    echo "🗄️  Running database migration..."
-    npm run migrate
-    
-    # Seed database
-    echo "🌱 Seeding database..."
-    npm run seed
-fi
-
-# Test database connection
-echo "🧪 Testing database connection..."
-node test_database.js
+# Test database connection first
+echo "🔍 Testing database connection..."
+node test_connection.js
 
 if [ $? -eq 0 ]; then
-    echo "✅ Database test passed"
+    echo "✅ Database connection successful, starting server..."
+    # Start the application
+    exec node src/server.js
 else
-    echo "❌ Database test failed"
-    exit 1
+    echo "❌ Database connection failed, but starting server anyway..."
+    echo "⚠️  Server will start without database connection"
+    exec node src/server.js
 fi
-
-# Start the application
-echo "🚀 Starting KOULIO Backend API server..."
-npm start
