@@ -37,9 +37,9 @@ COPY site.webmanifest ./
 # Expose port 80
 EXPOSE 80
 
-# Health check disabled for debugging
-# HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=5 \
-#   CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
+# Health check - simple and reliable
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
 
 # Start Node.js server directly
 CMD ["node", "src/server.js"]

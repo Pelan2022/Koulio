@@ -9,12 +9,7 @@ const logger = require('../utils/logger');
  * @access  Public
  */
 router.get('/', (req, res) => {
-    console.log('Health check called:', new Date().toISOString());
-    res.json({
-        status: 'healthy',
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime()
-    });
+    res.json({ status: 'ok' });
 });
 
 /**
