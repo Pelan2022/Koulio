@@ -109,9 +109,6 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/health', healthRoutes);
 app.use('/health', healthRoutes);
 
-// Serve static files from frontend
-app.use(express.static(path.join(__dirname, '../../')));
-
 // Swagger API documentation
 if (process.env.API_DOCS_ENABLED !== 'false') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
@@ -149,11 +146,14 @@ app.get('/api', (req, res) => {
     });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
+// Serve static files from frontend (MUST be after API routes)
+app.use(express.static(path.join(__dirname, '../../')));
+
+// 404 handler for API routes only
+app.use('/api/*', (req, res) => {
     res.status(404).json({
         success: false,
-        message: 'Endpoint not found',
+        message: 'API endpoint not found',
         path: req.originalUrl
     });
 });
