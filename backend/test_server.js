@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-// Simple server test script for KOULIO Backend
+// Simple server test script for Unroll Backend
 const http = require('http');
 
-console.log('🧪 Testing KOULIO Backend Server...');
+console.log('🧪 Testing Unroll Backend Server...');
 
 // Test if the server can start
 async function testServer() {

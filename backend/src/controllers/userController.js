@@ -219,7 +219,7 @@ const exportUserData = async (req, res) => {
             };
 
             res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Disposition', `attachment; filename="koulio_user_data_${user.id}.json"`);
+            res.setHeader('Content-Disposition', `attachment; filename="unroll_user_data_${user.id}.json"`);
             res.json(exportData);
         }
 

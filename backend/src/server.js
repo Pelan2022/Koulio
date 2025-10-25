@@ -19,7 +19,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
 // Log startup information
-console.log('=== KOULIO Backend Startup ===');
+console.log('=== Unroll Backend Startup ===');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('PORT:', PORT);
 console.log('HOST:', HOST);
@@ -63,14 +63,14 @@ async function startServer() {
 
         // Start server
         server.listen(PORT, HOST, () => {
-            logger.info(`🚀 KOULIO Backend API server started`);
+            logger.info(`🚀 Unroll Backend API server started`);
             logger.info(`📡 Server running on ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}`);
             logger.info(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
             logger.info(`🗄️  Database: ${database.isConnected() ? 'Connected' : 'Disconnected'}`);
             logger.info(`🔐 Security: ${HTTPS_ENABLED ? 'HTTPS Enabled' : 'HTTP Only'}`);
             
             console.log('\n' + '='.repeat(50));
-            console.log('🎯 KOULIO Backend API');
+            console.log('🎯 Unroll Backend API');
             console.log('='.repeat(50));
             console.log(`🌐 Server: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}`);
             console.log(`📊 Health: ${HTTPS_ENABLED ? 'https' : 'http'}://${HOST}:${PORT}/health`);

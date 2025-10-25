@@ -1,8 +1,8 @@
-# KOULIO - Full-Stack Web Application
+# Unroll - Full-Stack Web Application
 
 ## 🏗️ Architektura projektu
 
-KOULIO je full-stack webová aplikace postavená podle moderních best practices s následující architekturou:
+Unroll je full-stack webová aplikace postavená podle moderních best practices s následující architekturou:
 
 - **Frontend**: Vanilla HTML/CSS/JS s moderním designem
 - **Backend**: Node.js/Express API připojený k PostgreSQL

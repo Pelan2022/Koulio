@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Simple connection test script for KOULIO Backend
+// Simple connection test script for Unroll Backend
 const { Pool } = require('pg');
 
 async function testConnection() {
@@ -9,8 +9,8 @@ async function testConnection() {
     const pool = new Pool({
         host: process.env.DB_HOST || 'localhost',
         port: process.env.DB_PORT || 5432,
-        database: process.env.DB_NAME || 'koulio_db',
-        user: process.env.DB_USER || 'koulio_user',
+        database: process.env.DB_NAME || 'unroll_db',
+        user: process.env.DB_USER || 'unroll_user',
         password: process.env.DB_PASSWORD,
         max: 5,
         idleTimeoutMillis: 30000,

@@ -4,10 +4,10 @@ services:
   # PostgreSQL databáze
   postgres:
     image: postgres:15-alpine
-    container_name: koulio-postgres
+    container_name: unroll-postgres
     environment:
-      POSTGRES_DB: koulio_db
-      POSTGRES_USER: koulio_user
+      POSTGRES_DB: unroll_db
+      POSTGRES_USER: unroll_user
       POSTGRES_PASSWORD: ${DB_PASSWORD:-your_secure_password_here}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -15,19 +15,19 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - koulio-network
+      - unroll-network
     restart: unless-stopped
 
   # Backend API (Node.js)
-  koulio-backend:
+  unroll-backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: koulio-backend
+    container_name: unroll-backend
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: postgresql://koulio_user:${DB_PASSWORD:-your_secure_password_here}@postgres:5432/koulio_db?sslmode=require
+      DATABASE_URL: postgresql://unroll_user:${DB_PASSWORD:-your_secure_password_here}@postgres:5432/unroll_db?sslmode=require
       JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_here_make_it_very_long_and_secure_at_least_32_characters}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost,https://unrollit.aici.cz}
     ports:
@@ -35,29 +35,29 @@ services:
     depends_on:
       - postgres
     networks:
-      - koulio-network
+      - unroll-network
     restart: unless-stopped
     volumes:
       - ./backend/logs:/app/logs
       - ./backend/backups:/app/backups
 
   # Frontend (Nginx)
-  koulio-frontend:
+  unroll-frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: koulio-frontend
+    container_name: unroll-frontend
     ports:
       - "80:80"
       - "443:443"
     depends_on:
-      - koulio-backend
+      - unroll-backend
     networks:
-      - koulio-network
+      - unroll-network
     restart: unless-stopped
 
 networks:
-  koulio-network:
+  unroll-network:
     driver: bridge
 
 volumes:

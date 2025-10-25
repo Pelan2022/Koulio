@@ -1,7 +1,7 @@
 {
-  "name": "koulio-backend",
+  "name": "unroll-backend",
   "version": "1.0.0",
-  "description": "KOULIO Backend API with PostgreSQL and JWT authentication",
+  "description": "Unroll Backend API with PostgreSQL and JWT authentication",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -25,8 +25,8 @@
     "cleanup:logs": "find logs/ -name '*.log' -mtime +30 -delete",
     "cleanup:all": "npm run cleanup:temp && npm run cleanup:logs"
   },
-  "keywords": ["koulio", "api", "postgresql", "jwt", "authentication"],
-  "author": "KOULIO Team",
+  "keywords": ["unroll", "api", "postgresql", "jwt", "authentication"],
+  "author": "Unroll Team",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",

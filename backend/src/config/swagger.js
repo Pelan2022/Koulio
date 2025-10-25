@@ -5,12 +5,12 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'KOULIO Backend API',
+            title: 'Unroll Backend API',
             version: '1.0.0',
-            description: 'REST API for KOULIO application with PostgreSQL and JWT authentication',
+            description: 'REST API for Unroll application with PostgreSQL and JWT authentication',
             contact: {
-                name: 'KOULIO Team',
-                email: 'admin@koulio.cz'
+                name: 'Unroll Team',
+                email: 'admin@unroll.cz'
             },
             license: {
                 name: 'MIT',
@@ -203,7 +203,7 @@ const customCss = `
 
 const swaggerOptions = {
     customCss,
-    customSiteTitle: 'KOULIO API Documentation',
+    customSiteTitle: 'Unroll API Documentation',
     customfavIcon: '/favicon.ico',
     swaggerOptions: {
         persistAuthorization: true,

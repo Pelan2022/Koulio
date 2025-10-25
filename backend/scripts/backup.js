@@ -45,7 +45,7 @@ class DatabaseBackup {
      */
     async createBackup() {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const backupFileName = `koulio_backup_${timestamp}.sql`;
+        const backupFileName = `unroll_backup_${timestamp}.sql`;
         const backupPath = path.join(this.backupDir, backupFileName);
         
         // Vytvoření backup adresáře pokud neexistuje
@@ -179,7 +179,7 @@ class DatabaseBackup {
         let freedSpace = 0;
         
         for (const file of files) {
-            if (file.startsWith('koulio_backup_') && (file.endsWith('.sql') || file.endsWith('.sql.gz'))) {
+            if (file.startsWith('unroll_backup_') && (file.endsWith('.sql') || file.endsWith('.sql.gz'))) {
                 const filePath = path.join(this.backupDir, file);
                 const stats = fs.statSync(filePath);
                 

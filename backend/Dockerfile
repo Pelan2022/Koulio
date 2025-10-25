@@ -1,4 +1,4 @@
-# Multi-stage Docker build for KOULIO Backend API
+# Multi-stage Docker build for Unroll Backend API
 # Stage 1: Build stage
 FROM node:18-alpine AS builder
 

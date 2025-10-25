@@ -1,4 +1,4 @@
-# KOULIO - Deployment Architecture
+# Unroll - Deployment Architecture
 
 ## 🏗️ Architektura aplikace
 
@@ -18,7 +18,7 @@
 ```bash
 # Klonování a příprava
 git clone <repository>
-cd Koulio
+cd Unroll
 
 # Nastavení environment proměnných
 cp .env.example .env
@@ -52,7 +52,7 @@ NODE_ENV=production
 ```nginx
 # API proxy - routuje /api/* požadavky na backend
 location /api/ {
-    proxy_pass http://koulio-backend:3000/api/;
+    proxy_pass http://unroll-backend:3000/api/;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -65,7 +65,7 @@ location /api/ {
 ```nginx
 # Health check proxy
 location /health {
-    proxy_pass http://koulio-backend:3000/health;
+    proxy_pass http://unroll-backend:3000/health;
     proxy_http_version 1.1;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -100,10 +100,10 @@ unrollit.aici.cz → https://unrollit.aici.cz/api
 ### **Logy:**
 ```bash
 # Backend logy
-docker-compose logs koulio-backend
+docker-compose logs unroll-backend
 
 # Frontend logy  
-docker-compose logs koulio-frontend
+docker-compose logs unroll-frontend
 
 # Database logy
 docker-compose logs postgres
@@ -126,7 +126,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```bash
 # Klonování repository
 git clone <repository>
-cd Koulio
+cd Unroll
 
 # Nastavení environment proměnných
 cp .env.example .env
@@ -178,11 +178,11 @@ sudo ufw enable
 ```yaml
 # docker-compose.yml
 services:
-  koulio-backend:
+  unroll-backend:
     deploy:
       replicas: 3
       
-  koulio-frontend:
+  unroll-frontend:
     deploy:
       replicas: 2
 ```
@@ -197,10 +197,10 @@ services:
 ### **Backup:**
 ```bash
 # Database backup
-docker-compose exec postgres pg_dump -U koulio_user koulio_db > backup.sql
+docker-compose exec postgres pg_dump -U unroll_user unroll_db > backup.sql
 
 # Automatické zálohování
-docker-compose exec koulio-backend npm run backup
+docker-compose exec unroll-backend npm run backup
 ```
 
 ### **Updates:**

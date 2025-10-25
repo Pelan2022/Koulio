@@ -11,7 +11,7 @@ app.get('/health', (req, res) => {
 
 // API endpoint
 app.get('/api', (req, res) => {
-    res.json({ message: 'KOULIO API is working!' });
+    res.json({ message: 'Unroll API is working!' });
 });
 
 // Start server

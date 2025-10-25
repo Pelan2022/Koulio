@@ -1,5 +1,5 @@
 /**
- * KOULIO API Client
+ * Unroll API Client
  * Handles all communication with the backend API
  */
 
@@ -31,7 +31,7 @@ class ApiClient {
      * Get stored JWT token
      */
     getStoredToken() {
-        return localStorage.getItem('koulio_token');
+        return localStorage.getItem('unroll_token');
     }
 
     /**
@@ -40,9 +40,9 @@ class ApiClient {
     setToken(token) {
         this.token = token;
         if (token) {
-            localStorage.setItem('koulio_token', token);
+            localStorage.setItem('unroll_token', token);
         } else {
-            localStorage.removeItem('koulio_token');
+            localStorage.removeItem('unroll_token');
         }
     }
 
@@ -51,9 +51,9 @@ class ApiClient {
      */
     clearAuth() {
         this.token = null;
-        localStorage.removeItem('koulio_token');
-        localStorage.removeItem('koulio_user_data');
-        localStorage.removeItem('koulio_logged_in');
+        localStorage.removeItem('unroll_token');
+        localStorage.removeItem('unroll_user_data');
+        localStorage.removeItem('unroll_logged_in');
     }
 
     /**
@@ -149,8 +149,8 @@ class ApiClient {
 
         if (response && response.success) {
             this.setToken(response.data.data.tokens.accessToken);
-            localStorage.setItem('koulio_user_data', JSON.stringify(response.data.data.user));
-            localStorage.setItem('koulio_logged_in', 'true');
+            localStorage.setItem('unroll_user_data', JSON.stringify(response.data.data.user));
+            localStorage.setItem('unroll_logged_in', 'true');
         }
 
         return response;
@@ -164,18 +164,18 @@ class ApiClient {
 
         if (response && response.success) {
             this.setToken(response.data.data.tokens.accessToken);
-            localStorage.setItem('koulio_user_data', JSON.stringify(response.data.data.user));
-            localStorage.setItem('koulio_logged_in', 'true');
+            localStorage.setItem('unroll_user_data', JSON.stringify(response.data.data.user));
+            localStorage.setItem('unroll_logged_in', 'true');
             
             // Handle remember me functionality
             if (rememberMe) {
-                localStorage.setItem('koulio_remember_me', 'true');
-                localStorage.setItem('koulio_remembered_email', email);
-                localStorage.setItem('koulio_remembered_timestamp', new Date().getTime().toString());
+                localStorage.setItem('unroll_remember_me', 'true');
+                localStorage.setItem('unroll_remembered_email', email);
+                localStorage.setItem('unroll_remembered_timestamp', new Date().getTime().toString());
             } else {
-                localStorage.removeItem('koulio_remember_me');
-                localStorage.removeItem('koulio_remembered_email');
-                localStorage.removeItem('koulio_remembered_timestamp');
+                localStorage.removeItem('unroll_remember_me');
+                localStorage.removeItem('unroll_remembered_email');
+                localStorage.removeItem('unroll_remembered_timestamp');
             }
         }
 
@@ -192,7 +192,7 @@ class ApiClient {
     }
 
     async refreshToken() {
-        const refreshToken = localStorage.getItem('koulio_refresh_token');
+        const refreshToken = localStorage.getItem('unroll_refresh_token');
         if (!refreshToken) {
             return { success: false, error: 'No refresh token available' };
         }
@@ -205,7 +205,7 @@ class ApiClient {
         if (response && response.success) {
             this.setToken(response.data.data.tokens.accessToken);
             if (response.data.data.tokens.refreshToken) {
-                localStorage.setItem('koulio_refresh_token', response.data.data.tokens.refreshToken);
+                localStorage.setItem('unroll_refresh_token', response.data.data.tokens.refreshToken);
             }
         }
 
@@ -276,11 +276,11 @@ class ApiClient {
      */
 
     isLoggedIn() {
-        return !!this.token && localStorage.getItem('koulio_logged_in') === 'true';
+        return !!this.token && localStorage.getItem('unroll_logged_in') === 'true';
     }
 
     getUserData() {
-        const userData = localStorage.getItem('koulio_user_data');
+        const userData = localStorage.getItem('unroll_user_data');
         return userData ? JSON.parse(userData) : null;
     }
 
@@ -288,9 +288,9 @@ class ApiClient {
      * Check if user has remember me enabled
      */
     hasRememberMe() {
-        const rememberMe = localStorage.getItem('koulio_remember_me');
-        const rememberedEmail = localStorage.getItem('koulio_remembered_email');
-        const rememberedTimestamp = localStorage.getItem('koulio_remembered_timestamp');
+        const rememberMe = localStorage.getItem('unroll_remember_me');
+        const rememberedEmail = localStorage.getItem('unroll_remembered_email');
+        const rememberedTimestamp = localStorage.getItem('unroll_remembered_timestamp');
         
         if (rememberMe === 'true' && rememberedEmail && rememberedTimestamp) {
             // Check if remember me is not too old (30 days)
@@ -301,9 +301,9 @@ class ApiClient {
                 return rememberedEmail;
             } else {
                 // Remove old remember me data
-                localStorage.removeItem('koulio_remember_me');
-                localStorage.removeItem('koulio_remembered_email');
-                localStorage.removeItem('koulio_remembered_timestamp');
+                localStorage.removeItem('unroll_remember_me');
+                localStorage.removeItem('unroll_remembered_email');
+                localStorage.removeItem('unroll_remembered_timestamp');
             }
         }
         
