@@ -149,18 +149,28 @@ app.get('/api', (req, res) => {
 // Serve static files from frontend (MUST be after API routes)
 app.use(express.static(path.join(__dirname, '../../')));
 
-// Fallback for SPA - serve index.html for all non-API routes
-app.get('*', (req, res) => {
-    // Only serve index.html for non-API routes
-    if (!req.path.startsWith('/api') && !req.path.startsWith('/health')) {
+// Simple fallback for root route
+app.get('/', (req, res) => {
+    try {
+        console.log('Serving index.html from:', path.join(__dirname, '../../index.html'));
         res.sendFile(path.join(__dirname, '../../index.html'));
-    } else {
-        res.status(404).json({
+    } catch (error) {
+        console.error('Error serving index.html:', error);
+        res.status(500).json({
             success: false,
-            message: 'API endpoint not found',
-            path: req.originalUrl
+            message: 'Error serving frontend',
+            error: error.message
         });
     }
+});
+
+// 404 handler for API routes only
+app.use('/api/*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'API endpoint not found',
+        path: req.originalUrl
+    });
 });
 
 // Error monitoring middleware
