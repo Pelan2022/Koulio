@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -109,7 +110,7 @@ app.use('/api/health', healthRoutes);
 app.use('/health', healthRoutes);
 
 // Serve static files from frontend
-app.use(express.static(__dirname + '/../../'));
+app.use(express.static(path.join(__dirname, '../../')));
 
 // Swagger API documentation
 if (process.env.API_DOCS_ENABLED !== 'false') {
