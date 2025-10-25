@@ -152,8 +152,10 @@ app.use(express.static(path.join(__dirname, '../../')));
 // Simple fallback for root route
 app.get('/', (req, res) => {
     try {
-        console.log('Serving index.html from:', path.join(__dirname, '../../index.html'));
-        res.sendFile(path.join(__dirname, '../../index.html'));
+        const indexPath = path.join(__dirname, '../../index.html');
+        console.log('Serving index.html from:', indexPath);
+        console.log('File exists:', require('fs').existsSync(indexPath));
+        res.sendFile(indexPath);
     } catch (error) {
         console.error('Error serving index.html:', error);
         res.status(500).json({
