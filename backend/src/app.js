@@ -155,6 +155,8 @@ app.get('/', (req, res) => {
         const indexPath = path.join(__dirname, '../../index.html');
         console.log('Serving index.html from:', indexPath);
         console.log('File exists:', require('fs').existsSync(indexPath));
+        console.log('Current directory:', __dirname);
+        console.log('Working directory:', process.cwd());
         res.sendFile(indexPath);
     } catch (error) {
         console.error('Error serving index.html:', error);
