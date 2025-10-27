@@ -60,7 +60,7 @@ function showTab(tabName, clickedElement) {
     // Update URL without page reload
     const urlPath = reverseMapping[tabName];
     if (urlPath) {
-        const newUrl = window.location.origin + window.location.pathname + (urlPath === 'uvod' ? '' : '/' + urlPath);
+        const newUrl = window.location.origin + (urlPath === 'uvod' ? '' : '/' + urlPath);
         window.history.pushState({ tab: tabName }, '', newUrl);
     }
 }
