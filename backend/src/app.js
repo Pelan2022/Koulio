@@ -149,6 +149,24 @@ app.get('/api', (req, res) => {
 // Serve static files from frontend (MUST be after API routes)
 app.use(express.static(path.join(__dirname, '../')));
 
+// Route for individual lessons - serve index.html for SPA routing
+const lessonRoutes = ['uvod', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
+lessonRoutes.forEach(route => {
+    app.get(`/${route}`, (req, res) => {
+        try {
+            const indexPath = path.join(__dirname, '../index.html');
+            res.sendFile(indexPath);
+        } catch (error) {
+            console.error('Error serving lesson route:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Error serving frontend',
+                error: error.message
+            });
+        }
+    });
+});
+
 // Simple fallback for root route
 app.get('/', (req, res) => {
     try {

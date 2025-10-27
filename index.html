@@ -3889,6 +3889,44 @@
 
     <script src="./src/js/api-client.js"></script>
     <script>
+        // URL mapping for lessons
+        const urlMapping = {
+            'uvod': 'lekce0',
+            '1': 'lekce1',
+            '2': 'lekce2',
+            '3': 'lekce3',
+            '4': 'lekce4',
+            '5': 'lekce5',
+            '6': 'lekce6',
+            '7': 'lekce7',
+            '8': 'lekce8',
+            '9': 'lekce9',
+            '10': 'lekce10',
+            '11': 'lekce11',
+            '12': 'lekce12',
+            '13': 'lekce13',
+            '14': 'lekce14'
+        };
+
+        // Reverse mapping for getting URL from tab name
+        const reverseMapping = {
+            'lekce0': 'uvod',
+            'lekce1': '1',
+            'lekce2': '2',
+            'lekce3': '3',
+            'lekce4': '4',
+            'lekce5': '5',
+            'lekce6': '6',
+            'lekce7': '7',
+            'lekce8': '8',
+            'lekce9': '9',
+            'lekce10': '10',
+            'lekce11': '11',
+            'lekce12': '12',
+            'lekce13': '13',
+            'lekce14': '14'
+        };
+
         function showTab(tabName, clickedElement) {
             // Skryj všechny tab obsahy
             const tabContents = document.querySelectorAll('.tab-content');
@@ -3909,7 +3947,38 @@
             if (clickedElement) {
                 clickedElement.classList.add('active');
             }
+
+            // Update URL without page reload
+            const urlPath = reverseMapping[tabName];
+            if (urlPath) {
+                const newUrl = window.location.origin + window.location.pathname + (urlPath === 'uvod' ? '' : '/' + urlPath);
+                window.history.pushState({ tab: tabName }, '', newUrl);
+            }
         }
+
+        function showTabFromUrl(urlPath) {
+            const tabName = urlMapping[urlPath];
+            if (tabName) {
+                const tabElement = document.querySelector(`button[onclick*="${tabName}"]`);
+                showTab(tabName, tabElement);
+            } else {
+                // Default to intro if no valid path
+                const tabElement = document.querySelector(`button[onclick*="lekce0"]`);
+                showTab('lekce0', tabElement);
+            }
+        }
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            const urlPath = window.location.pathname.split('/').pop() || 'uvod';
+            showTabFromUrl(urlPath);
+        });
+
+        // Initialize tab from URL on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlPath = window.location.pathname.split('/').pop() || 'uvod';
+            showTabFromUrl(urlPath);
+        });
 
         // Function to handle checkbox changes in kuličky sections
         function handleKulickyCheckbox(checkbox) {
