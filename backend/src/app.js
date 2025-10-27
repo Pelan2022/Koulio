@@ -147,12 +147,12 @@ app.get('/api', (req, res) => {
 });
 
 // Serve static files from frontend (MUST be after API routes)
-app.use(express.static(path.join(__dirname, '../../')));
+app.use(express.static(path.join(__dirname, '../')));
 
 // Simple fallback for root route
 app.get('/', (req, res) => {
     try {
-        const indexPath = path.join(__dirname, '../../index.html');
+        const indexPath = path.join(__dirname, '../index.html');
         console.log('Serving index.html from:', indexPath);
         console.log('File exists:', require('fs').existsSync(indexPath));
         console.log('Current directory:', __dirname);
