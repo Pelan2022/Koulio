@@ -1,13 +1,13 @@
--- KOULIO Database Schema
--- PostgreSQL database schema for KOULIO application
+-- Unroll Database Schema
+-- PostgreSQL database schema for Unroll application
 
 -- Create database (run this separately)
--- CREATE DATABASE koulio_db;
--- CREATE USER koulio_user WITH PASSWORD 'your_secure_password_here';
--- GRANT ALL PRIVILEGES ON DATABASE koulio_db TO koulio_user;
+-- CREATE DATABASE unroll_db;
+-- CREATE USER unroll_user WITH PASSWORD 'your_secure_password_here';
+-- GRANT ALL PRIVILEGES ON DATABASE unroll_db TO unroll_user;
 
 -- Connect to the database
--- \c koulio_db;
+-- \c unroll_db;
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -173,9 +173,9 @@ SELECT
 FROM users;
 
 -- Grant permissions
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO koulio_user;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO koulio_user;
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO koulio_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO unroll_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO unroll_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO unroll_user;
 
 -- Comments for documentation
 COMMENT ON TABLE users IS 'Main users table storing user account information';

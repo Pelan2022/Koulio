@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KOULIO Backend Startup Script
-echo "🚀 Starting KOULIO Backend..."
+# Unroll Backend Startup Script
+echo "🚀 Starting Unroll Backend..."
 
 # Set default environment variables if not set
 export NODE_ENV=${NODE_ENV:-production}

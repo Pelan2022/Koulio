@@ -1,8 +1,8 @@
-# KOULIO Deployment Guide
+# Unroll Deployment Guide
 
 ## 🚀 Deployment podle cursorrules
 
-Tento dokument popisuje, jak nasadit KOULIO aplikaci na CapRover server podle architektury definované v cursorrules.
+Tento dokument popisuje, jak nasadit Unroll aplikaci na CapRover server podle architektury definované v cursorrules.
 
 ## 📋 Předpoklady
 
@@ -99,7 +99,7 @@ Project/
 ```bash
 # Push changes to Git repository
 git add .
-git commit -m "Deploy KOULIO application"
+git commit -m "Deploy Unroll application"
 git push origin main
 ```
 

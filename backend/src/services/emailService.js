@@ -4,7 +4,7 @@ const logger = require('../utils/logger');
 class EmailService {
     constructor() {
         this.transporter = null;
-        this.fromEmail = process.env.EMAIL_FROM || 'noreply@koulio.cz';
+        this.fromEmail = process.env.EMAIL_FROM || 'noreply@unroll.cz';
         this.init();
     }
 
@@ -92,13 +92,13 @@ class EmailService {
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Potvrzení registrace - KOULIO</title>
+                <title>Potvrzení registrace - Unroll</title>
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-                    <h1 style="color: #667eea;">Vítejte v KOULIO!</h1>
+                    <h1 style="color: #667eea;">Vítejte v Unroll!</h1>
                     <p>Ahoj ${userName},</p>
-                    <p>děkujeme za registraci v aplikaci KOULIO. Pro dokončení registrace prosím potvrďte svůj email kliknutím na tlačítko níže:</p>
+                    <p>děkujeme za registraci v aplikaci Unroll. Pro dokončení registrace prosím potvrďte svůj email kliknutím na tlačítko níže:</p>
                     
                     <div style="text-align: center; margin: 30px 0;">
                         <a href="${verificationUrl}" 
@@ -128,7 +128,7 @@ class EmailService {
 
         return await this.sendEmail(
             userEmail,
-            'Potvrzení registrace - KOULIO',
+            'Potvrzení registrace - Unroll',
             html
         );
     }
@@ -144,7 +144,7 @@ class EmailService {
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Reset hesla - KOULIO</title>
+                <title>Reset hesla - Unroll</title>
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -185,7 +185,7 @@ class EmailService {
 
         return await this.sendEmail(
             userEmail,
-            'Reset hesla - KOULIO',
+            'Reset hesla - Unroll',
             html
         );
     }
@@ -199,13 +199,13 @@ class EmailService {
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Účet byl smazán - KOULIO</title>
+                <title>Účet byl smazán - Unroll</title>
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                     <h1 style="color: #667eea;">Účet byl smazán</h1>
                     <p>Ahoj ${userName},</p>
-                    <p>váš účet v aplikaci KOULIO byl úspěšně smazán.</p>
+                    <p>váš účet v aplikaci Unroll byl úspěšně smazán.</p>
                     
                     <p><strong>Co to znamená:</strong></p>
                     <ul>
@@ -214,7 +214,7 @@ class EmailService {
                         <li>Pokud si budete chtít vytvořit nový účet, můžete se znovu zaregistrovat</li>
                     </ul>
                     
-                    <p>Děkujeme, že jste používali KOULIO!</p>
+                    <p>Děkujeme, že jste používali Unroll!</p>
                     
                     <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
                     <p style="font-size: 12px; color: #666;">
@@ -227,7 +227,7 @@ class EmailService {
 
         return await this.sendEmail(
             userEmail,
-            'Účet byl smazán - KOULIO',
+            'Účet byl smazán - Unroll',
             html
         );
     }
@@ -241,13 +241,13 @@ class EmailService {
             <html>
             <head>
                 <meta charset="utf-8">
-                <title>Heslo bylo změněno - KOULIO</title>
+                <title>Heslo bylo změněno - Unroll</title>
             </head>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
                     <h1 style="color: #667eea;">Heslo bylo změněno</h1>
                     <p>Ahoj ${userName},</p>
-                    <p>vaše heslo v aplikaci KOULIO bylo úspěšně změněno.</p>
+                    <p>vaše heslo v aplikaci Unroll bylo úspěšně změněno.</p>
                     
                     <p><strong>Důležité informace:</strong></p>
                     <ul>
@@ -269,7 +269,7 @@ class EmailService {
 
         return await this.sendEmail(
             userEmail,
-            'Heslo bylo změněno - KOULIO',
+            'Heslo bylo změněno - Unroll',
             html
         );
     }

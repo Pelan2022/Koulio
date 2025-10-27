@@ -17,7 +17,7 @@ RUN chmod +x start.sh
 
 # Copy frontend files
 COPY index.html ./
-COPY koulio_complete_app.html ./
+COPY unroll_complete_app.html ./
 COPY login.html ./
 COPY register.html ./
 COPY profile.html ./

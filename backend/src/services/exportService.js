@@ -124,7 +124,7 @@ class ExportService {
 
             // Header
             doc.fontSize(20)
-               .text('KOULIO - Export dat', 50, 50)
+               .text('Unroll - Export dat', 50, 50)
                .fontSize(12)
                .text(`Export typu: ${exportType}`, 50, 80)
                .text(`Datum exportu: ${new Date().toLocaleString('cs-CZ')}`, 50, 100)
@@ -192,7 +192,7 @@ class ExportService {
             // Footer
             doc.fontSize(8)
                .text(`Vygenerováno: ${new Date().toLocaleString('cs-CZ')}`, 50, doc.page.height - 50)
-               .text('KOULIO - Aplikace pro práci s emocemi', 50, doc.page.height - 35);
+               .text('Unroll - Aplikace pro práci s emocemi', 50, doc.page.height - 35);
 
             doc.end();
 

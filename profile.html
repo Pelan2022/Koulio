@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KOULIO - Můj účet</title>
+    <title>Unroll - Můj účet</title>
     <link rel="shortcut icon" href="./favicon.ico?v=6" type="image/x-icon">
     <link rel="icon" href="./favicon.ico?v=6" type="image/x-icon" sizes="any">
     <style>
@@ -232,7 +232,7 @@
         </div>
         
         <div class="profile-content">
-            <a href="koulio_complete_app.html" class="back-link">← Zpět do aplikace</a>
+            <a href="unroll_complete_app.html" class="back-link">← Zpět do aplikace</a>
             
             <div id="errorMessage" class="error-message" style="display: none;"></div>
             <div id="successMessage" class="success-message" style="display: none;"></div>
@@ -478,7 +478,7 @@
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `koulio-user-data-${new Date().toISOString().split('T')[0]}.json`;
+                    a.download = `unroll-user-data-${new Date().toISOString().split('T')[0]}.json`;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);

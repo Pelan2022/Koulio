@@ -118,7 +118,7 @@ if (process.env.API_DOCS_ENABLED !== 'false') {
 app.get('/api', (req, res) => {
     res.json({
         success: true,
-        message: 'KOULIO Backend API',
+        message: 'Unroll Backend API',
         version: '1.0.0',
         endpoints: {
             auth: {
