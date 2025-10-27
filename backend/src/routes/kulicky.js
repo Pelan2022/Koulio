@@ -5,8 +5,8 @@ const logger = require('../utils/logger');
 
 // Middleware pro autentifikaci (zatím bez autentifikace pro testování)
 const authenticateUser = (req, res, next) => {
-    // Prozatím použijeme anonymního uživatele
-    req.user = { id: 'anonymous-user-id' };
+    // Prozatím použijeme anonymního uživatele s UUID
+    req.user = { id: '00000000-0000-0000-0000-000000000000' };
     next();
 };
 
