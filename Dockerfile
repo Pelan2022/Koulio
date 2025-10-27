@@ -33,6 +33,7 @@ COPY maskable-icon-512x512.png ./
 COPY mstile-150x150.png ./
 COPY manifest.webmanifest ./
 COPY site.webmanifest ./
+COPY vanocni_koule.jpg ./
 
 # Expose port 80
 EXPOSE 80

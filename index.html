@@ -435,25 +435,25 @@
 
         <div class="tabs">
             <div class="tabs-row">
-                <button class="tab active" onclick="showTab('lekce0')">Úvod do Koulia</button>
-                <button class="tab" onclick="showTab('lekce1')">1. Emoční prožitky</button>
-                <button class="tab" onclick="showTab('lekce2')">2. Vztah sám k sobě</button>
-                <button class="tab" onclick="showTab('lekce3')">3. Závislosti</button>
-                <button class="tab" onclick="showTab('lekce4')">4. Skutečné bohatství</button>
+                <button class="tab active" onclick="showTab('lekce0', this)">Úvod do Koulia</button>
+                <button class="tab" onclick="showTab('lekce1', this)">1. Emoční prožitky</button>
+                <button class="tab" onclick="showTab('lekce2', this)">2. Vztah sám k sobě</button>
+                <button class="tab" onclick="showTab('lekce3', this)">3. Závislosti</button>
+                <button class="tab" onclick="showTab('lekce4', this)">4. Skutečné bohatství</button>
             </div>
             <div class="tabs-row">
-                <button class="tab" onclick="showTab('lekce5')">5. Rodinné vztahy</button>
-                <button class="tab" onclick="showTab('lekce6')">6. Prenatální období, porod a dětství</button>
-                <button class="tab" onclick="showTab('lekce7')">7. Škola a dospívání</button>
-                <button class="tab" onclick="showTab('lekce8')">8. Vztah muž a žena</button>
-                <button class="tab" onclick="showTab('lekce9')">9. Přijetí svého těla a pochopení nemocí</button>
-                <button class="tab" onclick="showTab('lekce10')">10. Sexualita</button>
+                <button class="tab" onclick="showTab('lekce5', this)">5. Rodinné vztahy</button>
+                <button class="tab" onclick="showTab('lekce6', this)">6. Prenatální období, porod a dětství</button>
+                <button class="tab" onclick="showTab('lekce7', this)">7. Škola a dospívání</button>
+                <button class="tab" onclick="showTab('lekce8', this)">8. Vztah muž a žena</button>
+                <button class="tab" onclick="showTab('lekce9', this)">9. Přijetí svého těla a pochopení nemocí</button>
+                <button class="tab" onclick="showTab('lekce10', this)">10. Sexualita</button>
             </div>
             <div class="tabs-row">
-                <button class="tab" onclick="showTab('lekce11')">11. Profesní život</button>
-                <button class="tab" onclick="showTab('lekce12')">12. Společný život, svatba, manželství a rozvod</button>
-                <button class="tab" onclick="showTab('lekce13')">13. Těhotenství a rodičovství</button>
-                <button class="tab" onclick="showTab('lekce14')">14. Obecně známé pravdy</button>
+                <button class="tab" onclick="showTab('lekce11', this)">11. Profesní život</button>
+                <button class="tab" onclick="showTab('lekce12', this)">12. Společný život, svatba, manželství a rozvod</button>
+                <button class="tab" onclick="showTab('lekce13', this)">13. Těhotenství a rodičovství</button>
+                <button class="tab" onclick="showTab('lekce14', this)">14. Obecně známé pravdy</button>
             </div>
         </div>
 
@@ -3889,7 +3889,7 @@
 
     <script src="./src/js/api-client.js"></script>
     <script>
-        function showTab(tabName) {
+        function showTab(tabName, clickedElement) {
             // Skryj všechny tab obsahy
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(content => {
@@ -3906,7 +3906,9 @@
             document.getElementById(tabName).classList.add('active');
 
             // Přidej aktivní třídu na vybraný tab
-            event.target.classList.add('active');
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
         }
 
         // Function to handle checkbox changes in kuličky sections
