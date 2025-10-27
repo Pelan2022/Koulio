@@ -133,12 +133,19 @@ function handleKulickyCheckbox(checkbox) {
         listItem.classList.remove('checked');
     }
 
-    // Save checkbox state to backend
+    // Save checkbox state to backend (only if kulicka has ID)
     const kulickaId = checkbox.getAttribute('data-kulicka-id');
     const lessonId = getCurrentLessonId();
     
     if (kulickaId && lessonId) {
         saveKulickaState(lessonId, kulickaId, checkbox.checked);
+    } else {
+        // For kuličky without ID, just save to localStorage as fallback
+        const kulickaText = checkbox.nextElementSibling ? checkbox.nextElementSibling.textContent : '';
+        if (kulickaText) {
+            const storageKey = `kulicka_${lessonId}_${kulickaText}`;
+            localStorage.setItem(storageKey, checkbox.checked.toString());
+        }
     }
 }
 
@@ -450,7 +457,7 @@ function convertKulickyListItems(kulickyList) {
 async function loadKulickyData(lessonId) {
     try {
         const response = await window.apiClient.getKulicky(lessonId);
-        if (response.success) {
+        if (response && response.success && response.data && response.data.kulicky) {
             return response.data.kulicky;
         } else {
             console.error('Failed to load kulicky data:', response);
@@ -528,6 +535,22 @@ function applyKulickyData(kulickyData) {
     }
 }
 
+// Load checkbox states from localStorage
+function loadCheckboxStatesFromStorage(lessonId) {
+    const allCheckboxes = document.querySelectorAll('.kuličky-list input[type="checkbox"]');
+    allCheckboxes.forEach(function(checkbox) {
+        const kulickaText = checkbox.nextElementSibling ? checkbox.nextElementSibling.textContent : '';
+        if (kulickaText) {
+            const storageKey = `kulicka_${lessonId}_${kulickaText}`;
+            const savedState = localStorage.getItem(storageKey);
+            if (savedState === 'true') {
+                checkbox.checked = true;
+                handleKulickyCheckbox(checkbox);
+            }
+        }
+    });
+}
+
 // Initialize all checkboxes when page loads
 document.addEventListener('DOMContentLoaded', async function() {
     // Convert all existing kuličky items to new format first
@@ -537,10 +560,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     const lessonId = getCurrentLessonId();
     const kulickyData = await loadKulickyData(lessonId);
     
-    if (kulickyData.length > 0) {
+    if (kulickyData && kulickyData.length > 0) {
         // Apply loaded data
         applyKulickyData(kulickyData);
     } else {
+        // Load states from localStorage for existing checkboxes
+        loadCheckboxStatesFromStorage(lessonId);
+        
         // Set up event listeners for existing checkboxes
         const allCheckboxes = document.querySelectorAll('.kuličky-list input[type="checkbox"]');
         allCheckboxes.forEach(function(checkbox) {
@@ -548,11 +574,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             checkbox.addEventListener('change', function() {
                 handleKulickyCheckbox(this);
             });
-            
-            // Initialize state if already checked
-            if (checkbox.checked) {
-                handleKulickyCheckbox(checkbox);
-            }
         });
     }
 });
