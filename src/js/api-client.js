@@ -272,6 +272,51 @@ class ApiClient {
     }
 
     /**
+     * Kulicky endpoints
+     */
+
+    async getKulicky(lessonId) {
+        return await this.request(`/kulicky/${lessonId}`, {
+            method: 'GET'
+        });
+    }
+
+    async checkKulicka(lessonId, kulickaId, isChecked) {
+        return await this.request(`/kulicky/${lessonId}/check`, {
+            method: 'POST',
+            body: JSON.stringify({
+                kulickaId: kulickaId,
+                isChecked: isChecked
+            })
+        });
+    }
+
+    async addCustomKulicka(lessonId, text, orderIndex = 0) {
+        return await this.request(`/kulicky/${lessonId}/add`, {
+            method: 'POST',
+            body: JSON.stringify({
+                text: text,
+                orderIndex: orderIndex
+            })
+        });
+    }
+
+    async updateCustomKulicka(kulickaId, text) {
+        return await this.request(`/kulicky/${kulickaId}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                text: text
+            })
+        });
+    }
+
+    async deleteCustomKulicka(kulickaId) {
+        return await this.request(`/kulicky/${kulickaId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    /**
      * Utility methods
      */
 

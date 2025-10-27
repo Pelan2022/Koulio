@@ -35,6 +35,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const healthRoutes = require('./routes/health');
+const kulickyRoutes = require('./routes/kulicky');
 
 // Import Swagger
 const { specs, swaggerUi, swaggerOptions } = require('./config/swagger');
@@ -107,6 +108,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/health', healthRoutes);
+app.use('/api/kulicky', kulickyRoutes);
 app.use('/health', healthRoutes);
 
 // Swagger API documentation
@@ -138,6 +140,13 @@ app.get('/api', (req, res) => {
                 'DELETE /api/user/account': 'Delete user account',
                 'GET /api/user/stats': 'Get user statistics',
                 'GET /api/user/export': 'Export user data'
+            },
+            kulicky: {
+                'GET /api/kulicky/:lessonId': 'Get all kulicky for lesson',
+                'POST /api/kulicky/:lessonId/check': 'Check/uncheck kulicka',
+                'POST /api/kulicky/:lessonId/add': 'Add custom kulicka',
+                'PUT /api/kulicky/:kulickaId': 'Update custom kulicka text',
+                'DELETE /api/kulicky/:kulickaId': 'Delete custom kulicka'
             },
             health: {
                 'GET /health': 'Health check'
