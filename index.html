@@ -435,25 +435,25 @@
 
         <div class="tabs">
             <div class="tabs-row">
-                <button class="tab active" onclick="showTab('lekce0', this)">Úvod do Koulia</button>
-                <button class="tab" onclick="showTab('lekce1', this)">1. Emoční prožitky</button>
-                <button class="tab" onclick="showTab('lekce2', this)">2. Vztah sám k sobě</button>
-                <button class="tab" onclick="showTab('lekce3', this)">3. Závislosti</button>
-                <button class="tab" onclick="showTab('lekce4', this)">4. Skutečné bohatství</button>
+                <button class="tab active" data-tab="lekce0">Úvod do Koulia</button>
+                <button class="tab" data-tab="lekce1">1. Emoční prožitky</button>
+                <button class="tab" data-tab="lekce2">2. Vztah sám k sobě</button>
+                <button class="tab" data-tab="lekce3">3. Závislosti</button>
+                <button class="tab" data-tab="lekce4">4. Skutečné bohatství</button>
             </div>
             <div class="tabs-row">
-                <button class="tab" onclick="showTab('lekce5', this)">5. Rodinné vztahy</button>
-                <button class="tab" onclick="showTab('lekce6', this)">6. Prenatální období, porod a dětství</button>
-                <button class="tab" onclick="showTab('lekce7', this)">7. Škola a dospívání</button>
-                <button class="tab" onclick="showTab('lekce8', this)">8. Vztah muž a žena</button>
-                <button class="tab" onclick="showTab('lekce9', this)">9. Přijetí svého těla a pochopení nemocí</button>
-                <button class="tab" onclick="showTab('lekce10', this)">10. Sexualita</button>
+                <button class="tab" data-tab="lekce5">5. Rodinné vztahy</button>
+                <button class="tab" data-tab="lekce6">6. Prenatální období, porod a dětství</button>
+                <button class="tab" data-tab="lekce7">7. Škola a dospívání</button>
+                <button class="tab" data-tab="lekce8">8. Vztah muž a žena</button>
+                <button class="tab" data-tab="lekce9">9. Přijetí svého těla a pochopení nemocí</button>
+                <button class="tab" data-tab="lekce10">10. Sexualita</button>
             </div>
             <div class="tabs-row">
-                <button class="tab" onclick="showTab('lekce11', this)">11. Profesní život</button>
-                <button class="tab" onclick="showTab('lekce12', this)">12. Společný život, svatba, manželství a rozvod</button>
-                <button class="tab" onclick="showTab('lekce13', this)">13. Těhotenství a rodičovství</button>
-                <button class="tab" onclick="showTab('lekce14', this)">14. Obecně známé pravdy</button>
+                <button class="tab" data-tab="lekce11">11. Profesní život</button>
+                <button class="tab" data-tab="lekce12">12. Společný život, svatba, manželství a rozvod</button>
+                <button class="tab" data-tab="lekce13">13. Těhotenství a rodičovství</button>
+                <button class="tab" data-tab="lekce14">14. Obecně známé pravdy</button>
             </div>
         </div>
 
@@ -501,7 +501,7 @@
                 <div class="section kuličky">
                     <div class="section-header">
                         <h3><img src="vanocni_koule.jpg" alt="Vánoční koule" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 8px;"> Kuličky (40)</h3>
-                        <button class="add-kulicka-btn" onclick="addKulickaToSection(this)">+</button>
+                        <button class="add-kulicka-btn" data-action="add-kulicka-section">+</button>
                     </div>
                     <ul class="kuličky-list">
                         <li class="kulicka-item">
@@ -510,8 +510,8 @@
                                 <span class="kulicka-text">strach ze změny</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -520,8 +520,8 @@
                                 <span class="kulicka-text">přesvědčení, že si nedokážu pomoci sama</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -530,8 +530,8 @@
                                 <span class="kulicka-text">nedůvěru v sebe, že můžu cokoliv změnit</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -540,8 +540,8 @@
                                 <span class="kulicka-text">přesvědčení, že každá změna je jen na chvilku</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -550,8 +550,8 @@
                                 <span class="kulicka-text">prahnutí po dokonalosti</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -560,8 +560,8 @@
                                 <span class="kulicka-text">zákaz přijímat pomoc</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -570,8 +570,8 @@
                                 <span class="kulicka-text">trapnost v požádání o pomoc</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -580,8 +580,8 @@
                                 <span class="kulicka-text">boj s časem</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -590,8 +590,8 @@
                                 <span class="kulicka-text">marnivost svého života</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -600,8 +600,8 @@
                                 <span class="kulicka-text">bezohlednost sama k sobě</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -610,8 +610,8 @@
                                 <span class="kulicka-text">zmítání se v pochybnostech</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -620,8 +620,8 @@
                                 <span class="kulicka-text">to, že dáváš sebe na poslední místo</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -630,8 +630,8 @@
                                 <span class="kulicka-text">těžké průběhy situací</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -640,8 +640,8 @@
                                 <span class="kulicka-text">marnivost svého času</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -650,8 +650,8 @@
                                 <span class="kulicka-text">odkládání svého života na potom</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -660,8 +660,8 @@
                                 <span class="kulicka-text">promarněnost vlastních příležitostí</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -670,8 +670,8 @@
                                 <span class="kulicka-text">ztrátu naděje na pěkný život</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -680,8 +680,8 @@
                                 <span class="kulicka-text">roli oběti</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -690,8 +690,8 @@
                                 <span class="kulicka-text">život v sebelítosti</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -700,8 +700,8 @@
                                 <span class="kulicka-text">nepochopení sama sebe</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -710,8 +710,8 @@
                                 <span class="kulicka-text">nepochopení druhých</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -720,8 +720,8 @@
                                 <span class="kulicka-text">bezohlednost ve vztazích</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -730,8 +730,8 @@
                                 <span class="kulicka-text">sebezpůsobování</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -740,8 +740,8 @@
                                 <span class="kulicka-text">strach vzdát se iluzí</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -750,8 +750,8 @@
                                 <span class="kulicka-text">život v iluzích</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -760,8 +760,8 @@
                                 <span class="kulicka-text">chaos ve vztahu sama k sobě</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -770,8 +770,8 @@
                                 <span class="kulicka-text">přebírání zodpovědnosti za druhé</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -780,8 +780,8 @@
                                 <span class="kulicka-text">strach vidět pravdu</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -790,8 +790,8 @@
                                 <span class="kulicka-text">potřebu zraňovat</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -800,8 +800,8 @@
                                 <span class="kulicka-text">závislost na názoru druhých o mně</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -810,8 +810,8 @@
                                 <span class="kulicka-text">přesvědčení o vlastní slabosti</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -820,8 +820,8 @@
                                 <span class="kulicka-text">život v manipulaci</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -830,8 +830,8 @@
                                 <span class="kulicka-text">strach z projevování vlastních citů a pocitů</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -840,8 +840,8 @@
                                 <span class="kulicka-text">zákaz prožívání svých emocí, citů a pocitů</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -850,8 +850,8 @@
                                 <span class="kulicka-text">zbabělost</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -860,8 +860,8 @@
                                 <span class="kulicka-text">přesvědčení, že život není fér</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -870,8 +870,8 @@
                                 <span class="kulicka-text">nenávist sama k sobě</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -880,8 +880,8 @@
                                 <span class="kulicka-text">nenávist k rodičům</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -890,8 +890,8 @@
                                 <span class="kulicka-text">nenávist k dětem</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                         <li class="kulicka-item">
@@ -900,8 +900,8 @@
                                 <span class="kulicka-text">nenávist k životu</span>
                             </div>
                             <div class="kulicka-actions">
-                                <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                             </div>
                         </li>
                     </ul>
@@ -920,49 +920,49 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">TRAUMATA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">TRAUMA V REALITĚ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ODKOULOVÁVACÍ PYRAMIDA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">HÁDKA RODIČŮ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – OTEC</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – MATKA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – SYN</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – DCERA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -1062,13 +1062,13 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – ZRCADLO</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEBEHODNOTA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1077,8 +1077,8 @@
                                         <span class="kulicka-text">nikdo si mě neváží</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1087,8 +1087,8 @@
                                         <span class="kulicka-text">nestojím za nic</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1097,8 +1097,8 @@
                                         <span class="kulicka-text">vše co udělám je k ničemu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1107,8 +1107,8 @@
                                         <span class="kulicka-text">nemůžu být sama sebou</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1117,8 +1117,8 @@
                                         <span class="kulicka-text">nechápu co tu vlastně dělám</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1127,8 +1127,8 @@
                                         <span class="kulicka-text">je ze mě troska</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1137,8 +1137,8 @@
                                         <span class="kulicka-text">vše je to stejně moje vina</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1146,19 +1146,19 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">KONTROLY PRAVIDLA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – ZASLOUŽIT SI</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PYRAMIDA – NÁLEPKOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <div style="margin-left: 20px; margin-top: 10px;">
                                 <h4 style="color: #667eea; margin: 10px 0 5px 0; font-size: 1em;">(JAK MĚ VIDÍ DRUZÍ):</h4>
@@ -1169,8 +1169,8 @@
                                             <span class="kulicka-text">dosáhnu vůbec něčeho</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1179,8 +1179,8 @@
                                             <span class="kulicka-text">jsem neschopný</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1189,8 +1189,8 @@
                                             <span class="kulicka-text">strach o finanční zajištění rodiny</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1199,8 +1199,8 @@
                                             <span class="kulicka-text">když to říkají druzí, tak takový musím být</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1209,8 +1209,8 @@
                                             <span class="kulicka-text">musím naplnit očekávání druhých</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1219,8 +1219,8 @@
                                             <span class="kulicka-text">zaslepení vůči svým vlastnostem</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                 </ul>
@@ -1233,8 +1233,8 @@
                                             <span class="kulicka-text">jsem divná</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1243,8 +1243,8 @@
                                             <span class="kulicka-text">nikam nezapadám</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1253,8 +1253,8 @@
                                             <span class="kulicka-text">stejně to nemá smysl</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1263,8 +1263,8 @@
                                             <span class="kulicka-text">ospravedlňování svých činů a chování</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                     <li class="kulicka-item">
@@ -1273,8 +1273,8 @@
                                             <span class="kulicka-text">nikdy nedokážu, aby mě měli všichni rádi</span>
                                         </div>
                                         <div class="kulicka-actions">
-                                            <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                            <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                            <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                            <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                         </div>
                                     </li>
                                 </ul>
@@ -1283,13 +1283,13 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">OTEC KUTIL</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MATKA MARNÁ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -1358,13 +1358,13 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NEMŮŽU BEZ TOHO ŽÍT</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">DRUHY ZÁVISLOSTÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1373,8 +1373,8 @@
                                         <span class="kulicka-text">zjevá</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1383,8 +1383,8 @@
                                         <span class="kulicka-text">skrytá</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1393,8 +1393,8 @@
                                         <span class="kulicka-text">příčina</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1402,13 +1402,13 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PŘEJÍMÁNÍ ZÁVISLOSTI - ZÁVISLOST NA JÍDLE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PŘEJÍMÁNÍ ZÁVISLOSTI</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1417,8 +1417,8 @@
                                         <span class="kulicka-text">přesvědčení, že cokoli dělá taťka, tak to můžu dělat i já, protože to je v pořádku</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1427,8 +1427,8 @@
                                         <span class="kulicka-text">přesvědčení, že musím být jako on, abych se mu zalíbil</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1437,8 +1437,8 @@
                                         <span class="kulicka-text">přesvědčení, že abych byl přijat, musím napodobovat druhé</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1446,7 +1446,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZÁVISLOST NA ÚKLIDU</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1455,8 +1455,8 @@
                                         <span class="kulicka-text">posedlost</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1465,8 +1465,8 @@
                                         <span class="kulicka-text">že nebudu spát dokud tu nebude pořádně uklizeno</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1475,8 +1475,8 @@
                                         <span class="kulicka-text">že nikdy není dostatečně uklizeno</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1485,8 +1485,8 @@
                                         <span class="kulicka-text">posedlost úklidem je silnější než já</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1495,8 +1495,8 @@
                                         <span class="kulicka-text">že stavím svou hodnotu na pořádku okolo sebe a mínění druhých</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1504,7 +1504,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NESCHOPNOST SE ODPOUTAT</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1513,8 +1513,8 @@
                                         <span class="kulicka-text">neochotu změnit své chování</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1523,8 +1523,8 @@
                                         <span class="kulicka-text">potlačování negativních vzpomínek</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1533,8 +1533,8 @@
                                         <span class="kulicka-text">podléhání manipulaci jiných osob</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1543,8 +1543,8 @@
                                         <span class="kulicka-text">rezignaci nad svým osudem ve vztahu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1623,7 +1623,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SKUTEČNÉ BOHATSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1632,8 +1632,8 @@
                                         <span class="kulicka-text">Prostor příznivý pro život (domov)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1642,8 +1642,8 @@
                                         <span class="kulicka-text">Zdraví (fyzická a duševní spokojenost)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1652,8 +1652,8 @@
                                         <span class="kulicka-text">Šťastná rodina (harmonické vztahy mezi rodiči a dětmi)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1662,8 +1662,8 @@
                                         <span class="kulicka-text">Materiální blahobyt (dostatečné množství peněz)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1672,8 +1672,8 @@
                                         <span class="kulicka-text">Příznivá vzájemná komunikace s lidmi (spolehliví a věrní přátelé, podobně smýšlející)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1682,8 +1682,8 @@
                                         <span class="kulicka-text">Oblíbená činnost (přináší duševní a materiální uspokojení)</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -1691,37 +1691,37 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MAJETNÝ X BOHATÝ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">BOHATSTVÍ RODIČŮ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A SYSTÉM (vláda, politika, systém, daně)</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VNÍMÁNÍ BOHATÉHO ČLOVĚKA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VNÍMÁNÍ CHUDÉHO ČLOVĚKA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PENÍZE A STRACH</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -1821,7 +1821,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH S MÁMOU</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> neposlouchá co říkám</li>
@@ -1836,7 +1836,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH S TÁTOU</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> je duchem nepřítomný</li>
@@ -1851,7 +1851,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH SE SOUROZENCEM</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> mají ho/jí víc rádi než mě</li>
@@ -1863,12 +1863,12 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MOJE RODINA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZDĚDĚNÉ VZORCE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                     </ul>
                 </div>
@@ -1948,7 +1948,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">OVLIVNILO MĚ TĚHOTENSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -1957,8 +1957,8 @@
                                         <span class="kulicka-text">ovlivnění psychickými vlivy</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1967,8 +1967,8 @@
                                         <span class="kulicka-text">ovlivnění fyzickými vlivy</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1977,8 +1977,8 @@
                                         <span class="kulicka-text">přenos negativních vlivů</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1987,8 +1987,8 @@
                                         <span class="kulicka-text">ovlivnění skrze procesy v placentě</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -1997,8 +1997,8 @@
                                         <span class="kulicka-text">nedůvěra v život</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2007,8 +2007,8 @@
                                         <span class="kulicka-text">strach z náhlé změny prostředí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2017,8 +2017,8 @@
                                         <span class="kulicka-text">výčitky matce co mi způsobila</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2026,7 +2026,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">POROD</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2035,8 +2035,8 @@
                                         <span class="kulicka-text">neschopnost cokoliv ovládat</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2045,8 +2045,8 @@
                                         <span class="kulicka-text">porod je spojený s úzkostí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2055,8 +2055,8 @@
                                         <span class="kulicka-text">dopady bolesti při porodu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2065,8 +2065,8 @@
                                         <span class="kulicka-text">trauma formuje naši osobnost</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2075,8 +2075,8 @@
                                         <span class="kulicka-text">bezvýchodnost situací</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2085,8 +2085,8 @@
                                         <span class="kulicka-text">touha vrátit se zpět do lůna matky</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2095,8 +2095,8 @@
                                         <span class="kulicka-text">dopad prvotního útlaku na celý náš život</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2104,13 +2104,13 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MŮJ POROD</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">DĚTSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2119,8 +2119,8 @@
                                         <span class="kulicka-text">jsem nechtěný / nechtěná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2129,8 +2129,8 @@
                                         <span class="kulicka-text">pocit neustálého nebezpečí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2139,8 +2139,8 @@
                                         <span class="kulicka-text">potlačený hněv</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2149,8 +2149,8 @@
                                         <span class="kulicka-text">dopady nedostatku blízkosti rodičů</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2159,8 +2159,8 @@
                                         <span class="kulicka-text">strach z blízkosti</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2169,8 +2169,8 @@
                                         <span class="kulicka-text">přesvědčení že se nemůžu osamostatnit</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2179,8 +2179,8 @@
                                         <span class="kulicka-text">popírání sebe sama / sebe samé</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2189,8 +2189,8 @@
                                         <span class="kulicka-text">žít v kritice rodičů</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2199,8 +2199,8 @@
                                         <span class="kulicka-text">neschopnost uvidět svou hodnotu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2209,8 +2209,8 @@
                                         <span class="kulicka-text">zákaz projevení své autenticity</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2219,8 +2219,8 @@
                                         <span class="kulicka-text">přesvědčení, že rodina není bezpečné místo</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2228,7 +2228,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">OVLIVNĚNÍ IDOLY – „KÉŽ BYCH"</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -2313,7 +2313,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZÁPIS A NÁSTUP DO ŠKOLY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2322,8 +2322,8 @@
                                         <span class="kulicka-text">strach ze zklamání</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2332,8 +2332,8 @@
                                         <span class="kulicka-text">přesvědčení, že něco musím</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2342,8 +2342,8 @@
                                         <span class="kulicka-text">nutnost být testovaná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2352,8 +2352,8 @@
                                         <span class="kulicka-text">stresové situace</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2362,8 +2362,8 @@
                                         <span class="kulicka-text">šok z reality</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2372,8 +2372,8 @@
                                         <span class="kulicka-text">strach z nových situací</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2382,8 +2382,8 @@
                                         <span class="kulicka-text">pocit, že jsem ztracená</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2392,8 +2392,8 @@
                                         <span class="kulicka-text">rozpaky z nového prostředí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2402,8 +2402,8 @@
                                         <span class="kulicka-text">obavy z navazování kontaktů</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2411,7 +2411,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VÝUKA A ZKOUŠENÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2420,8 +2420,8 @@
                                         <span class="kulicka-text">nemožnost vyjádřit svůj názor</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2430,8 +2430,8 @@
                                         <span class="kulicka-text">být nevyslyšena</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2440,8 +2440,8 @@
                                         <span class="kulicka-text">jsem neschopná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2450,8 +2450,8 @@
                                         <span class="kulicka-text">jsem terčem posměchu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2460,8 +2460,8 @@
                                         <span class="kulicka-text">chyba je neomluvitelná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2470,8 +2470,8 @@
                                         <span class="kulicka-text">ostatní vědí všechno líp</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2480,8 +2480,8 @@
                                         <span class="kulicka-text">nedokážu nic vysvětlit</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2490,8 +2490,8 @@
                                         <span class="kulicka-text">nechuť se učit nové věci</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2499,7 +2499,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A RODIČE VE VZTAHU KE ŠKOLE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2508,8 +2508,8 @@
                                         <span class="kulicka-text">jsem k ničemu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2518,8 +2518,8 @@
                                         <span class="kulicka-text">jsem černou ovcí rodiny</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2528,8 +2528,8 @@
                                         <span class="kulicka-text">všechny zklamu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2538,8 +2538,8 @@
                                         <span class="kulicka-text">nikdy nic nedokážu</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2547,7 +2547,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ŠIKANA – UBLIŽOVÁNÍ MNĚ NEBO DRUHÝM</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2556,8 +2556,8 @@
                                         <span class="kulicka-text">jsem slabší/slaboch</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2566,8 +2566,8 @@
                                         <span class="kulicka-text">nerovné podmínky</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2576,8 +2576,8 @@
                                         <span class="kulicka-text">zesměšnění</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2586,8 +2586,8 @@
                                         <span class="kulicka-text">přání být neviditelná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2596,8 +2596,8 @@
                                         <span class="kulicka-text">strach někomu pomoci</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2606,8 +2606,8 @@
                                         <span class="kulicka-text">trápení, že nemůžeš pomoc</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2616,8 +2616,8 @@
                                         <span class="kulicka-text">příjmu co se mi nelíbí, abych měla klid</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2625,7 +2625,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">DOSPÍVÁNÍ – RODIČE A JÁ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2634,8 +2634,8 @@
                                         <span class="kulicka-text">nikdo mi nerozumí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2644,8 +2644,8 @@
                                         <span class="kulicka-text">nikdo mě neposlouchá</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2654,8 +2654,8 @@
                                         <span class="kulicka-text">nikdo mě nechápe</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2664,8 +2664,8 @@
                                         <span class="kulicka-text">nevěří mi</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2674,8 +2674,8 @@
                                         <span class="kulicka-text">nezajímají se o mě</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2684,8 +2684,8 @@
                                         <span class="kulicka-text">dělám všechno špatně</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2694,8 +2694,8 @@
                                         <span class="kulicka-text">jednají se mnou jako s miminem</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2703,7 +2703,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A PARTA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li class="kulicka-item">
@@ -2712,8 +2712,8 @@
                                         <span class="kulicka-text">vděk, že někam patřím</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2722,8 +2722,8 @@
                                         <span class="kulicka-text">musím být jako ostatní</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2732,8 +2732,8 @@
                                         <span class="kulicka-text">když budu jiná, budu divná</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2742,8 +2742,8 @@
                                         <span class="kulicka-text">dělat to, co chtějí ostatní</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                                 <li class="kulicka-item">
@@ -2752,8 +2752,8 @@
                                         <span class="kulicka-text">jen oni mi rozumí</span>
                                     </div>
                                     <div class="kulicka-actions">
-                                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                                     </div>
                                 </li>
                             </ul>
@@ -2855,67 +2855,67 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZOR OTCE A MATKY - PŘEJATÉ VZORY OD RODIČŮ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ODPOR K NÁVYKŮM</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JAK SE MÁ CHOVAT? - ŽENA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JAK SE MÁ CHOVAT? - MUŽ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">POTŘEBUJI VE SVÉM ŽIVOTĚ MUŽE / ŽENU? PROČ?</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">FILMY A POHÁDKY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZOR DOKONALÉHO MUŽE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZOR DOKONALÉ ŽENY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A MUŽI – CO TĚ ŠTVE?</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A ŽENY – CO TĚ ŠTVE?</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NESHODY A ROZCHODY – ZLOMENÉ SRDCE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -3016,43 +3016,43 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">FYZICKÉ NEDOSTATKY – Co pro mě znamenaly změny na těle/proč mi vadily fyzické nedostatky</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PROČ ZAKRÝVÁM SVÉ NEDOSTATKY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JAKOU ČÁST TĚLA JSTE CHTĚLI MÍT JAKO NĚKDO JINÝ? KÉŽ BYCH …</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">CO SI NEDOPŘEJI A PROČ?</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">CO SE MI NELÍBÍ NA MÉM TĚLE A PROČ? (jak ho vidím?)</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SPÁNEK</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NEMOC</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -3119,97 +3119,97 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEXUÁLNÍ VÝCHOVA – CO VÁS O SEXU NAUČILA RODINA A SPOLEČNOST?</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEXUÁLNÍ HRANICE – PŘIJATELNÉ A NEPŘIJATELNÉ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NAHOTA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">GENITÁLIE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JAK VIDÍM SVÉ TĚLO – OCHLUPENÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">DOTEK A OBEJMUTÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEBEUSPOKOJENÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ORGASMUS</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEXUÁLNÍ ŽIVOT A SPONTÁNNOST</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K VÁŠNI</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K MILOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K SEXU</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K ROZKOŠI</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K TRAPNÝM SITUACÍM PŘI MILOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K STUDU PŘI MILOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VZTAH K ZÁKAZY A PŘEJATÉ PRAVDY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -3284,61 +3284,61 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">RODINA – STÁTNÍ ZAMĚSTNANEC, PODNIKATEL, MATKA V DOMÁCNOSTI</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ROZHODOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SEN VS. NAUČENÝ SEN</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZAMĚSTNANEC VS. PODNIKATEL</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">FYZICKÁ VS. PSYCHICKÁ PRÁCE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SCÉNÁŘE PRÁCE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">DOMÁCÍ PRÁCE V DĚTSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">TÝMOVÝ SPORT VS. INDIVIDUÁLNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ŽIVOTOPIS/POHOVOR – ZMĚNA PRÁCE</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MATEŘSKÁ/RODIČOVSKÁ DOVOLENÁ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -3422,55 +3422,55 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VYSNĚNÝ PROTĚJŠEK</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZAMILOVANOST</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VĚK A ČAS</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SESTĚHOVÁNÍ – BALANCOVÁNÍ ZVYKLOSTÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZVYKLOSTI RODINY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">SVATBA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">TCHÁN A TCHÝNĚ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ROMANTICKÉ FILMY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ROZVOD</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                         </li>
                     </ul>
@@ -3534,7 +3534,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">POČETÍ A TĚHOTENSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že dítě zachrání vztah</li>
@@ -3549,7 +3549,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">JÁ A TĚHOTENSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> nenávist k dítěti kvůli nevolnostem</li>
@@ -3567,7 +3567,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">STRACH Z NEMOCÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> strach z přenosu nemocí</li>
@@ -3578,27 +3578,27 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">VADY ORGÁNŮ A TĚLA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">GENETICKÉ VADY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZDĚDĚNÉ NEMOCI – ochrnutí, autismus, obrna...</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">ZNIČENÍ POSTAVY ŽENY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">RODIČOVSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> přesvědčení, že nejsem dobrý rodič</li>
@@ -3612,7 +3612,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">KOPÍROVÁNÍ RODIČOVSKÉHO MODELU</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> strach ze zklamání rodičů</li>
@@ -3627,7 +3627,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">POTRAT</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> strach z potratu</li>
@@ -3640,7 +3640,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">TĚHOTENSTVÍ A RODIČOVSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                     </ul>
                 </div>
@@ -3711,7 +3711,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NAŠE PARADOXY V ŽIVOTĚ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> přes., že s poctivostí nejdál dojdeš</li>
@@ -3725,7 +3725,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">NÁBOŽENSTVÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> následování utrpení</li>
@@ -3739,7 +3739,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">FANATISMUS</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> pocit zuřivosti při útocích na mou ideologii</li>
@@ -3755,7 +3755,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">GENERAČNÍ CHOROBY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> strach z generačních chorob</li>
@@ -3768,7 +3768,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">GENERAČNÍ STRACHY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> strach z války</li>
@@ -3783,7 +3783,7 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PŘÍRODNÍ KATASTROFY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> ztráty na majetku</li>
@@ -3797,12 +3797,12 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">LIDOVÉ RČENÍ A PÍSNĚ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">POMLUVY A URÁŽKY</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> přijetí pomluv a urážek</li>
@@ -3816,12 +3816,12 @@
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">PRONÁSLEDOVÁNÍ</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div></li>
                         <li class="topic-item">
                             <div class="topic-header">
                                 <span class="topic-title">MODLITBA</span>
-                                <button class="add-kulicka-btn" onclick="addKulickaToTopic(this)">+</button>
+                                <button class="add-kulicka-btn" data-action="add-kulicka-topic">+</button>
                             </div>
                             <ul class="kuličky-list" style="margin-top: 10px;">
                                 <li><input type="checkbox" style="margin-right: 8px;"> iluzorní posílení mé vůle</li>
@@ -3959,11 +3959,11 @@
         function showTabFromUrl(urlPath) {
             const tabName = urlMapping[urlPath];
             if (tabName) {
-                const tabElement = document.querySelector(`button[onclick*="${tabName}"]`);
+                const tabElement = document.querySelector(`button[data-tab="${tabName}"]`);
                 showTab(tabName, tabElement);
             } else {
                 // Default to intro if no valid path
-                const tabElement = document.querySelector(`button[onclick*="lekce0"]`);
+                const tabElement = document.querySelector(`button[data-tab="lekce0"]`);
                 showTab('lekce0', tabElement);
             }
         }
@@ -3976,6 +3976,34 @@
 
         // Initialize tab from URL on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to all tab buttons
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    showTab(tabName, this);
+                });
+            });
+
+            // Add delegated event listeners for all buttons with onclick handlers
+            document.addEventListener('click', function(event) {
+                // Handle add-kulicka-btn buttons
+                if (event.target.hasAttribute('data-action')) {
+                    const action = event.target.getAttribute('data-action');
+                    
+                    if (action === 'add-kulicka-section') {
+                        addKulickaToSection(event.target);
+                    } else if (action === 'add-kulicka-topic') {
+                        addKulickaToTopic(event.target);
+                    } else if (action === 'edit-kulicka') {
+                        editKulicka(event.target);
+                    } else if (action === 'delete-kulicka') {
+                        deleteKulicka(event.target);
+                    }
+                }
+            });
+
+            // Initialize tab from URL
             const urlPath = window.location.pathname.split('/').pop() || 'uvod';
             showTabFromUrl(urlPath);
         });
@@ -4012,8 +4040,8 @@
                     <span class="kulicka-text">Nová kulička</span>
                 </div>
                 <div class="kulicka-actions">
-                    <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                    <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                    <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                    <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                 </div>
             `;
             
@@ -4052,8 +4080,8 @@
                     <span class="kulicka-text">Nová kulička</span>
                 </div>
                 <div class="kulicka-actions">
-                    <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                    <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                    <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                    <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                 </div>
             `;
             
@@ -4142,7 +4170,7 @@
                         sectionHeader.className = 'section-header';
                         sectionHeader.innerHTML = `
                             ${h3.outerHTML}
-                            <button class="add-kulicka-btn" onclick="addKulickaToSection(this)">+</button>
+                            <button class="add-kulicka-btn" data-action="add-kulicka-section">+</button>
                         `;
                         h3.remove();
                         section.insertBefore(sectionHeader, section.firstChild);
@@ -4199,8 +4227,8 @@
                         <span class="kulicka-text">${text}</span>
                     </div>
                     <div class="kulicka-actions">
-                        <button class="edit-kulicka-btn" onclick="editKulicka(this)">✏️</button>
-                        <button class="delete-kulicka-btn" onclick="deleteKulicka(this)">🗑️</button>
+                        <button class="edit-kulicka-btn" data-action="edit-kulicka">✏️</button>
+                        <button class="delete-kulicka-btn" data-action="delete-kulicka">🗑️</button>
                     </div>
                 `;
             });
